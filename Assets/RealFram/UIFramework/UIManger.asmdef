@@ -1,0 +1,11 @@
+{
+    "name": "UIManger",
+    "references": [
+        "Base",
+        "Resource"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

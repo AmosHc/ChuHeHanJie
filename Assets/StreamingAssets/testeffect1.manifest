@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 2319520590
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9f2337e050471c8860ac7ea29806d7fb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3565420f27f8dd22875b3bf49fcb44d8
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 96
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1681619f8a78b65478188d0a14fb2903, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+Assets:
+- Assets/GameData/Prefabs/Effect/TestEffect1.prefab
+Dependencies: []
