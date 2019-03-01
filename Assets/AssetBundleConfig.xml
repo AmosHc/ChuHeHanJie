@@ -14,4 +14,5 @@
   <ABList Path="Assets/GameData/Prefabs/UGUI/TestUI2.prefab" Crc="1588009699" ABName="testui2" AssetName="TestUI2.prefab" />
   <ABList Path="Assets/GameData/UGUI/icons_stats_deploy_time.png" Crc="2441125574" ABName="ugui" AssetName="icons_stats_deploy_time.png" />
   <ABList Path="Assets/GameData/UGUI/icons_stats_dmg.png" Crc="2954929919" ABName="ugui" AssetName="icons_stats_dmg.png" />
+  <ABList Path="Assets/GameData/UGUI/icons_stats_dmg_area.png" Crc="1587772431" ABName="ugui" AssetName="icons_stats_dmg_area.png" />
 </AssetBundleConfig>

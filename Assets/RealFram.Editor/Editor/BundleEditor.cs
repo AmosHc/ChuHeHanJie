@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 /// </summary>
 public class BundleEditor : ScriptableObject
 {
-    private static string ABOUTPUTPATH = Application.streamingAssetsPath;
+    private static string ABOUTPUTPATH = Application.dataPath+"/../AssetBundle/"+EditorUserBuildSettings.activeBuildTarget.ToString();
     private static string ABCONFIGPATH = "Assets/RealFram.Editor/Editor/ABConfig.asset";
     private static Dictionary<string, string> m_AllFileDir = new Dictionary<string, string>();//所有文件夹ab包路径
     private static List<string> m_AllFileAB = new List<string>();//ab包已有的所有文件资源,不重复
@@ -95,7 +95,12 @@ public class BundleEditor : ScriptableObject
         }
 
         WriteData(resPathDic);//写入配置表
-        BuildPipeline.BuildAssetBundles(ABOUTPUTPATH, BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+        if (!Directory.Exists(ABOUTPUTPATH)) Directory.CreateDirectory(ABOUTPUTPATH);
+        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(ABOUTPUTPATH, BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+        if(manifest == null)
+            Debug.LogError("打包失败");
+        else
+            Debug.Log("打包成功");
     }
 
     //写入配置表
