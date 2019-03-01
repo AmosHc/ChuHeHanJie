@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class GameStart : MonoSingleton<GameStart>
 {
-    private GameObject go = null;
-
     public RectTransform UIRoot;//UI节点
     public RectTransform WndRoot;//窗口节点
     public Camera UICamera;//UI相机

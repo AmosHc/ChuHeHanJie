@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 568027705
+CRC: 4284134078
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -9,23 +9,26 @@ AssetBundleManifest:
       Name: sound
       Dependencies: {}
     Info_2:
-      Name: attack
+      Name: ugui
       Dependencies: {}
     Info_3:
-      Name: testeffect1
+      Name: attack
       Dependencies: {}
     Info_4:
-      Name: gamestart
+      Name: testeffect1
       Dependencies: {}
     Info_5:
-      Name: loadpanel
+      Name: gamestart
       Dependencies: {}
     Info_6:
-      Name: menupanel
+      Name: loadpanel
       Dependencies: {}
     Info_7:
-      Name: testui1
+      Name: menupanel
       Dependencies: {}
     Info_8:
+      Name: testui1
+      Dependencies: {}
+    Info_9:
       Name: testui2
       Dependencies: {}

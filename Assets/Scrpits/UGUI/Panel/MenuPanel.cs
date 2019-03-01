@@ -8,5 +8,7 @@ public class MenuPanel : MonoBehaviour {
     public Button LoadButton;
     public Button ExitButton;
 
-    public AudioSource AudioSource;
+    public Image img1;
+    public Image img2;
+    public Image img3;
 }
