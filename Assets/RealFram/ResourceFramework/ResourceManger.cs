@@ -110,6 +110,7 @@ public class ResourceManger : Singleton<ResourceManger>
     protected ClassObjectPool<AsyncLoadResParam> m_AsyncLoadResParamPool = new ClassObjectPool<AsyncLoadResParam>(50);
     protected ClassObjectPool<AsyncCallBack> m_AsyncCallBackPool = new ClassObjectPool<AsyncCallBack>(100);
 
+    protected const float ASYNCWAITTIME = 0.2f;//编辑器模拟异步等待时间
     protected const int MAXCACHECOUNT = 500;//最大无用资源缓存上限，用来清理多余资源
     //异步加载最长等待时间
     private const long MAXLOADRESTIME = 200000;
@@ -578,7 +579,15 @@ public class ResourceManger : Singleton<ResourceManger>
     /// <summary>
     /// 异步加载资源（仅用于加载非实例化的资源，如音频，图片等）
     /// </summary>
-    public void AsyncLoadResource(string path, OnAsyncObjFinish dealFinish, LoadResPriority priority, object param1 = null,
+    /// <param name="path">路径</param>
+    /// <param name="dealFinish">回调函数</param>
+    /// <param name="priority">优先级</param>
+    /// <param name="isSprite">是否是图片</param>
+    /// <param name="param1">参数</param>
+    /// <param name="param2">参数</param>
+    /// <param name="param3">参数</param>
+    /// <param name="crc">路径crc</param>
+    public void AsyncLoadResource(string path, OnAsyncObjFinish dealFinish, LoadResPriority priority, bool isSprite = false, object param1 = null,
         object param2 = null, object param3 = null, uint crc = 0)
     {
         if (crc == 0) crc = Crc.GetCRC32(path);
@@ -596,6 +605,7 @@ public class ResourceManger : Singleton<ResourceManger>
             param.m_Crc = crc;
             param.m_Path = path;
             param.m_Priority = priority;
+            param.m_IsSprite = isSprite;
             m_LoadingAssetDic.Add(crc,param);
             m_LoadingAssetList[(int)priority].Add(param);
         }
@@ -652,6 +662,12 @@ public class ResourceManger : Singleton<ResourceManger>
             bool haveYiled = false;//是否已经return了
             for (int i = 0; i < (int)LoadResPriority.RES_NUM; i++)
             {
+                //优先级检测
+                if (m_LoadingAssetList[(int) LoadResPriority.RES_HIGH].Count > 0)
+                    i = (int)LoadResPriority.RES_HIGH;
+                else if(m_LoadingAssetList[(int)LoadResPriority.RES_MIDDLE].Count > 0)
+                    i = (int)LoadResPriority.RES_MIDDLE;
+                
                 List<AsyncLoadResParam> loadingList = m_LoadingAssetList[i];
                 if(loadingList.Count <= 0 )continue;
                 //取第一个
@@ -664,9 +680,12 @@ public class ResourceManger : Singleton<ResourceManger>
                 if (!m_LoadFromAssetBundle)
                 {
                     //编辑器加载
-                    obj = LoadAssetByEditor<Object>(loadingItem.m_Path);
+                    if (loadingItem.m_IsSprite)
+                        obj = LoadAssetByEditor<Sprite>(loadingItem.m_Path);
+                    else
+                        obj = LoadAssetByEditor<Object>(loadingItem.m_Path);
                     //模拟异步
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(ASYNCWAITTIME);
                     item = AssetBundleManger.Instance.FindResourceItem(loadingItem.m_Crc);
                     if (item == null)
                     {
@@ -701,7 +720,7 @@ public class ResourceManger : Singleton<ResourceManger>
                 //依次调用回调函数
                 for (int j = 0; j < callBackList.Count; j++)
                 {
-                    AsyncCallBack callBack = callBackList[i];
+                    AsyncCallBack callBack = callBackList[j];
 
                     if (callBack != null && callBack.m_DealFinish != null && callBack.m_ResObj != null)
                     {
