@@ -17,12 +17,12 @@ public class GameStart : MonoSingleton<GameStart>
         AssetBundleManger.Instance.LoadAssetBundleConfig();//初始化配置表
         ResourceManger.Instance.Init(this);
         ObjectManger.Instance.Init(transform.Find("RecyclePoolTrs"), transform.Find("SceenTrs"));
+        UIManager.Instance.Init(UIRoot, WndRoot, UICamera, EventSystem);//初始化UI框架
+        GameMapManger.Instance.Init(this);//初始化场景加载器
     }
     void Start()
     {
-        UIManager.Instance.Init(UIRoot, WndRoot, UICamera, EventSystem);
-        GameMapManger.Instance.Init(this);
-        RegistUI();//注册UI
+        RegistUI();//注册UI页面
 
         //测试资源跨场景加载
         //ObjectManger.Instance.InstantiateObject(ConStr.ATTACK);

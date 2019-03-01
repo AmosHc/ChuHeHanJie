@@ -68,7 +68,7 @@ public class UIManager : Singleton<UIManager>
         return null;
     }
     /// <summary>
-    /// 置顶指定窗口
+    /// 打开指定窗口
     /// </summary>
     /// <param name="wndName"></param>
     /// <param name="bTop"></param>
