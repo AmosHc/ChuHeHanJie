@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AssetBundleManger : Singleton<AssetBundleManger>
 {
-    private string m_AssetConfigPath = "Assets/AssetBundleConfig.bytes";
+    private string m_AssetConfigPath = Application.streamingAssetsPath + "/AssetBundle/assetbundleconfig";
     protected Dictionary<uint,ResourceItem> m_ResourceItemDic = new Dictionary<uint, ResourceItem>();//资源依赖关系表，根据crc找到对应资源块
     protected Dictionary<uint,AssetBundleItem> m_AssetBundleItemDic = new Dictionary<uint, AssetBundleItem>();//ab包字典集
 
@@ -18,13 +18,25 @@ public class AssetBundleManger : Singleton<AssetBundleManger>
     /// <returns></returns>
     public bool LoadAssetBundleConfig()
     {
-        TextAsset textAsset = null;
+        //        TextAsset textAsset = null;
+        //#if UNITY_EDITOR
+        //            textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(m_AssetConfigPath);
+        //#endif
+        //        if (textAsset == null)
+        //        {
+        //            Debug.LogError("assetbundleConfig不存在！"+ m_AssetConfigPath);
+        //            return false;
+        //        }
 #if UNITY_EDITOR
-            textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(m_AssetConfigPath);
+        if (!ResourceManger.Instance.m_LoadFromAssetBundle)
+            return false;
 #endif
+        m_ResourceItemDic.Clear();
+        AssetBundle abConfigBundle = AssetBundle.LoadFromFile(m_AssetConfigPath);
+        TextAsset textAsset = abConfigBundle.LoadAsset<TextAsset>("AssetBundleConfig");
         if (textAsset == null)
         {
-            Debug.LogError("assetbundleConfig不存在！");
+            Debug.LogError("assetbundleConfig不存在！" );
             return false;
         }
         MemoryStream stream = new MemoryStream(textAsset.bytes);
@@ -91,10 +103,10 @@ public class AssetBundleManger : Singleton<AssetBundleManger>
         AssetBundleItem item = null;
         if (!m_AssetBundleItemDic.TryGetValue(crc, out item))
         {
-            string path = Application.streamingAssetsPath + "/" + abName;
+            string path = Application.streamingAssetsPath + "/AssetBundle/" + abName;
             AssetBundle ab = null;
-            if (File.Exists(path))
-                ab = AssetBundle.LoadFromFile(path);
+            //if (File.Exists(path))//移动端不支持File访问
+            ab = AssetBundle.LoadFromFile(path);
             if (ab == null)
             {
                 Debug.LogError("ab包加载失败，请检查" + path);

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class BuildApp
 {
-    public const string m_AppName = "ChuHeHanJie";//应用名
+    public static string m_AppName = PlayerSettings.productName;//应用名
     public static string m_AndroidPath = Application.dataPath + "/../BuildTarget/Android/";//Android发布路径
     public static string m_IOSPath = Application.dataPath + "/../BuildTarget/IOS/";//IOS
     public static string m_WindowsPath = Application.dataPath + "/../BuildTarget/Windows/";//Windows

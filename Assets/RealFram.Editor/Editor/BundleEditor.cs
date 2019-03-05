@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 /// </summary>
 public class BundleEditor : ScriptableObject
 {
+    private static string ABBYTEPATH = "Assets/GameData/Data/ABData/AssetBundleConfig.bytes";
     private static string ABOUTPUTPATH = Application.dataPath+"/../AssetBundle/"+EditorUserBuildSettings.activeBuildTarget.ToString();
     private static string ABCONFIGPATH = "Assets/RealFram.Editor/Editor/ABConfig.asset";
     private static Dictionary<string, string> m_AllFileDir = new Dictionary<string, string>();//所有文件夹ab包路径
@@ -153,20 +154,28 @@ public class BundleEditor : ScriptableObject
             ab.Path = "";
         }
 
-        string bytesSavePath = Application.dataPath + "/AssetBundleConfig.bytes";
+        string bytesSavePath = "Assets/GameData/Data/ABData/AssetBundleConfig.bytes";
         if (File.Exists(bytesSavePath)) File.Delete(bytesSavePath);
         FileStream fileStream = new FileStream(bytesSavePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+        //清空二进制文件
+        fileStream.Seek(0, SeekOrigin.Begin);
+        fileStream.SetLength(0);
+        //写入
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(fileStream, config);
         fileStream.Close();
+        AssetDatabase.Refresh();
+        //设置ab包
+        SetAB("assetbundleconfig", ABBYTEPATH);
     }
 
     //写入xml
     static void WriteXml(AssetBundleConfig config)
     {
-        string xmlSavePath = Application.dataPath + "/AssetBundleConfig.xml";
+        string xmlSavePath = "Assets/AssetBundleConfig.xml";
         if (File.Exists(xmlSavePath)) File.Delete(xmlSavePath);
         FileStream fileStream = new FileStream(xmlSavePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+        
         StreamWriter sw = new StreamWriter(fileStream);
         XmlSerializer serializer = new XmlSerializer(config.GetType());
         serializer.Serialize(sw, config);

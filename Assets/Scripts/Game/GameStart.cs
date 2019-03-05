@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameStart : MonoSingleton<GameStart>
 {
@@ -13,6 +14,7 @@ public class GameStart : MonoSingleton<GameStart>
     protected override void Awake()
     {
         base.Awake();
+
         GameObject.DontDestroyOnLoad(gameObject);//切场景不销毁此控制器
         AssetBundleManger.Instance.LoadAssetBundleConfig();//初始化配置表
         ResourceManger.Instance.Init(this);
