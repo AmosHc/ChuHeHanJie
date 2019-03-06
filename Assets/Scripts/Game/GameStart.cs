@@ -25,17 +25,15 @@ public class GameStart : MonoSingleton<GameStart>
     void Start()
     {
         RegistUI();//注册UI页面
+        UIManager.Instance.PopUpWnd(ConStr.LOGINPANEL,true);
 
-        //测试资源跨场景加载
-        //ObjectManger.Instance.InstantiateObject(ConStr.ATTACK);
-
-        GameMapManger.Instance.LoadScene(ConStr.MENUSCENE);
+        //GameMapManger.Instance.LoadScene(ConStr.MENUSCENE);
     }
 
     void RegistUI()
     {
-        UIManager.Instance.Register<MenulUi>(ConStr.MENUPANEL);
-        UIManager.Instance.Register<LoadUi>(ConStr.LOADINGPANEL);
+        UIManager.Instance.Register<LoginWindow>(ConStr.LOGINPANEL);
+        UIManager.Instance.Register<loadWindow>(ConStr.LOADPANEL);
     }
 
     void Update()

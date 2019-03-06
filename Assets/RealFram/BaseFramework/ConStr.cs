@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ConStr {
     //界面名称
-    public const string LOADINGPANEL = "LoadPanel";
-    public const string MENUPANEL = "MenuPanel";
+    public const string LOGINPANEL = "LoginPlane";
+    public const string LOADPANEL = "LoadPanel";
     //场景名称
     public const string EMPTYSCENE = "Empty";
     public const string MENUSCENE = "Menu";

@@ -3,6 +3,7 @@
   <ABList Path="Assets/GameData/Prefabs/Attack.prefab" Crc="1330568117" ABName="attack" AssetName="Attack.prefab" />
   <ABList Path="Assets/GameData/Prefabs/GameStart.prefab" Crc="114936917" ABName="gamestart" AssetName="GameStart.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoadPanel.prefab" Crc="460640323" ABName="loadpanel" AssetName="LoadPanel.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoginPlane.prefab" Crc="103597582" ABName="loginplane" AssetName="LoginPlane.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="3283179713" ABName="menupanel" AssetName="MenuPanel.prefab" />
   <ABList Path="Assets/GameData/Shaders/Skybox.shader" Crc="1986987949" ABName="shader" AssetName="Skybox.shader" />
   <ABList Path="Assets/GameData/Shaders/Water.shader" Crc="1357101244" ABName="shader" AssetName="Water.shader" />
@@ -10,9 +11,4 @@
   <ABList Path="Assets/GameData/Sounds/menusound.mp3" Crc="2729331572" ABName="sound" AssetName="menusound.mp3" />
   <ABList Path="Assets/GameData/Sounds/senlin.mp3" Crc="3022988390" ABName="sound" AssetName="senlin.mp3" />
   <ABList Path="Assets/GameData/Prefabs/Effect/TestEffect1.prefab" Crc="129261198" ABName="testeffect1" AssetName="TestEffect1.prefab" />
-  <ABList Path="Assets/GameData/Prefabs/UGUI/TestUI1.prefab" Crc="2990899133" ABName="testui1" AssetName="TestUI1.prefab" />
-  <ABList Path="Assets/GameData/Prefabs/UGUI/TestUI2.prefab" Crc="1588009699" ABName="testui2" AssetName="TestUI2.prefab" />
-  <ABList Path="Assets/GameData/UGUI/icons_stats_deploy_time.png" Crc="2441125574" ABName="ugui" AssetName="icons_stats_deploy_time.png" />
-  <ABList Path="Assets/GameData/UGUI/icons_stats_dmg.png" Crc="2954929919" ABName="ugui" AssetName="icons_stats_dmg.png" />
-  <ABList Path="Assets/GameData/UGUI/icons_stats_dmg_area.png" Crc="1587772431" ABName="ugui" AssetName="icons_stats_dmg_area.png" />
 </AssetBundleConfig>

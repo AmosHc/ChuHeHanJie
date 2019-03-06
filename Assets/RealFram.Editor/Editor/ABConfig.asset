@@ -18,5 +18,3 @@ MonoBehaviour:
     Path: Assets/GameData/Shaders
   - ABName: sound
     Path: Assets/GameData/Sounds
-  - ABName: ugui
-    Path: Assets/GameData/UGUI

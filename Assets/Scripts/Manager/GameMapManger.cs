@@ -33,7 +33,7 @@ public class GameMapManger : Singleton<GameMapManger>
     {
         LoadingProgress = 0;
         m_Mono.StartCoroutine(LoadSceneAsync(name));
-        UIManager.Instance.PopUpWnd(ConStr.LOADINGPANEL, true , name);
+        UIManager.Instance.PopUpWnd(ConStr.LOADPANEL, true, name);
     }
     /// <summary>
     /// 场景设置
