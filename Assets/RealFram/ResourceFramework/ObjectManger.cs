@@ -112,8 +112,10 @@ public class ObjectManger : Singleton<ObjectManger>
             if (!System.Object.ReferenceEquals(obj, null))
             {
                 resObj.m_Already = false;
-                if(!System.Object.ReferenceEquals(resObj.m_OffineData,null))
+                if(resObj.m_OffineData != null)
                     resObj.m_OffineData.ResetProp();//还原
+                //if(!obj.activeSelf)
+                //    obj.SetActive(true);
 #if UNITY_EDITOR
                 //编辑器模式下为了方便查看，改个名，如果是实机模式下改名消耗gc，所以不改名。
                 if (obj.name.EndsWith("(Recycle)"))
@@ -197,7 +199,7 @@ public class ObjectManger : Singleton<ObjectManger>
             resObj.m_CloneObj.transform.SetParent(SceenTrs,true);
         }
 
-        resObj.m_OffineData.ResetProp();//还原
+        //resObj.m_OffineData.ResetProp();//还原
         long guid = resObj.m_CloneObj.GetInstanceID();
         if (!m_ResourceObjDic.ContainsKey(guid))
             m_ResourceObjDic.Add(guid, resObj);
@@ -276,7 +278,7 @@ public class ObjectManger : Singleton<ObjectManger>
         {
             resObj.m_CloneObj.transform.SetParent(SceenTrs,false);
         }
-        resObj.m_OffineData.ResetProp();//还原
+        //resObj.m_OffineData.ResetProp();//还原
         //调回调
         if (resObj.m_DealFinish != null)
         {
