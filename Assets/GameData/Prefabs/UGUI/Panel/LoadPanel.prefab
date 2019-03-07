@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 222239202901189286}
   - component: {fileID: 114474307922311800}
   - component: {fileID: 114617122397611318}
-  - component: {fileID: 114983448629143174}
+  - component: {fileID: 114154903260865322}
   m_Layer: 5
   m_Name: LoadPanel
   m_TagString: Untagged
@@ -192,6 +192,103 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114154903260865322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1945811247106400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c4d73e652a4849a0ca21d7b8e8409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Rigidbody: {fileID: 0}
+  m_Collider: {fileID: 0}
+  m_AllPoint:
+  - {fileID: 224059316794651484}
+  - {fileID: 224172335458789724}
+  - {fileID: 224355834338412922}
+  - {fileID: 224890146953862864}
+  - {fileID: 224222402369283366}
+  - {fileID: 224366629776180254}
+  - {fileID: 224638970176752456}
+  - {fileID: 224570857125884784}
+  m_AllPointChildCount: 0200000003000000000000000100000000000000010000000000000000000000
+  m_AllPointActive: 0101010101010101
+  m_Pos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.0000076294, y: 150, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -5, y: 0, z: 0}
+  - {x: -391.45, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -391.45, y: 0, z: 0}
+  - {x: -321, y: -383.8, z: 0}
+  m_Scale:
+  - {x: 1, y: 1, z: 1}
+  - {x: 2, y: 2, z: 2}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  m_Rot:
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  m_AnchorMax:
+  - {x: 1, y: 1}
+  - {x: 0.5, y: 0}
+  - {x: 1, y: 0.75}
+  - {x: 1, y: 0.75}
+  - {x: 0, y: 1}
+  - {x: 1, y: 1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0.5}
+  m_AnchorMin:
+  - {x: 0, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 1, y: 0.5}
+  m_Pivot:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_SizeDelta:
+  - {x: 0, y: 0}
+  - {x: 802.9, y: 20}
+  - {x: 0, y: 0}
+  - {x: -20, y: 0}
+  - {x: 10, y: 0}
+  - {x: -20, y: 0}
+  - {x: 20, y: 0}
+  - {x: 195.80005, y: 80.5}
+  m_AnchoredPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.0000076294, y: 150, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -5, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -321, y: -383.8, z: 0}
+  m_Particle: []
 --- !u!114 &114350948887312818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,103 +443,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 99%
---- !u!114 &114983448629143174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1945811247106400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d7c4d73e652a4849a0ca21d7b8e8409, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Rigidbody: {fileID: 0}
-  m_Collider: {fileID: 0}
-  m_AllPoint:
-  - {fileID: 224059316794651484}
-  - {fileID: 224172335458789724}
-  - {fileID: 224355834338412922}
-  - {fileID: 224890146953862864}
-  - {fileID: 224222402369283366}
-  - {fileID: 224366629776180254}
-  - {fileID: 224638970176752456}
-  - {fileID: 224570857125884784}
-  m_AllPointChildCount: 0200000003000000000000000100000000000000010000000000000000000000
-  m_AllPointActive: 0101010101010101
-  m_Pos:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0.0000076294, y: 150, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: -5, y: 0, z: 0}
-  - {x: -391.45, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: -391.45, y: 0, z: 0}
-  - {x: -321, y: -383.8, z: 0}
-  m_Scale:
-  - {x: 1, y: 1, z: 1}
-  - {x: 2, y: 2, z: 2}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  m_Rot:
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  - {x: 0, y: 0, z: 0, w: 1}
-  m_AnchorMax:
-  - {x: 1, y: 1}
-  - {x: 0.5, y: 0}
-  - {x: 1, y: 0.75}
-  - {x: 1, y: 0.75}
-  - {x: 0, y: 1}
-  - {x: 1, y: 1}
-  - {x: 0, y: 1}
-  - {x: 1, y: 0.5}
-  m_AnchorMin:
-  - {x: 0, y: 0}
-  - {x: 0.5, y: 0}
-  - {x: 0, y: 0.25}
-  - {x: 0, y: 0.25}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 1, y: 0.5}
-  m_Pivot:
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  m_SizeDelta:
-  - {x: 0, y: 0}
-  - {x: 802.9, y: 20}
-  - {x: 0, y: 0}
-  - {x: -20, y: 0}
-  - {x: 10, y: 0}
-  - {x: -20, y: 0}
-  - {x: 20, y: 0}
-  - {x: 195.80005, y: 80.5}
-  m_AnchoredPos:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0.0000076294, y: 150, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: -5, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: -321, y: -383.8, z: 0}
-  m_Particle: []
 --- !u!222 &222075004547649628
 CanvasRenderer:
   m_ObjectHideFlags: 1

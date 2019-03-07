@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224250407561673736}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WndRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 4438911816416400}
   - component: {fileID: 114168039910631474}
   - component: {fileID: 114657531363405056}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,8 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224154083506204018}
   - component: {fileID: 20458153064848922}
-  - component: {fileID: 81271554924143742}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +134,7 @@ GameObject:
   - component: {fileID: 223120663237047358}
   - component: {fileID: 114718599059918442}
   - component: {fileID: 114021520784295518}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UIRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +278,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 279
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -297,13 +296,6 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1216238591964874}
-  m_Enabled: 1
---- !u!81 &81271554924143742
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1432541418123316}
   m_Enabled: 1
 --- !u!82 &82271976512884296
 AudioSource:
@@ -480,6 +472,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ee9c7afa8ba604e9a81d3ffc68a929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIRoot: {fileID: 224200386239758746}
+  WndRoot: {fileID: 224250407561673736}
+  UICamera: {fileID: 20458153064848922}
+  EventSystem: {fileID: 114168039910631474}
 --- !u!223 &223120663237047358
 Canvas:
   m_ObjectHideFlags: 1
@@ -507,7 +503,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432541418123316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224200386239758746}

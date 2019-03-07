@@ -4,7 +4,12 @@
   <ABList Path="Assets/GameData/Prefabs/GameStart.prefab" Crc="114936917" ABName="gamestart" AssetName="GameStart.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoadPanel.prefab" Crc="460640323" ABName="loadpanel" AssetName="LoadPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoginPlane.prefab" Crc="103597582" ABName="loginplane" AssetName="LoginPlane.prefab" />
-  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="3283179713" ABName="menupanel" AssetName="MenuPanel.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="3283179713" ABName="menupanel" AssetName="MenuPanel.prefab">
+    <ABDependce>loginplane</ABDependce>
+  </ABList>
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/RegisterPanel.prefab" Crc="1531265789" ABName="registerpanel" AssetName="RegisterPanel.prefab">
+    <ABDependce>loginplane</ABDependce>
+  </ABList>
   <ABList Path="Assets/GameData/Shaders/Skybox.shader" Crc="1986987949" ABName="shader" AssetName="Skybox.shader" />
   <ABList Path="Assets/GameData/Shaders/Water.shader" Crc="1357101244" ABName="shader" AssetName="Water.shader" />
   <ABList Path="Assets/GameData/Shaders/Xray.shader" Crc="1043595403" ABName="shader" AssetName="Xray.shader" />

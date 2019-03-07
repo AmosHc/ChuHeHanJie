@@ -34,6 +34,8 @@ public class GameStart : MonoSingleton<GameStart>
     {
         UIManager.Instance.Register<LoginWindow>(ConStr.LOGINPANEL);
         UIManager.Instance.Register<loadWindow>(ConStr.LOADPANEL);
+        UIManager.Instance.Register<RegisterWindow>(ConStr.REGISTERPANEL);
+        UIManager.Instance.Register<MenuWindow>(ConStr.MENUPANEL);
     }
 
     void Update()

@@ -56,7 +56,7 @@ public class OffineDataEditor : ScriptableObject
             GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if(System.Object.ReferenceEquals(obj,null))
                 continue;
-            CreateOffineData(obj);
+            CreateUIData(obj);
         }
         Debug.Log("UI离线数据全部生成完毕！");
         EditorUtility.ClearProgressBar();

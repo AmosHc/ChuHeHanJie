@@ -22,6 +22,9 @@ public class LoginWindow : BaseWindow
     {
         Debug.Log("登录");
         Debug.Log("账号："+m_MainPanel.UserNameTxt.text+"密码："+m_MainPanel.PassWordTxt.text);
+        UIManager.Instance.PopUpWnd(ConStr.MENUPANEL, true);
+        UIManager.Instance.CloseWindow(ConStr.LOGINPANEL,true);
+
     }
     /// <summary>
     /// 注册点击事件
@@ -29,6 +32,8 @@ public class LoginWindow : BaseWindow
     private void OnClickRegisterBtn()
     {
         Debug.Log("注册");
+        UIManager.Instance.PopUpWnd(ConStr.REGISTERPANEL, true);
+        UIManager.Instance.CloseWindow(ConStr.LOGINPANEL);
     }
     /// <summary>
     /// 关闭按钮

@@ -13,7 +13,9 @@ public class UIOffineData : OffineData
     public Vector2[] m_SizeDelta;
     public Vector3[] m_AnchoredPos;
     public ParticleSystem[] m_Particle;
-
+    /// <summary>
+    /// 还原数据
+    /// </summary>
     public override void ResetProp()
     {
         int allPointCount = m_AllPoint.Length;
@@ -22,6 +24,16 @@ public class UIOffineData : OffineData
             RectTransform rescRectTransform = m_AllPoint[i] as RectTransform;
             if (rescRectTransform != null)
             {
+                if (m_AllPointActive[i])
+                {
+                    if (!rescRectTransform.gameObject.activeSelf)
+                        rescRectTransform.gameObject.SetActive(true);//如果是false设置为true，如果为false不改变，节约资源
+                }
+                else
+                {
+                    if (rescRectTransform.gameObject.activeSelf)
+                        rescRectTransform.gameObject.SetActive(false);
+                }
                 rescRectTransform.anchorMax = m_AnchorMax[i];
                 rescRectTransform.anchorMin = m_AnchorMin[i];
                 rescRectTransform.localPosition = m_Pos[i];

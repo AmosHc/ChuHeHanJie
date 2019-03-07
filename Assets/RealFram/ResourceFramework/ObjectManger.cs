@@ -197,7 +197,7 @@ public class ObjectManger : Singleton<ObjectManger>
             resObj.m_CloneObj.transform.SetParent(SceenTrs,true);
         }
 
-
+        resObj.m_OffineData.ResetProp();//还原
         long guid = resObj.m_CloneObj.GetInstanceID();
         if (!m_ResourceObjDic.ContainsKey(guid))
             m_ResourceObjDic.Add(guid, resObj);
@@ -276,6 +276,7 @@ public class ObjectManger : Singleton<ObjectManger>
         {
             resObj.m_CloneObj.transform.SetParent(SceenTrs,false);
         }
+        resObj.m_OffineData.ResetProp();//还原
         //调回调
         if (resObj.m_DealFinish != null)
         {
