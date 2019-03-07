@@ -17,7 +17,10 @@ public class Data
     {
         public RequestType RequestType;
 
-        public MessageDescriptor Descriptor => throw new NotImplementedException();
+        public MessageDescriptor Descriptor
+        {
+            get{ throw new NotImplementedException(); }
+        }
 
         public int CalculateSize()
         {
@@ -37,11 +40,14 @@ public class Data
 
     public class LogIn:IMessage
     {
-        public MessageDescriptor Descriptor => throw new NotImplementedException();
+
+        public MessageDescriptor Descriptor
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         public int CalculateSize()
         {
-
             return 0;
         }
 
