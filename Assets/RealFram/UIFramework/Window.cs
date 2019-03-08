@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Window {
@@ -167,16 +168,16 @@ public class Window {
     /// <summary>
     /// 播放按钮声音
     /// </summary>
-    public void ButtonPlaySound()
+    public virtual void ButtonPlaySound()
     {
-
+        
     }
 
     /// <summary>
     /// 播放toggle声音
     /// </summary>
     /// <param name="isOn"></param>
-    public void TogglePlaySound(bool isOn)
+    public virtual void TogglePlaySound(bool isOn)
     {
 
     }
