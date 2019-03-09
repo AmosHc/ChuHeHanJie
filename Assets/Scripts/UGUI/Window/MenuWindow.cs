@@ -8,6 +8,7 @@ public class MenuWindow : BaseWindow
     public override void Awake(params object[] paramList)
     {
         base.Awake(paramList);
+        Debug.Log("Awake");
         m_MainPanel = GameObject.GetComponent<MenuPanel>();
         AddButtonClickListener(m_MainPanel.PlayBtn, OnClickPlayBtn);
         AddButtonClickListener(m_MainPanel.SettingBtn, OnClickSettingBtn);
@@ -18,6 +19,7 @@ public class MenuWindow : BaseWindow
         AddButtonClickListener(m_MainPanel.InfoBtn, OnClickInfoBtn);
         AddButtonClickListener(m_MainPanel.ExitBtn, OnClickExitBtn);
     }
+
     /// <summary>
     /// 对战
     /// </summary>
@@ -58,20 +60,35 @@ public class MenuWindow : BaseWindow
     /// </summary>
     private void OnClickHelpBtn()
     {
-
+        UIManager.Instance.PopUpWnd(this, ConStr.HELPPANEL);
     }
     /// <summary>
     /// 信息
     /// </summary>
     private void OnClickInfoBtn()
     {
-
+        UIManager.Instance.PopUpWnd(this,ConStr.INFOPANEL);
     }
     /// <summary>
     /// 退出
     /// </summary>
     private void OnClickExitBtn()
     {
-        Application.Quit();
+        UIManager.Instance.PopUpWnd(this, ConStr.EXITPANEL);
+    }
+
+    public override void OnShow(params object[] paramList)
+    {
+        Debug.Log("OnShow");
+    }
+
+    public override void OnDisable()
+    {
+        Debug.Log("OnDisable");
+    }
+
+    public override void OnClose()
+    {
+        Debug.Log("OnClose");
     }
 }
