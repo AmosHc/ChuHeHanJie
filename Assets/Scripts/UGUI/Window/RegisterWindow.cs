@@ -28,7 +28,7 @@ public class RegisterWindow : BaseWindow
     /// </summary>
     private void OnClickCloseBtn()
     {
-        UIManager.Instance.PopUpWnd(ConStr.LOGINPANEL,true);
+        UIManager.Instance.OpenWnd(ConStr.LOGINPANEL,true);
         UIManager.Instance.CloseWindow(ConStr.REGISTERPANEL,true);
     }
 }

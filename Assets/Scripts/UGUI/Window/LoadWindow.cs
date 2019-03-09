@@ -30,7 +30,7 @@ public class loadWindow : Window
         switch (m_SceneName)
         {
             //case ConStr.MENUSCENE:
-            //    UIManager.Instance.PopUpWnd(ConStr.MENUPANEL,true);
+            //    UIManager.Instance.OpenWnd(ConStr.MENUPANEL,true);
             //    break;
             default:
                 return;
