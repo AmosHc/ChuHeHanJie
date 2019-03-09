@@ -26,6 +26,7 @@ public class MenuWindow : BaseWindow
     private void OnClickPlayBtn()
     {
         GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+        UIManager.Instance.CloseWindow(this);
     }
     /// <summary>
     /// 设置
