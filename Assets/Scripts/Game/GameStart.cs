@@ -26,7 +26,8 @@ public class GameStart : MonoSingleton<GameStart>
     {
         RegistUI();//注册UI页面
         UIManager.Instance.PopUpWnd(ConStr.LOGINPANEL,true);
-
+        GameMapManger.Instance.LoadScene("ARTest");
+        //transform.GetComponent<Camera>().enabled = false;
         //GameMapManger.Instance.LoadScene(ConStr.MENUSCENE);
     }
 
