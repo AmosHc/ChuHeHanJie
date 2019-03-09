@@ -27,14 +27,14 @@ public class loadWindow : Window
     public void LoadOtherScene()
     {
         //根据打开场景加载第一个界面
-        switch (m_SceneName)
-        {
-            //case ConStr.MENUSCENE:
-            //    UIManager.Instance.OpenWnd(ConStr.MENUPANEL,true);
-            //    break;
-            default:
-                return;
-        }
+        //switch (m_SceneName)
+        //{
+        //    //case ConStr.MENUSCENE:
+        //    //    UIManager.Instance.OpenWnd(ConStr.MENUPANEL,true);
+        //    //    break;
+        //    default:
+        //        return;
+        //}
         UIManager.Instance.CloseWindow(ConStr.LOADPANEL);
     }
 }

@@ -14,4 +14,5 @@ public class ConStr {
     //场景名称
     public const string EMPTYSCENE = "Empty";
     public const string MENUSCENE = "Menu";
+    public const string ARSCENE = "ARTest";
 }

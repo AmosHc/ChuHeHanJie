@@ -25,7 +25,7 @@ public class MenuWindow : BaseWindow
     /// </summary>
     private void OnClickPlayBtn()
     {
-
+        GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
     }
     /// <summary>
     /// 设置
