@@ -17,9 +17,10 @@ using Vuforia;
 /// </summary>
 public class StableTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
-
+    [Tooltip("战斗场景的Transform组件")]
     public Transform WarFieldTransform = null;
 
+    [Tooltip("战斗场景初始偏移量")]
     public float InitialOffset = 0.5f;
 
     private bool isFirstTracked = false;
@@ -87,7 +88,11 @@ public class StableTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 
     protected virtual void OnTrackingFound()
     {
-        if(!isFirstTracked)
+        //如果是第一次跟踪到Image，将做三件事
+        //1 设置战斗场景的初始偏移量
+        //2 播放音乐
+        //3 激活战斗场景游戏对象上的WarFieldController组件
+        if (!isFirstTracked)
         {
             WarFieldTransform.localPosition = - InitialOffset * new Vector3(0, 1f, 0);
             isFirstTracked = true;

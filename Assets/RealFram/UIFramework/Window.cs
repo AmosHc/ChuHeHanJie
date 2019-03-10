@@ -11,32 +11,33 @@ public class Window {
     public string Name { get; set; }//引用transform
     protected List<Button> m_AllButton = new List<Button>();//所有的button
     protected List<Toggle> m_Toggle = new List<Toggle>();//所有的toggle
-    
+    public Window ParentWnd { get; set; }//记录父窗口-弹窗用
+    public GameObject PopupBackground { get; set; }//记录弹窗遮罩-弹窗用
 
     //事件调用顺序
     //Awake -> OnShow -> OnUpdate -> OnDisAble -> OnClose
 
-    public virtual void Awake(params object[] paramList)
+    public virtual void Awake(params object[] paramList)//初始化
     {
 
     }
 
-    public virtual void OnShow(params object[] paramList)
+    public virtual void OnShow(params object[] paramList)//界面显示
     {
 
     }
 
-    public virtual void OnUpdate()
+    public virtual void OnUpdate()//界面更新
     {
 
     }
 
-    public virtual void OnDisable()
+    public virtual void OnDisable()//界面禁用(比如弹窗时)
     {
 
     }
 
-    public virtual void OnClose()
+    public virtual void OnClose()//界面关闭
     {
         RemoveAllButtonListener();
         RemoveAllToggleListener();

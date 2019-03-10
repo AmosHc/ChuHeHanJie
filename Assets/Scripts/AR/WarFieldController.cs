@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarFieldController : MonoBehaviour
+
+/// <summary>
+/// 战斗场景的基本控制
+/// </summary>
+public class WarFieldController : MonoSingleton<WarFieldController>
 {
+    [Tooltip("为了突出战斗场景的背景")]
     public GameObject BGRFX = null;
 
+    [Tooltip("战斗场景上升速度")]
     public float RiseSpeed = 1f;
 
+    [Tooltip("战斗场景最大旋转角度")]
     public float MaxRotateAngle = 180f;
+
 	
 	// Update is called once per frame
 	void Update ()
