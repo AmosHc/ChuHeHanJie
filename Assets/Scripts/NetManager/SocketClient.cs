@@ -2,14 +2,16 @@
 using System.Net;
 using System.Net.Sockets;
 using System;
-using Google.Protobuf;
-using Google.Protobuf.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using ProtoBuf;
 
 public class SocketClient
 {
-    private byte[] buffer = new byte[1024];
+    static byte[] Read_Buffer = new byte[1024];
+    static byte[] Write_Buffer = new byte[1024];
+
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
 
@@ -32,12 +34,10 @@ public class SocketClient
     /// </summary>
     /// <typeparam name="T">消息类型</typeparam>
     /// <param name="data">消息内容</param>
-    public void SendAsyn<T>(T data) where T : IMessage
+    public void SendAsyn<T>(T data)
     {
-        CodedOutputStream cos = new CodedOutputStream(buffer);
-        data.WriteTo(cos);
-        int len = GetBytesLenth(buffer);
-        m_Socket.BeginSend(buffer, 0, len, SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
+        Write_Buffer = ObjectToBytes(data);
+        m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
     }
 
     /// <summary>
@@ -50,15 +50,9 @@ public class SocketClient
             return null;
         byte[] bytes = MsgQueue.Dequeue();
 
-        //对消息进行解析
-        Data.GetRequestType getRequestType = new Data.GetRequestType();
-        getRequestType.MergeFrom(bytes);
-        switch (getRequestType.RequestType)
-        {
-            case Data.RequestType.LogIn:Data.LogIn t = new Data.LogIn();t.MergeFrom(bytes);return t;
-        }
-        Debug.LogWarning("Error:" + getRequestType.RequestType);
-        return null;
+        Login m = new Login();
+        m = BytesToObject<Login>(bytes, 0, GetBytesLenth(bytes));
+        return m;
     }
 
     /// <summary>
@@ -67,16 +61,15 @@ public class SocketClient
     void OnInit()
     {
         int port = 8888;
-        string host = "39.105.149.213";
-        //            string host = "127.0.0.1";
-
+//        string host = "39.105.149.213";
+                    string host = "127.0.0.1";
         IPAddress ip = IPAddress.Parse(host);
         IPEndPoint ipe = new IPEndPoint(ip, port);
         m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         m_Socket.Connect(ipe);
 
-        m_Socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_Socket);
+        m_Socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_Socket);
     }
 
     /// <summary>
@@ -89,9 +82,12 @@ public class SocketClient
         int len = m_socket.EndReceive(ar);
         if (len > 0)
         {
-            MsgQueue.Enqueue(buffer);
-            Debug.Log("Receive Message From Server");
-            m_socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_socket);
+            byte[] msgcell = new byte[len];
+            for (int i = 0; i < len; i++)
+                msgcell[i] = Read_Buffer[i];
+            MsgQueue.Enqueue(msgcell);
+            Debug.Log("收到服务器消息");
+            m_socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_socket);
         }
     }
 
@@ -122,5 +118,28 @@ public class SocketClient
                 break;
         }
         return i;
+    }
+
+
+    public static byte[] ObjectToBytes<T>(T instance)
+    {
+        MemoryStream memoryStream = new MemoryStream();
+        Serializer.Serialize(memoryStream, instance);
+        byte[] array = new byte[memoryStream.Length];
+        memoryStream.Position = 0L;
+        memoryStream.Read(array, 0, array.Length);
+        memoryStream.Dispose();
+        return array;
+    }
+
+    public static T BytesToObject<T>(byte[] bytesData, int offset, int length)
+    {
+
+        MemoryStream memoryStream = new MemoryStream();
+        memoryStream.Write(bytesData, 0, length);
+        memoryStream.Position = 0L;
+        T result = Serializer.Deserialize<T>(memoryStream);
+        memoryStream.Dispose();
+        return result;
     }
 }
