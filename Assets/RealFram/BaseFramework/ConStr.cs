@@ -11,6 +11,8 @@ public class ConStr {
     public const string INFOPANEL = "InfoPanel";
     public const string HELPPANEL = "HelpPanel";
     public const string EXITPANEL = "ExitPanel";
+    public const string SETTINGPANEL = "SettingPanel";
+    public const string ALERTPANEL = "AlertPanel";
     //场景名称
     public const string EMPTYSCENE = "Empty";
     public const string MENUSCENE = "Menu";

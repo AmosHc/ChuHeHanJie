@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
 
-public class SocketClient
+public class SocketClient:Singleton<SocketClient>
 {
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
@@ -16,18 +16,19 @@ public class SocketClient
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
 
     private static SocketClient m_instance = null;
-    public static SocketClient Instance
-    {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = new SocketClient();
-                m_instance.OnInit();
-            }
-            return m_instance;
-        }
-    }
+    //public static SocketClient Instance
+    //{
+    //    get
+    //    {
+    //        if (m_instance == null)
+    //        {
+    //            m_instance = new SocketClient();
+    //            m_instance.OnInit();
+    //        }
+    //        return m_instance;
+    //    }
+    //}
+
 
     /// <summary>
     /// 向服务发送消息
