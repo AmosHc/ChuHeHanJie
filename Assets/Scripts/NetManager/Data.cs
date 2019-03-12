@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ProtoBuf;
 
 [ProtoContract]
-public class Login
+public class LOG_IN
 {
     [ProtoMember(1)]
     public string id { get; set; }
@@ -14,5 +14,13 @@ public class Login
     [ProtoMember(2)]
     public string password { get; set; }
 
-    public Login() { }
+    public LOG_IN() {
+    }
+}
+
+enum _RequestType
+{
+    SIGN_IN = 101,
+    LOG_IN = 102,
+    OK = 200
 }
