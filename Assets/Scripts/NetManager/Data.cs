@@ -9,12 +9,28 @@ using ProtoBuf;
 public class LOG_IN
 {
     [ProtoMember(1)]
-    public string id { get; set; }
+    public string Id { get; set; }
 
     [ProtoMember(2)]
-    public string password { get; set; }
+    public string Password { get; set; }
 
     public LOG_IN() {
+    }
+}
+
+[ProtoContract]
+public class SIGN_IN
+{
+    [ProtoMember(1)]
+    public string Id { get; set; }
+
+    [ProtoMember(2)]
+    public string Password { get; set; }
+
+    [ProtoMember(3)]
+    public string name { get; set; }
+
+    public SIGN_IN(){
     }
 }
 
@@ -22,5 +38,6 @@ enum _RequestType
 {
     SIGN_IN = 101,
     LOG_IN = 102,
-    OK = 200
+    OK = 200,
+    FAIL = 201
 }
