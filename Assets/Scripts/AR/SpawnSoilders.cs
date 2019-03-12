@@ -2,40 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Soilder
-{
-    public GameObject SoilderPrefab;
-
-    public int SoilderCount;
-}
 
 /// <summary>
 /// 自动生成小兵
 /// </summary>
 public class SpawnSoilders : MonoBehaviour
 {
-    [Tooltip("士兵预设体")]
-    public Soilder[] SoilderPrefabs;
-
     /// <summary>
-    /// 士兵存储字典
+    /// 士兵存储
     /// </summary>
-    private Dictionary<GameObject,int> SoildersDictionary = null;
+    private Dictionary<string,int> SoildersDictionary = new Dictionary<string, int>();
 
 
     private void Start()
     {
-        //foreach(Soilder s in SoilderPrefabs)
-        //{
-        //    SoildersDictionary.Add(s.SoilderPrefab, s.SoilderCount);
-        //}
-
-        //StartSpawnSoilders();
+        SoildersDictionary.Add("Assets/GameData/Prefabs/Attack.prefab", 1);
+        //ObjectManger.Instance.InstantiateObject("Assets/GameData/Prefabs/Attack.prefab");
+        StartSpawnSoilders();
     }
 
     public void StartSpawnSoilders()
     {
-        GameObject go = ObjectManger.Instance.InstantiateObject("Assets/GameData/Prefabs/Attack.prefab");
+        foreach(KeyValuePair<string, int> pair in SoildersDictionary)
+        {
+            int count = pair.Value;
+            for(int i=0;i<count;i++)
+            {
+                GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
+            }
+        }
     }
 }

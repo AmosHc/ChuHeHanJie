@@ -94,9 +94,9 @@ public class StableTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
         //3 激活战斗场景游戏对象上的WarFieldController组件
         if (!isFirstTracked)
         {
-            WarFieldTransform.localPosition = - InitialOffset * new Vector3(0, 1f, 0);
+            WarFieldTransform.localPosition = -InitialOffset * new Vector3(0, 1f, 0);
             isFirstTracked = true;
-            if(!audioSource.isPlaying)
+            if (!audioSource.isPlaying)
             {
                 audioSource.Play();
             }
