@@ -38,6 +38,8 @@ public class GameStart : MonoSingleton<GameStart>
         UIManager.Instance.Register<InfoWindow>(ConStr.INFOPANEL);
         UIManager.Instance.Register<HelpWindow>(ConStr.HELPPANEL);
         UIManager.Instance.Register<ExitWindow>(ConStr.EXITPANEL);
+        UIManager.Instance.Register<SettingWindow>(ConStr.SETTINGPANEL);
+        UIManager.Instance.Register<AlertWindow>(ConStr.ALERTPANEL);
     }
 
     void Update()

@@ -8,7 +8,7 @@ using System.IO;
 using ProtoBuf;
 using System.Text;
 
-public class SocketClient
+public class SocketClient:Singleton<SocketClient>
 {
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
@@ -18,6 +18,7 @@ public class SocketClient
     public bool IsConnected = false;
 
     private static SocketClient m_instance = null;
+
     public static SocketClient Instance
     {
         get

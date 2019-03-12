@@ -54,6 +54,7 @@ public class LoginWindow : BaseWindow
     /// </summary>
     private void OnClickCloseBtn()
     {
+        Toast("11", "22");
         Debug.Log("点击关闭按钮");
         Application.Quit();
     }

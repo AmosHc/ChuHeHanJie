@@ -33,7 +33,7 @@ public class MenuWindow : BaseWindow
     /// </summary>
     private void OnClickSettingBtn()
     {
-
+        UIManager.Instance.PopUpWnd(this, ConStr.SETTINGPANEL);
     }
     /// <summary>
     /// 布阵模块
