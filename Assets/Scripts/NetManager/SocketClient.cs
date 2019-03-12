@@ -14,8 +14,8 @@ public class SocketClient
     static byte[] Write_Buffer = new byte[1024];
 
     private Socket m_Socket = null;
-    public bool IsConnected = false;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
+    public bool IsConnected = false;
 
     private static SocketClient m_instance = null;
     public static SocketClient Instance
@@ -25,7 +25,6 @@ public class SocketClient
             if (m_instance == null)
             {
                 m_instance = new SocketClient();
-                m_instance.OnInit();
             }
             return m_instance;
         }
@@ -60,8 +59,9 @@ public class SocketClient
     /// <summary>
     /// 初始化工作，包括Socket的初始化、连接服务器以及开启消息异步接受
     /// </summary>
-    void OnInit()
+    public void Connect()
     {
+        IsConnected = false;
         int port = 8888;
         string host = "39.105.149.213";
         //                   string host = "127.0.0.1";
@@ -69,16 +69,15 @@ public class SocketClient
         IPEndPoint ipe = new IPEndPoint(ip, port);
         m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        m_Socket.BeginConnect(ipe, Connect, m_Socket);
+        m_Socket.BeginConnect(ipe, new AsyncCallback(EndConnect), null);
+    }
+    void EndConnect(IAsyncResult ar)
+    {
+        m_Socket.EndConnect(ar);
+        IsConnected = true;
         m_Socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_Socket);
     }
 
-    void Connect(IAsyncResult ar)
-    {
-        Socket m_socket = ar as Socket;
-        m_socket.EndConnect(ar);
-        IsConnected = m_socket.Connected;
-    }
 
     /// <summary>
     /// 异步接收消息的函数回调
