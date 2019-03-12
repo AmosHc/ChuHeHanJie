@@ -1,72 +1,18 @@
-﻿using Google.Protobuf;
-using Google.Protobuf.Reflection;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ProtoBuf;
 
-public class Data
+[ProtoContract]
+public class Login
 {
-    public enum RequestType
-    {
-        LogIn,
-        Register
-    }
+    [ProtoMember(1)]
+    public string id { get; set; }
 
-    public class GetRequestType:IMessage
-    {
-        public RequestType RequestType;
+    [ProtoMember(2)]
+    public string password { get; set; }
 
-        public MessageDescriptor Descriptor
-        {
-            get{ throw new NotImplementedException(); }
-        }
-
-        public int CalculateSize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MergeFrom(CodedInputStream input)
-        {
-            RequestType = (RequestType)input.ReadEnum();
-        }
-
-        public void WriteTo(CodedOutputStream output)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class LogIn:IMessage
-    {
-
-        public MessageDescriptor Descriptor
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public int CalculateSize()
-        {
-            return 0;
-        }
-
-        public void MergeFrom(CodedInputStream input)
-        {
-            id = input.ReadString();
-            password = input.ReadString();
-        }
-
-        public void WriteTo(CodedOutputStream output)
-        {
-            output.WriteString(id);
-            output.WriteString(password);
-        }
-
-        public RequestType RequestType;
-
-        public string id;
-
-        public string password;
-    }
+    public Login() { }
 }
