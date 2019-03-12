@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
+using System.Text;
 
 public class SocketClient:Singleton<SocketClient>
 {
@@ -13,6 +14,7 @@ public class SocketClient:Singleton<SocketClient>
     static byte[] Write_Buffer = new byte[1024];
 
     private Socket m_Socket = null;
+    public bool IsConnected = false;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
 
     private static SocketClient m_instance = null;
@@ -38,6 +40,7 @@ public class SocketClient:Singleton<SocketClient>
     public void SendAsyn<T>(T data)
     {
         Write_Buffer = ObjectToBytes(data);
+
         m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
     }
 
@@ -50,10 +53,9 @@ public class SocketClient:Singleton<SocketClient>
         if (MsgQueue.Count == 0)
             return null;
         byte[] bytes = MsgQueue.Dequeue();
-
-        Login m = new Login();
-        m = BytesToObject<Login>(bytes, 0, GetBytesLenth(bytes));
-        return m;
+        if (bytes[0] == 200)
+            Debug.Log("OK!");
+        return BytesToObject(bytes, 0, GetBytesLenth(bytes));
     }
 
     /// <summary>
@@ -62,15 +64,23 @@ public class SocketClient:Singleton<SocketClient>
     void OnInit()
     {
         int port = 8888;
-//        string host = "39.105.149.213";
-                    string host = "127.0.0.1";
+        string host = "39.105.149.213";
+        //                   string host = "127.0.0.1";
         IPAddress ip = IPAddress.Parse(host);
         IPEndPoint ipe = new IPEndPoint(ip, port);
         m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        m_Socket.Connect(ipe);
-
+        m_Socket.BeginConnect(ipe, Connect, m_Socket);
         m_Socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_Socket);
+    }
+
+    void Connect(IAsyncResult ar)
+    {
+        Socket m_socket = ar as Socket;
+        m_socket.EndConnect(ar);
+        IsConnected = m_socket.Connected;
+        if(!IsConnected)
+            m_instance = null;
     }
 
     /// <summary>
@@ -124,23 +134,33 @@ public class SocketClient:Singleton<SocketClient>
 
     public static byte[] ObjectToBytes<T>(T instance)
     {
+        _RequestType _RequestType = (_RequestType)Enum.Parse(typeof(_RequestType), instance.ToString());
+        byte _type = (byte)_RequestType;
         MemoryStream memoryStream = new MemoryStream();
         Serializer.Serialize(memoryStream, instance);
-        byte[] array = new byte[memoryStream.Length];
+        byte[] array = new byte[memoryStream.Length + 1];
+        array[0] = _type;
         memoryStream.Position = 0L;
-        memoryStream.Read(array, 0, array.Length);
+        memoryStream.Read(array, 1, array.Length-1);
         memoryStream.Dispose();
         return array;
     }
 
-    public static T BytesToObject<T>(byte[] bytesData, int offset, int length)
+    public static object BytesToObject(byte[] bytesData, int offset, int length)
     {
-
+        if (length <= 1)
+            return null;
         MemoryStream memoryStream = new MemoryStream();
-        memoryStream.Write(bytesData, 0, length);
+        memoryStream.Write(bytesData, 1, length);
         memoryStream.Position = 0L;
-        T result = Serializer.Deserialize<T>(memoryStream);
+        _RequestType _RequestType = (_RequestType)bytesData[0];
+        object r;
+        switch (_RequestType)
+        {
+            case _RequestType.LOG_IN:r = new LOG_IN();r = Serializer.Deserialize<LOG_IN>(memoryStream);break;
+            default: r = null;break;
+        }
         memoryStream.Dispose();
-        return result;
+        return r;
     }
 }

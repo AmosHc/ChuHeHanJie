@@ -10,9 +10,17 @@ public class LoginWindow : BaseWindow
     {
         base.Awake(paramList);
         m_MainPanel = GameObject.GetComponent<LoginPanel>();
+        AddButtonClickListener(m_MainPanel.CloseBtn, OnClickCloseBtn);//注册监听
+        m_MainPanel.StartCoroutine(WaitForConnect());
+    }
+
+    IEnumerator WaitForConnect()
+    {
+        Debug.Log("正在连接服务器...");
+        yield return new WaitUntil(() => SocketClient.Instance.IsConnected);
         AddButtonClickListener(m_MainPanel.LoginBtn, OnClickLoginBtn);//登录监听
         AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);//注册监听
-        AddButtonClickListener(m_MainPanel.CloseBtn, OnClickCloseBtn);//注册监听
+        Debug.Log("成功连接到服务器！");
     }
 
     /// <summary>
@@ -22,6 +30,10 @@ public class LoginWindow : BaseWindow
     {
         Debug.Log("登录");
         Debug.Log("账号："+m_MainPanel.UserNameTxt.text+"密码："+m_MainPanel.PassWordTxt.text);
+        LOG_IN login = new LOG_IN();
+        login.Id = m_MainPanel.UserNameTxt.text;
+        login.Password = m_MainPanel.PassWordTxt.text;
+        SocketClient.Instance.SendAsyn(login);
         UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
         UIManager.Instance.CloseWindow(ConStr.LOGINPANEL,true);
 
