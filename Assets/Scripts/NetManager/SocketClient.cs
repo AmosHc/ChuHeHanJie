@@ -78,6 +78,8 @@ public class SocketClient
         Socket m_socket = ar as Socket;
         m_socket.EndConnect(ar);
         IsConnected = m_socket.Connected;
+        if(!IsConnected)
+            m_instance = null;
     }
 
     /// <summary>
