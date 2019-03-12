@@ -14,6 +14,7 @@ public class SocketClient
     static byte[] Write_Buffer = new byte[1024];
 
     private Socket m_Socket = null;
+    public bool IsConnected = false;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
 
     private static SocketClient m_instance = null;
@@ -63,14 +64,20 @@ public class SocketClient
     {
         int port = 8888;
         string host = "39.105.149.213";
- //                   string host = "127.0.0.1";
+        //                   string host = "127.0.0.1";
         IPAddress ip = IPAddress.Parse(host);
         IPEndPoint ipe = new IPEndPoint(ip, port);
         m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        m_Socket.Connect(ipe);
-
+        m_Socket.BeginConnect(ipe, Connect, m_Socket);
         m_Socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_Socket);
+    }
+
+    void Connect(IAsyncResult ar)
+    {
+        Socket m_socket = ar as Socket;
+        m_socket.EndConnect(ar);
+        IsConnected = m_socket.Connected;
     }
 
     /// <summary>
