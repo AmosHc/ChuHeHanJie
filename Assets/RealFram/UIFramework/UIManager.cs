@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// 消息事件在这里添加
@@ -74,7 +75,7 @@ public class UIManager : Singleton<UIManager>
     /// <param name="bTop"></param>
     /// <param name="paramList"></param>
     /// <returns></returns>
-    public Window PopUpWnd(string wndName,bool bTop, params object[] paramList)
+    public Window OpenWnd(string wndName,bool bTop, params object[] paramList)
     {
         Window wnd = FindWndByName<Window>(wndName);
         if (wnd == null)
@@ -122,6 +123,71 @@ public class UIManager : Singleton<UIManager>
         return wnd;
     }
     /// <summary>
+    /// 在指定页面打开弹窗，弹窗禁止页面后部点击事件
+    /// </summary>
+    /// <param name="wnd">当前窗口</param>
+    /// <param name="popupsName">弹窗名</param>
+    /// <param name="paramList">参数列表</param>
+    /// <returns></returns>
+    public void PopUpWnd(Window wnd,string popupsName, params object[] paramList)
+    {
+        if (wnd == null)
+        {
+            Debug.LogError("未指定弹窗父页面");
+            return;
+        }
+
+        wnd.OnDisable();//界面禁用
+
+        Color backgroundColor = new Color(10.0f / 255.0f, 10.0f / 255.0f, 10.0f / 255.0f, 0.6f);//弹窗遮罩颜色
+
+        Window popups = FindWndByName<Window>(popupsName);
+        if (popups == null)
+        {
+            Type type = null;
+            if (m_RegisterDic.TryGetValue(popupsName, out type) && type != null)
+            {
+                popups = System.Activator.CreateInstance(type) as Window;
+            }
+            else
+            {
+                Debug.Log("找不到对应的弹窗脚本，弹窗名为：" + popupsName);
+            }
+            //拼接字符串耗gc，换种方式
+            StringBuilder sb = new StringBuilder();
+            if (popupsName.EndsWith(".prefab"))
+                sb.Append(UIPREFABPATH).Append(popupsName);
+            else
+                sb.Append(UIPREFABPATH).Append(popupsName).Append(".prefab");
+            GameObject wndObj = ObjectManger.Instance.InstantiateObject(sb.ToString(), false, false);
+            if (wndObj == null)
+            {
+                Debug.Log("弹窗Prefab创建失败" + popupsName);
+            }
+            if (!m_WindowDic.ContainsKey(popupsName))
+                m_WindowDic.Add(popupsName, popups);
+            //初始化obj
+            popups.GameObject = wndObj;
+            popups.Transform = wndObj.transform;
+            popups.Name = popupsName;
+
+            popups.Awake(paramList);
+            wndObj.transform.SetParent(m_WndRoot, false);
+            wndObj.transform.SetAsLastSibling();
+
+            popups.PopupBackground = AddBackground(wndObj, backgroundColor);//添加弹窗遮罩
+            popups.ParentWnd = wnd;
+            popups.OnShow(paramList);
+        }
+        else
+        {
+            popups.PopupBackground = AddBackground(popups.GameObject, backgroundColor);//添加弹窗遮罩
+            popups.ParentWnd = wnd;
+            ShowWindow(popups, true, paramList);
+        }
+    }
+
+    /// <summary>
     /// 关闭指定窗口
     /// </summary>
     /// <param name="wndName">窗口名</param>
@@ -144,6 +210,14 @@ public class UIManager : Singleton<UIManager>
             wnd.OnClose();
             if (m_WindowDic.ContainsKey(wnd.Name))
                 m_WindowDic.Remove(wnd.Name);
+            if (wnd.PopupBackground != null)//是弹窗
+            {
+                wnd.ParentWnd.OnShow();
+                wnd.ParentWnd.Transform.SetAsLastSibling();
+                GameObject.Destroy(wnd.PopupBackground);
+                wnd.PopupBackground = null;
+                wnd.ParentWnd = null;
+            }
             if (destory)
             {
                 ObjectManger.Instance.ReleaseObject(wnd.GameObject,0,true);
@@ -171,6 +245,38 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
+    /// 添加弹窗遮罩
+    /// </summary>
+    /// <param name="wnd">弹窗</param>
+    /// <param name="backgroundColor"></param>
+    /// <param name="m_background"></param>
+    private GameObject AddBackground(GameObject wnd, Color backgroundColor)
+    {
+        GameObject background; //弹窗遮罩
+        var bgTex = new Texture2D(1, 1);
+        bgTex.SetPixel(0, 0, backgroundColor);
+        bgTex.Apply();
+
+        background = new GameObject("PopupBackground");
+        var image = background.AddComponent<Image>();
+        var rect = new Rect(0, 0, bgTex.width, bgTex.height);
+        var sprite = Sprite.Create(bgTex, rect, new Vector2(0.5f, 0.5f), 1);
+        image.material.mainTexture = bgTex;
+        image.sprite = sprite;
+        var newColor = image.color;
+        image.color = newColor;
+        image.canvasRenderer.SetAlpha(0.0f);
+        image.CrossFadeAlpha(1.0f, 0.4f, false);
+
+        //var canvas = GameObject.Find("Canvas");
+        background.transform.localScale = new Vector3(1, 1, 1);
+        background.GetComponent<RectTransform>().sizeDelta = m_UIRoot.GetComponent<RectTransform>().sizeDelta;
+        background.transform.SetParent(m_WndRoot.transform, false);
+        background.transform.SetSiblingIndex(wnd.transform.GetSiblingIndex());
+        return background;
+    }
+
+    /// <summary>
     /// 切换到唯一窗口
     /// </summary>
     /// <param name="wndName"></param>
@@ -179,7 +285,7 @@ public class UIManager : Singleton<UIManager>
     public void SwitchStateByName(string wndName, bool bTop = true, params object[] paramList)
     {
         CloseAllWindow();//关闭所有窗口
-        PopUpWnd(wndName, bTop, paramList);//打开窗口
+        OpenWnd(wndName, bTop, paramList);//打开窗口
     }
     /// <summary>
     /// 隐藏窗口
