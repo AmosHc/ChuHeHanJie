@@ -191,7 +191,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224836284098292264}
   - component: {fileID: 114444233257597752}
-  - component: {fileID: 114633112480126032}
   m_Layer: 5
   m_Name: SoundSlider
   m_TagString: Untagged
@@ -445,7 +444,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224536784232352170}
   - component: {fileID: 114932461063708360}
-  - component: {fileID: 114636177860274134}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -667,6 +665,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224052512610004306}
   - component: {fileID: 95727911165854144}
+  - component: {fileID: 114544386120655668}
+  - component: {fileID: 114545675587818260}
   m_Layer: 5
   m_Name: SettingPanel
   m_TagString: Untagged
@@ -1147,17 +1147,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: Close
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: Ricimi.AnimatedButton+ButtonClickedEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114025250983677706
@@ -1426,11 +1415,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f47410f368bf40f4b4be4929906c9c9, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: 96beb9654e127084280f6a29b59829ab, type: 3}
+    m_FontSize: 42
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -1438,7 +1427,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Music
+  m_Text: "\u80CC\u666F\u97F3\u4E50"
 --- !u!114 &114228785191067264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1459,11 +1448,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f47410f368bf40f4b4be4929906c9c9, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: 96beb9654e127084280f6a29b59829ab, type: 3}
+    m_FontSize: 42
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -1471,7 +1460,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Sound
+  m_Text: "\u97F3\u6548"
 --- !u!114 &114239645253286932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1546,19 +1535,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f47410f368bf40f4b4be4929906c9c9, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: 96beb9654e127084280f6a29b59829ab, type: 3}
+    m_FontSize: 42
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 50
     m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
-    m_LineSpacing: 1.3
-  m_Text: Push Notifications
+    m_LineSpacing: 1
+  m_Text: "\u662F\u5426\u5F00\u542F\u6D88\u606F\u63A8\u9001"
 --- !u!114 &114297259075018250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1606,11 +1595,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f47410f368bf40f4b4be4929906c9c9, type: 3}
+    m_Font: {fileID: 12800000, guid: 96beb9654e127084280f6a29b59829ab, type: 3}
     m_FontSize: 70
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 6
     m_MaxSize: 70
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1618,7 +1607,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Save
+  m_Text: "\u4FDD\u5B58"
 --- !u!114 &114331540939325462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1717,51 +1706,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114437390944234104}
-        m_MethodName: SwapSprite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: SwapColor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114633112480126032}
-        m_MethodName: SwitchSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114435122863167698}
-        m_MethodName: SwapSprite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114457546831048926
@@ -1838,9 +1783,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f47410f368bf40f4b4be4929906c9c9, type: 3}
+    m_Font: {fileID: 12800000, guid: 96beb9654e127084280f6a29b59829ab, type: 3}
     m_FontSize: 73
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 73
@@ -1850,7 +1795,435 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Settings
+  m_Text: "\u8BBE\u7F6E"
+--- !u!114 &114544386120655668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875208136957304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b0aba15acc7524eac60e959c2cadb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CloseBtn: {fileID: 114699685849875386}
+  MusicSlider: {fileID: 114932461063708360}
+  SoundSlider: {fileID: 114444233257597752}
+  NotificationToggle: {fileID: 114962653392256042}
+  SaveBtn: {fileID: 114022314998578856}
+--- !u!114 &114545675587818260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875208136957304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c4d73e652a4849a0ca21d7b8e8409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Rigidbody: {fileID: 0}
+  m_Collider: {fileID: 0}
+  m_AllPoint:
+  - {fileID: 224052512610004306}
+  - {fileID: 224748051450232120}
+  - {fileID: 224754077241068300}
+  - {fileID: 224764220247269046}
+  - {fileID: 224930286438411398}
+  - {fileID: 224188486062578332}
+  - {fileID: 224977946082506220}
+  - {fileID: 224656629555933432}
+  - {fileID: 224029363006339476}
+  - {fileID: 224510614497676500}
+  - {fileID: 224536784232352170}
+  - {fileID: 224014935233183614}
+  - {fileID: 224495309283648882}
+  - {fileID: 224090452889176382}
+  - {fileID: 224496546830620344}
+  - {fileID: 224417054804867292}
+  - {fileID: 224631550546157130}
+  - {fileID: 224805656088381562}
+  - {fileID: 224036752329985478}
+  - {fileID: 224996573250106222}
+  - {fileID: 224836284098292264}
+  - {fileID: 224118277261703410}
+  - {fileID: 224495240779218114}
+  - {fileID: 224420231542864538}
+  - {fileID: 224535234021212918}
+  - {fileID: 224511696659283782}
+  - {fileID: 224717989134258940}
+  - {fileID: 224633227365336872}
+  - {fileID: 224241539742737468}
+  - {fileID: 224956440053407584}
+  - {fileID: 224695150784902498}
+  - {fileID: 224002875720551006}
+  - {fileID: 224075166022249306}
+  - {fileID: 224918008292773462}
+  - {fileID: 224694848553926294}
+  - {fileID: 224410163073138126}
+  - {fileID: 224050265234233210}
+  - {fileID: 224365584534328512}
+  - {fileID: 224868310687837934}
+  - {fileID: 224928361989887598}
+  - {fileID: 224846948900481762}
+  - {fileID: 224453536529360744}
+  - {fileID: 224679432866883148}
+  m_AllPointChildCount: 08000000030000000000000000000000000000000400000000000000000000000000000000000000040000000000000000000000010000000000000001000000030000000000000000000000000000000400000000000000000000000100000000000000010000000300000000000000000000000000000000000000020000000000000001000000000000000300000000000000000000000000000003000000000000000000000000000000
+  m_AllPointActive: 01010101010101010101010101010101010101010101010101010101010101010101010101010101010101
+  m_Pos:
+  - {x: 5.835, y: 22.737, z: 0.63086}
+  - {x: -66.00001, y: -236.00003, z: -1}
+  - {x: 59, y: 134, z: 0}
+  - {x: 63, y: 150, z: 0}
+  - {x: 63, y: 114, z: 0}
+  - {x: 323, y: 168, z: -1}
+  - {x: -7, y: -3, z: 0}
+  - {x: -5, y: 3, z: 0}
+  - {x: -4, y: 5, z: 0}
+  - {x: 0, y: 4, z: 0}
+  - {x: -187, y: -43, z: -1}
+  - {x: -0.6909485, y: 76.00307, z: 0}
+  - {x: 0, y: -3, z: 0}
+  - {x: 4, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 71, y: -2, z: 0}
+  - {x: 1.3, y: 1.5, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 178, y: -43, z: -1}
+  - {x: 8.29126, y: 76.00307, z: 0}
+  - {x: 13, y: -3, z: 0}
+  - {x: -5, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 77, y: -3.25, z: 0}
+  - {x: 1.3, y: 1.5, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 30, y: -171.00003, z: 0}
+  - {x: 147, y: -196, z: 0}
+  - {x: 6, y: 4, z: 0}
+  - {x: 6, y: 7, z: 0}
+  - {x: -0.15368634, y: 0.15088126, z: 0}
+  - {x: 30, y: -344, z: -1}
+  - {x: -32, y: -6, z: 0}
+  - {x: -33, y: -3, z: 0}
+  - {x: -32, y: 4, z: 0}
+  - {x: 0, y: 168, z: -1}
+  - {x: -18, y: -28, z: 0}
+  - {x: -31, y: 0, z: 0}
+  - {x: -21, y: 10, z: 0}
+  m_Scale:
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.8, y: 0.8, z: 0.8}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.8, y: 0.8, z: 0.8}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.7031248, y: 0.70312506, z: 0.70312506}
+  - {x: 0.6973735, y: 0.688764, z: 0.688764}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1.0045426, y: 1.0045426, z: 1.0045426}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.70312476, y: 0.703125, z: 0.703125}
+  - {x: 0.6973735, y: 0.688764, z: 0.688764}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.8, y: 0.8, z: 0.8}
+  - {x: 0.8, y: 0.8, z: 0.8}
+  - {x: 1, y: 1, z: 1}
+  - {x: 4.561778, y: 4.5617805, z: 4.5617805}
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.8, y: 0.8, z: 0.8}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 0.8, y: 0.8, z: 0.8}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  m_Rot:
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  m_AnchorMax:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 0.25}
+  - {x: 1, y: 0.75}
+  - {x: 1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 0.25}
+  - {x: 1, y: 0.75}
+  - {x: 1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_AnchorMin:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_Pivot:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_SizeDelta:
+  - {x: 100, y: 100}
+  - {x: 100, y: 100}
+  - {x: 1089, y: 973}
+  - {x: 1051, y: 941}
+  - {x: 994, y: 795}
+  - {x: 100, y: 100}
+  - {x: 162, y: 162}
+  - {x: 162, y: 162}
+  - {x: 70, y: 70}
+  - {x: 70, y: 70}
+  - {x: 160, y: 20}
+  - {x: 160, y: 30}
+  - {x: 302, y: 114}
+  - {x: -20, y: 0}
+  - {x: 10, y: 0}
+  - {x: -20, y: 0}
+  - {x: 39, y: 20.5}
+  - {x: 100, y: 100}
+  - {x: 50, y: 50}
+  - {x: 50, y: 50}
+  - {x: 160, y: 20}
+  - {x: 160, y: 30}
+  - {x: 302, y: 114}
+  - {x: -20, y: 0}
+  - {x: 10, y: 0}
+  - {x: -20, y: 0}
+  - {x: 39, y: 18.5}
+  - {x: 100, y: 100}
+  - {x: 50, y: 50}
+  - {x: 50, y: 50}
+  - {x: 160, y: 30}
+  - {x: 160, y: 20}
+  - {x: 96.1, y: 96.1}
+  - {x: 20, y: 20}
+  - {x: 19.814, y: 20.183}
+  - {x: 100, y: 100}
+  - {x: 380, y: 166}
+  - {x: 466, y: 166}
+  - {x: 194, y: 36}
+  - {x: 100, y: 100}
+  - {x: 582, y: 213}
+  - {x: 582, y: 213}
+  - {x: 160, y: 30}
+  m_AnchoredPos:
+  - {x: 5.835, y: 22.737, z: 0.63086}
+  - {x: -66.00001, y: -236.00003, z: -1}
+  - {x: 59, y: 134, z: 0}
+  - {x: 63, y: 150, z: 0}
+  - {x: 63, y: 114, z: 0}
+  - {x: 323, y: 168, z: -1}
+  - {x: -7, y: -3, z: 0}
+  - {x: -5, y: 3, z: 0}
+  - {x: -4, y: 5, z: 0}
+  - {x: 0, y: 4, z: 0}
+  - {x: -187, y: -43, z: -1}
+  - {x: -0.6909485, y: 76.00307, z: 0}
+  - {x: 80, y: 2, z: 0}
+  - {x: 4, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: -2, z: 0}
+  - {x: 1.3, y: 1.5, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 178, y: -43, z: -1}
+  - {x: 8.29126, y: 76.00307, z: 0}
+  - {x: 93, y: 2, z: 0}
+  - {x: -5, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 7, y: -3.25, z: 0}
+  - {x: 1.3, y: 1.5, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 1.3, y: 2, z: 0}
+  - {x: 30, y: -171.00003, z: 0}
+  - {x: 147, y: -196, z: 0}
+  - {x: 6, y: 4, z: 0}
+  - {x: 86, y: -3, z: 0}
+  - {x: -0.15368634, y: 0.15088126, z: 0}
+  - {x: 30, y: -344, z: -1}
+  - {x: -32, y: -6, z: 0}
+  - {x: -33, y: -3, z: 0}
+  - {x: -32, y: 4, z: 0}
+  - {x: 0, y: 168, z: -1}
+  - {x: -18, y: -28, z: 0}
+  - {x: -31, y: 0, z: 0}
+  - {x: -21, y: 10, z: 0}
+  m_Particle: []
 --- !u!114 &114569514910686998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1895,28 +2268,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Ricimi.AnimatedButton+ButtonClickedEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114633112480126032
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1165940686104782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7be6c3c211a493d82311be760374a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114636177860274134
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1513996758033778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1beb64595284f5aab4f4e66901e85c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114699685849875386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2244,51 +2595,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114905586523991534}
-        m_MethodName: SwapSprite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: SwapColor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114636177860274134}
-        m_MethodName: SwitchMusic
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114059959359429644}
-        m_MethodName: SwapSprite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114961171093388580
@@ -2588,7 +2895,7 @@ RectTransform:
   m_GameObject: {fileID: 1829370806392590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 224075166022249306}
   - {fileID: 224918008292773462}
@@ -2597,7 +2904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 193, y: -195}
+  m_AnchoredPosition: {x: 147, y: -196}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224014935233183614
@@ -2761,7 +3068,7 @@ RectTransform:
   m_GameObject: {fileID: 1556033824043062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 224977946082506220}
   - {fileID: 224656629555933432}
@@ -2772,7 +3079,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 268}
+  m_AnchoredPosition: {x: 323, y: 168}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224241539742737468
@@ -2829,7 +3136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 48, y: -345}
+  m_AnchoredPosition: {x: 30, y: -344}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224417054804867292
@@ -3005,7 +3312,7 @@ RectTransform:
   m_GameObject: {fileID: 1513996758033778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1.4473096, y: 1.4473097, z: 1.4473097}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224014935233183614}
   - {fileID: 224495309283648882}
@@ -3016,7 +3323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -199, y: -18}
+  m_AnchoredPosition: {x: -187, y: -43}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224631550546157130
@@ -3120,14 +3427,14 @@ RectTransform:
   m_GameObject: {fileID: 1344945267573824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 224052512610004306}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56, y: -173}
+  m_AnchoredPosition: {x: 30, y: -171.00003}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224717989134258940
@@ -3159,7 +3466,7 @@ RectTransform:
   m_GameObject: {fileID: 1402656851033764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 224754077241068300}
   - {fileID: 224764220247269046}
@@ -3234,7 +3541,7 @@ RectTransform:
   m_GameObject: {fileID: 1165940686104782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1.4473097, y: 1.4473099, z: 1.4473099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224118277261703410}
   - {fileID: 224495240779218114}
@@ -3245,7 +3552,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 166, y: -18}
+  m_AnchoredPosition: {x: 178, y: -43}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224846948900481762
@@ -3311,7 +3618,7 @@ RectTransform:
   m_GameObject: {fileID: 1209902066998038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1.0841421, y: 1.0841421, z: 1.0841421}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 224846948900481762}
   - {fileID: 224453536529360744}
@@ -3321,7 +3628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22, y: 213}
+  m_AnchoredPosition: {x: 0, y: 168}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224930286438411398

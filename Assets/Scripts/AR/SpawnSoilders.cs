@@ -31,7 +31,7 @@ public class SpawnSoilders : MonoBehaviour
         //    SoildersDictionary.Add(s.SoilderPrefab, s.SoilderCount);
         //}
 
-        //StartSpawnSoilders();
+        StartSpawnSoilders();
     }
 
     public void StartSpawnSoilders()
