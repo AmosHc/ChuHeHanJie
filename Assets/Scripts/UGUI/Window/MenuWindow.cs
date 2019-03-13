@@ -20,6 +20,11 @@ public class MenuWindow : BaseWindow
         AddButtonClickListener(m_MainPanel.ExitBtn, OnClickExitBtn);
     }
 
+    public override bool OnMessage(UIMsgID msgId, object[] paramList)
+    {
+        return base.OnMessage(msgId, paramList);
+    }
+
     /// <summary>
     /// 对战
     /// </summary>

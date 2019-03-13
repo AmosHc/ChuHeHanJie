@@ -21,7 +21,13 @@ public class RegisterWindow : BaseWindow
         //校验TODO
         Debug.Log("用户名："+m_MainPanel.UsernameTxt.text+" 昵称："+ m_MainPanel.NicknameTxt.text+" 密码："+ m_MainPanel.PasswordTxt.text+"确认密码："+ m_MainPanel.AgainPasswordTxt.text);
         //发注册请求
-        Debug.Log("发送注册请求");
+        if (m_MainPanel.PasswordTxt.text != m_MainPanel.AgainPasswordTxt.text)
+            return;
+        GData.REGISTER sign = new GData.REGISTER();
+        sign.Id = m_MainPanel.UsernameTxt.text;
+        sign.Password = m_MainPanel.PasswordTxt.text;
+        sign.name = m_MainPanel.NicknameTxt.text;
+        SocketClient.Instance.SendAsyn(sign);
     }
     /// <summary>
     /// 关闭界面返回登录界面
