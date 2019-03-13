@@ -19,6 +19,7 @@ public class LoginWindow : BaseWindow
         else
         {
             Debug.Log("离线模式");
+
             AddButtonClickListener(m_MainPanel.LoginBtn, OnClickLoginBtn);//登陆监听
             AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);//注册监听
         }
@@ -43,7 +44,7 @@ public class LoginWindow : BaseWindow
         AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);//注册监听
     }
 
-    public new void OnMessage(UIMsgID msgId, params object[] paramList)
+    public override bool OnMessage(UIMsgID msgId, params object[] paramList)
     {
         switch (msgId)
         {
@@ -52,11 +53,12 @@ public class LoginWindow : BaseWindow
                 UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
                 UIManager.Instance.CloseWindow(ConStr.LOGINPANEL, true);
                 break;
-            case UIMsgID.FIAL:
+            case UIMsgID.FAIL:
                 Debug.Log("登陆失败！");
                 break;
-            default:break;
+            default:Debug.Log(msgId); return false;
         }
+        return true;
     }
 
     /// <summary>
@@ -70,7 +72,6 @@ public class LoginWindow : BaseWindow
         login.Id = m_MainPanel.UserNameTxt.text;
         login.Password = m_MainPanel.PassWordTxt.text;
         SocketClient.Instance.SendAsyn(login);
-
     }
 
     /// <summary>
@@ -99,7 +100,6 @@ public class LoginWindow : BaseWindow
     /// </summary>
     private void OnClickCloseBtn()
     {
-        Toast("11", "22");
         Debug.Log("点击关闭按钮");
         Application.Quit();
     }

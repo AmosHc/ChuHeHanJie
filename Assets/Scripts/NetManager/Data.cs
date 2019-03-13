@@ -5,39 +5,55 @@ using System.Text;
 using System.Threading.Tasks;
 using ProtoBuf;
 
-[ProtoContract]
-public class LOG_IN
+public class GData
 {
-    [ProtoMember(1)]
-    public string Id { get; set; }
+    [ProtoContract]
+    public class LOGIN
+    {
+        [ProtoMember(1)]
+        public string Id { get; set; }
 
-    [ProtoMember(2)]
-    public string Password { get; set; }
+        [ProtoMember(2)]
+        public string Password { get; set; }
 
-    public LOG_IN() {
+        public LOGIN()
+        {
+        }
     }
-}
 
-[ProtoContract]
-public class SIGN_IN
-{
-    [ProtoMember(1)]
-    public string Id { get; set; }
+    [ProtoContract]
+    public class REGISTER
+    {
+        [ProtoMember(1)]
+        public string Id { get; set; }
 
-    [ProtoMember(2)]
-    public string Password { get; set; }
+        [ProtoMember(2)]
+        public string Password { get; set; }
 
-    [ProtoMember(3)]
-    public string name { get; set; }
+        [ProtoMember(3)]
+        public string name { get; set; }
 
-    public SIGN_IN(){
+        public REGISTER()
+        {
+        }
     }
-}
 
-enum _RequestType
-{
-    SIGN_IN = 101,
-    LOG_IN = 102,
-    OK = 200,
-    FAIL = 201
+    [ProtoContract]
+    public class PLAYERINFO
+    {
+        [ProtoMember(1)]
+        public string Name { get; set; }
+    }
+
+    public enum _RequestType
+    {
+        REGISTER = 101,     //注册
+        LOGIN = 102,        //登陆
+        PLAYERINFO = 103,   //玩家信息
+
+        REGISTEROK = 200,   //注册成功
+        REGISTERFAIL = 201, //注册失败
+        LOGINOK = 202,      //登陆成功
+        LOGINFAIL = 203     //登陆失败
+    }
 }

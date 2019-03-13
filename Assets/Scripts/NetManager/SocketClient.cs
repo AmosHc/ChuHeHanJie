@@ -20,20 +20,6 @@ public class SocketClient:Singleton<SocketClient>
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
     public bool IsConnected = false;
 
-    private static SocketClient m_instance = null;
-
-    public static SocketClient Instance
-    {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = new SocketClient();
-            }
-            return m_instance;
-        }
-    }
-
     /// <summary>
     /// 向服务发送消息
     /// </summary>
@@ -79,20 +65,20 @@ public class SocketClient:Singleton<SocketClient>
         int len = m_socket.EndReceive(ar);
         if (len > 0)
         {
-            Debug.Log("收到服务器消息");
+            Debug.Log("收到服务器消息,消息类型："+ Read_Buffer[0]);
             switch (Read_Buffer[0])
             {
                 case (int)GData._RequestType.LOGINOK:       //登陆成功
                     UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.OK);
                     break;
                 case (int)GData._RequestType.LOGINFAIL:     //登陆失败
-                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.FIAL);
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.FAIL);
                     break;
                 case (int)GData._RequestType.REGISTEROK:    //注册成功
                     UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.OK);
                     break;
                 case (int)GData._RequestType.REGISTERFAIL:  //注册失败
-                    UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.FIAL);
+                    UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.FAIL);
                     break;
                 case (int)GData._RequestType.PLAYERINFO:    //玩家信息
                     GData.PLAYERINFO playerinfo = BytesToObject<GData.PLAYERINFO>(Read_Buffer, 0, len);
@@ -136,7 +122,7 @@ public class SocketClient:Singleton<SocketClient>
 
     public static byte[] ObjectToBytes<T>(T instance)
     {
-        GData._RequestType _RequestType = (GData._RequestType)Enum.Parse(typeof(GData._RequestType), instance.ToString());
+        GData._RequestType _RequestType = (GData._RequestType)Enum.Parse(typeof(GData._RequestType), instance.ToString().Split('+')[1]);
         byte _type = (byte)_RequestType;
         MemoryStream memoryStream = new MemoryStream();
         Serializer.Serialize(memoryStream, instance);
