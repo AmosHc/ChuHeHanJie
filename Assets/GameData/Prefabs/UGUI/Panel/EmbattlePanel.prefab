@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224566556678645278}
   - component: {fileID: 222936623504195598}
   - component: {fileID: 114125360452429362}
+  - component: {fileID: 114609563233553146}
   m_Layer: 5
   m_Name: EmbattlePanel
   m_TagString: Untagged
@@ -55,6 +56,40 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114609563233553146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1521099187745516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c4d73e652a4849a0ca21d7b8e8409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Rigidbody: {fileID: 0}
+  m_Collider: {fileID: 0}
+  m_AllPoint:
+  - {fileID: 224566556678645278}
+  m_AllPointChildCount: 00000000
+  m_AllPointActive: 01
+  m_Pos:
+  - {x: 0, y: 0, z: 0}
+  m_Scale:
+  - {x: 1, y: 1, z: 1}
+  m_Rot:
+  - {x: 0, y: 0, z: 0, w: 1}
+  m_AnchorMax:
+  - {x: 1, y: 1}
+  m_AnchorMin:
+  - {x: 0, y: 0}
+  m_Pivot:
+  - {x: 0.5, y: 0.5}
+  m_SizeDelta:
+  - {x: 0, y: 0}
+  m_AnchoredPos:
+  - {x: 0, y: 0, z: 0}
+  m_Particle: []
 --- !u!222 &222936623504195598
 CanvasRenderer:
   m_ObjectHideFlags: 1

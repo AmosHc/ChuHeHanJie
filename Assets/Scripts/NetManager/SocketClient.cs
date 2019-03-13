@@ -137,7 +137,7 @@ public class SocketClient:Singleton<SocketClient>
     public static T BytesToObject<T>(byte[] bytesData, int offset, int length)
     {
         if (length <= 1)
-            return default;
+            return default(T);
         MemoryStream memoryStream = new MemoryStream();
         memoryStream.Write(bytesData, 1, length);
         memoryStream.Position = 0L;
@@ -156,7 +156,7 @@ public class SocketClient:Singleton<SocketClient>
             }
         }
         Debug.Log("没找到对应类型!");
-        return default;
+        return default(T);
 
         //object r;
         //switch (_requestType)
