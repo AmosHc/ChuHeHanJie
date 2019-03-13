@@ -7,11 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
 using System.Text;
+using System.Reflection;
 
 public class SocketClient
 {
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
+
+    public static bool IsOnline = true;    //在线模式
 
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
@@ -40,20 +43,6 @@ public class SocketClient
         Write_Buffer = ObjectToBytes(data);
 
         m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
-    }
-
-    /// <summary>
-    /// 在消息队列中获取消息
-    /// </summary>
-    /// <returns>消息内容</returns>
-    public object ReadAsyn()
-    {
-        if (MsgQueue.Count == 0)
-            return null;
-        byte[] bytes = MsgQueue.Dequeue();
-        if (bytes[0] == 200)
-            Debug.Log("OK!");
-        return BytesToObject(bytes, 0, GetBytesLenth(bytes));
     }
 
     /// <summary>
@@ -89,11 +78,27 @@ public class SocketClient
         int len = m_socket.EndReceive(ar);
         if (len > 0)
         {
-            byte[] msgcell = new byte[len];
-            for (int i = 0; i < len; i++)
-                msgcell[i] = Read_Buffer[i];
-            MsgQueue.Enqueue(msgcell);
             Debug.Log("收到服务器消息");
+            switch (Read_Buffer[0])
+            {
+                case (int)GData._RequestType.LOGINOK:       //登陆成功
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.OK);
+                    break;
+                case (int)GData._RequestType.LOGINFAIL:     //登陆失败
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.FIAL);
+                    break;
+                case (int)GData._RequestType.REGISTEROK:    //注册成功
+                    UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.OK);
+                    break;
+                case (int)GData._RequestType.REGISTERFAIL:  //注册失败
+                    UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.FIAL);
+                    break;
+                case (int)GData._RequestType.PLAYERINFO:    //玩家信息
+                    GData.PLAYERINFO playerinfo = BytesToObject<GData.PLAYERINFO>(Read_Buffer, 0, len);
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.PLAYERINFO, playerinfo);
+                    break;
+                default:break;
+            }
             m_socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_socket);
         }
     }
@@ -130,7 +135,7 @@ public class SocketClient
 
     public static byte[] ObjectToBytes<T>(T instance)
     {
-        _RequestType _RequestType = (_RequestType)Enum.Parse(typeof(_RequestType), instance.ToString());
+        GData._RequestType _RequestType = (GData._RequestType)Enum.Parse(typeof(GData._RequestType), instance.ToString());
         byte _type = (byte)_RequestType;
         MemoryStream memoryStream = new MemoryStream();
         Serializer.Serialize(memoryStream, instance);
@@ -142,21 +147,38 @@ public class SocketClient
         return array;
     }
 
-    public static object BytesToObject(byte[] bytesData, int offset, int length)
+    public static T BytesToObject<T>(byte[] bytesData, int offset, int length)
     {
         if (length <= 1)
-            return null;
+            return default;
         MemoryStream memoryStream = new MemoryStream();
         memoryStream.Write(bytesData, 1, length);
         memoryStream.Position = 0L;
-        _RequestType _RequestType = (_RequestType)bytesData[0];
-        object r;
-        switch (_RequestType)
+        GData data = new GData();
+        Type t = data.GetType();
+        Type[] types = t.GetNestedTypes();
+        GData._RequestType _requestType = (GData._RequestType)bytesData[0];
+        foreach(Type type in types)
         {
-            case _RequestType.LOG_IN:r = new LOG_IN();r = Serializer.Deserialize<LOG_IN>(memoryStream);break;
-            default: r = null;break;
+            if(type.Name == _requestType.ToString())
+            {
+                object result = Activator.CreateInstance(type);
+                result = Serializer.Deserialize<T>(memoryStream);
+                memoryStream.Dispose();
+                return (T)result;
+            }
         }
-        memoryStream.Dispose();
-        return r;
+        Debug.Log("没找到对应类型!");
+        return default;
+
+        //object r;
+        //switch (_requestType)
+        //{
+        //    case _RequestType.LOG_IN:r = new LOG_IN();r = Serializer.Deserialize<LOG_IN>(memoryStream);break;
+        //    case _RequestType.SIGN_IN: r = new SIGN_IN(); r = Serializer.Deserialize<SIGN_IN>(memoryStream); break;
+        //    default: r = null;break;
+        //}
+        //memoryStream.Dispose();
+        //return r;
     }
 }
