@@ -65,7 +65,7 @@ public class SocketClient:Singleton<SocketClient>
         int len = m_socket.EndReceive(ar);
         if (len > 0)
         {
-            Debug.Log("收到服务器消息,消息类型："+ Read_Buffer[0]);
+            Debug.Log("收到服务器消息,消息类型："+ (GData._RequestType)Read_Buffer[0]);
             switch (Read_Buffer[0])
             {
                 case (int)GData._RequestType.LOGINOK:       //登陆成功

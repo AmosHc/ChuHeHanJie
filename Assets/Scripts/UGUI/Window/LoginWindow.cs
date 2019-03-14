@@ -6,6 +6,8 @@ public class LoginWindow : BaseWindow
 {
     private LoginPanel m_MainPanel;
 
+    private bool IsLoginSuccess = false;
+
     public override void Awake(params object[] paramList)
     {
         base.Awake(paramList);
@@ -15,6 +17,7 @@ public class LoginWindow : BaseWindow
         {
             if (!SocketClient.Instance.IsConnected)
                 m_MainPanel.StartCoroutine(WaitForConnect());
+            m_MainPanel.StartCoroutine(WaitForLogSuccess());
         }
         else
         {
@@ -44,17 +47,31 @@ public class LoginWindow : BaseWindow
         AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);//注册监听
     }
 
+    /// <summary>
+    /// 等待登陆成功进行场景跳转
+    /// （资源加载只能在主线程执行）
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator WaitForLogSuccess()
+    {
+        yield return new WaitUntil(() => IsLoginSuccess);
+        UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
+        UIManager.Instance.CloseWindow(ConStr.LOGINPANEL, true);
+    }
+
     public override bool OnMessage(UIMsgID msgId, params object[] paramList)
     {
         switch (msgId)
         {
             case UIMsgID.OK:
-                Debug.Log("登陆成功！");
-                UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
-                UIManager.Instance.CloseWindow(ConStr.LOGINPANEL, true);
+                //Toast("提示","登陆成功！");
+                Debug.Log("登陆成功");
+                IsLoginSuccess = true;
                 break;
             case UIMsgID.FAIL:
-                Debug.Log("登陆失败！");
+                //Toast("提示", "登陆失败！");
+                Debug.Log("登陆失败");
+                IsLoginSuccess = false;
                 break;
             default:Debug.Log(msgId); return false;
         }
