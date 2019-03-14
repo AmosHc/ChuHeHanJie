@@ -6,7 +6,7 @@ public class LoginWindow : BaseWindow
 {
     private LoginPanel m_MainPanel;
 
-    private bool IsLoginSuccess = false;
+    private UIMsgID LogInState = UIMsgID.NONE;
 
     public override void Awake(params object[] paramList)
     {
@@ -36,13 +36,22 @@ public class LoginWindow : BaseWindow
     {
         if (SocketClient.IsOnline)
         {
-            Debug.Log("正在连接服务器...");
+//            Toast("提示", "正在连接到服务器...");
             SocketClient.Instance.Connect();
-            yield return new WaitUntil(() => SocketClient.Instance.IsConnected);
-            Debug.Log("已成功连接到服务器!");
+            float t = 0f;
+            yield return new WaitUntil(() => {
+                t += Time.deltaTime;
+                if (t > 5.0f)
+                    return true;
+                return SocketClient.Instance.IsConnected;
+                });
+            if (t > 5.0f)
+                Toast("提示", "连接服务器失败");
+            else
+                Debug.Log("连接服务器成功");
         }
         else
-            Debug.Log("离线模式");
+            Toast("提示", "离线模式.");
         AddButtonClickListener(m_MainPanel.LoginBtn, OnClickLoginBtnOnline);//登陆监听
         AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);//注册监听
     }
@@ -54,27 +63,23 @@ public class LoginWindow : BaseWindow
     /// <returns></returns>
     IEnumerator WaitForLogSuccess()
     {
-        yield return new WaitUntil(() => IsLoginSuccess);
-        UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
-        UIManager.Instance.CloseWindow(ConStr.LOGINPANEL, true);
+        yield return new WaitUntil(() => LogInState != UIMsgID.NONE);
+        if (LogInState == UIMsgID.OK)    //登陆成功
+        {
+            UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
+            UIManager.Instance.CloseWindow(ConStr.LOGINPANEL, true);
+        }
+        else if(LogInState == UIMsgID.FAIL)   //登陆失败
+        {
+            Toast("提示","登陆失败！");
+            LogInState = UIMsgID.NONE;
+            m_MainPanel.StartCoroutine(WaitForLogSuccess());
+        }
     }
 
     public override bool OnMessage(UIMsgID msgId, params object[] paramList)
     {
-        switch (msgId)
-        {
-            case UIMsgID.OK:
-                //Toast("提示","登陆成功！");
-                Debug.Log("登陆成功");
-                IsLoginSuccess = true;
-                break;
-            case UIMsgID.FAIL:
-                //Toast("提示", "登陆失败！");
-                Debug.Log("登陆失败");
-                IsLoginSuccess = false;
-                break;
-            default:Debug.Log(msgId); return false;
-        }
+        LogInState = msgId;
         return true;
     }
 
