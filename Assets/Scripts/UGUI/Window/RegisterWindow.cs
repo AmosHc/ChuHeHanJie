@@ -13,6 +13,18 @@ public class RegisterWindow : BaseWindow
         AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);
         AddButtonClickListener(m_MainPanel.CloseBtn, OnClickCloseBtn);
     }
+
+    public override bool OnMessage(UIMsgID msgId, object[] paramList)
+    {
+        if(msgId == UIMsgID.OK)
+            //Toast("提示", "注册成功！");
+            Debug.Log("注册成功");
+        else
+            //Toast("提示", "注册失败！");
+            Debug.Log("注册失败");
+        return true;
+    }
+
     /// <summary>
     /// 注册事件
     /// </summary>
