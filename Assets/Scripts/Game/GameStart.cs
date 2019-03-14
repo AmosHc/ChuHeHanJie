@@ -25,6 +25,7 @@ public class GameStart : MonoSingleton<GameStart>
     void Start()
     {
         RegistUI();//注册UI页面
+        PreLoad();///预加载资源放这里
         UIManager.Instance.OpenWnd(ConStr.LOGINPANEL, true);
         //GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
     }
@@ -40,6 +41,11 @@ public class GameStart : MonoSingleton<GameStart>
         UIManager.Instance.Register<ExitWindow>(ConStr.EXITPANEL);
         UIManager.Instance.Register<SettingWindow>(ConStr.SETTINGPANEL);
         UIManager.Instance.Register<AlertWindow>(ConStr.ALERTPANEL);
+    }
+
+    public void PreLoad()
+    {
+        ObjectManger.Instance.PreLoadGameObject(ConStr.ALERTPRE);
     }
 
     void Update()

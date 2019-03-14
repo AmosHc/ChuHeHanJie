@@ -17,4 +17,7 @@ public class ConStr {
     public const string EMPTYSCENE = "Empty";
     public const string MENUSCENE = "Menu";
     public const string ARSCENE = "ARTest";
+
+    //预加载资源
+    public const string ALERTPRE = "Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab";
 }
