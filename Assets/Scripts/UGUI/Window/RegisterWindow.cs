@@ -6,22 +6,35 @@ public class RegisterWindow : BaseWindow
 {
     private RegisterPanel m_MainPanel;
 
+    private UIMsgID RegisterState = UIMsgID.NONE;
+
     public override void Awake(params object[] paramList)
     {
         base.Awake(paramList);
         m_MainPanel = GameObject.GetComponent<RegisterPanel>();
         AddButtonClickListener(m_MainPanel.RegisterBtn, OnClickRegisterBtn);
         AddButtonClickListener(m_MainPanel.CloseBtn, OnClickCloseBtn);
+        m_MainPanel.StartCoroutine(WaitForRegister());
+    }
+
+    IEnumerator WaitForRegister()
+    {
+        yield return new WaitUntil(() => RegisterState != UIMsgID.NONE);
+        if(RegisterState == UIMsgID.OK)
+        {
+            OnClickCloseBtn();
+        }
+        else if(RegisterState == UIMsgID.FAIL)
+        {
+            Toast("提示", "注册失败！");
+            RegisterState = UIMsgID.NONE;
+            m_MainPanel.StartCoroutine(WaitForRegister());
+        }
     }
 
     public override bool OnMessage(UIMsgID msgId, object[] paramList)
     {
-        if(msgId == UIMsgID.OK)
-            //Toast("提示", "注册成功！");
-            Debug.Log("注册成功");
-        else
-            //Toast("提示", "注册失败！");
-            Debug.Log("注册失败");
+        RegisterState = msgId;
         return true;
     }
 
@@ -41,6 +54,7 @@ public class RegisterWindow : BaseWindow
         sign.name = m_MainPanel.NicknameTxt.text;
         SocketClient.Instance.SendAsyn(sign);
     }
+
     /// <summary>
     /// 关闭界面返回登录界面
     /// </summary>
