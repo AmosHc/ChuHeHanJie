@@ -64,12 +64,12 @@ public class LoginWindow : BaseWindow
         switch (msgId)
         {
             case UIMsgID.OK:
-                //Toast("提示", "登陆成功！");
+                Toast("提示", "登陆成功！");
                 Debug.Log("登陆成功");
                 IsLoginSuccess = true;
                 break;
             case UIMsgID.FAIL:
-                //Toast("提示", "登陆失败！");
+                Toast("提示", "登陆失败！");
                 Debug.Log("登陆失败");
                 IsLoginSuccess = false;
                 break;
