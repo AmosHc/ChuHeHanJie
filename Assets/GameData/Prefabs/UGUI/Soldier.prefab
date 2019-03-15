@@ -71,6 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224600320879952300}
+  - component: {fileID: 114666966383964556}
   m_Layer: 5
   m_Name: Soldier
   m_TagString: Untagged
@@ -240,6 +241,85 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u9A91\u5175"
+--- !u!114 &114666966383964556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1787392858440852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c4d73e652a4849a0ca21d7b8e8409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Rigidbody: {fileID: 0}
+  m_Collider: {fileID: 0}
+  m_AllPoint:
+  - {fileID: 224600320879952300}
+  - {fileID: 224492714648406718}
+  - {fileID: 224744411665714578}
+  - {fileID: 224992304661216256}
+  - {fileID: 224036345174254486}
+  - {fileID: 224820648125618644}
+  m_AllPointChildCount: 010000000400000000000000000000000000000000000000
+  m_AllPointActive: 010101010101
+  m_Pos:
+  - {x: 50, y: -50, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.0015001, y: -108.23, z: 0}
+  - {x: 0.0010071, y: -152.7, z: 0}
+  - {x: 0.0010113, y: -202, z: 0}
+  m_Scale:
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1.00008, y: 1.00008, z: 1.00008}
+  m_Rot:
+  - {x: -0, y: -0, z: -0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: -0, y: -0, z: -0, w: 1}
+  m_AnchorMax:
+  - {x: 0, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_AnchorMin:
+  - {x: 0, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_Pivot:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_SizeDelta:
+  - {x: 100, y: 100}
+  - {x: 172.95, y: 172.95}
+  - {x: 100, y: 100}
+  - {x: 100, y: 50.46}
+  - {x: 99.998, y: 30}
+  - {x: 99.998, y: 30}
+  m_AnchoredPos:
+  - {x: 50, y: -50, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.0015001, y: -108.23, z: 0}
+  - {x: 0.0010071, y: -152.7, z: 0}
+  - {x: 0.0010113, y: -202, z: 0}
+  m_Particle: []
 --- !u!114 &114672614751766192
 MonoBehaviour:
   m_ObjectHideFlags: 1
