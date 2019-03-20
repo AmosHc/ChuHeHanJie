@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetBundleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ABList Path="Assets/GameData/Prefabs/Attack.prefab" Crc="1330568117" ABName="attack" AssetName="Attack.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/AR/BlueThief.prefab" Crc="4065899689" ABName="bluethief" AssetName="BlueThief.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/AR/Bullet.prefab" Crc="2920459829" ABName="bullet" AssetName="Bullet.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/ExitPanel.prefab" Crc="919997153" ABName="exitpanel" AssetName="ExitPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/GameStart.prefab" Crc="114936917" ABName="gamestart" AssetName="GameStart.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/HelpPanel.prefab" Crc="2587995737" ABName="helppanel" AssetName="HelpPanel.prefab">
@@ -17,14 +19,26 @@
     <ABDependce>loginplane</ABDependce>
     <ABDependce>exitpanel</ABDependce>
   </ABList>
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/Panel.prefab" Crc="2282723340" ABName="panel" AssetName="Panel.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/AR/RedThief.prefab" Crc="2250691663" ABName="redthief" AssetName="RedThief.prefab">
+    <ABDependce>bluethief</ABDependce>
+  </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/RegisterPanel.prefab" Crc="1531265789" ABName="registerpanel" AssetName="RegisterPanel.prefab">
     <ABDependce>loginplane</ABDependce>
     <ABDependce>exitpanel</ABDependce>
   </ABList>
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/SettingPanel.prefab" Crc="2634294076" ABName="settingpanel" AssetName="SettingPanel.prefab">
+    <ABDependce>loginplane</ABDependce>
+    <ABDependce>exitpanel</ABDependce>
+    <ABDependce>menupanel</ABDependce>
+  </ABList>
   <ABList Path="Assets/GameData/Shaders/Skybox.shader" Crc="1986987949" ABName="shader" AssetName="Skybox.shader" />
   <ABList Path="Assets/GameData/Shaders/Water.shader" Crc="1357101244" ABName="shader" AssetName="Water.shader" />
   <ABList Path="Assets/GameData/Shaders/Xray.shader" Crc="1043595403" ABName="shader" AssetName="Xray.shader" />
+  <ABList Path="Assets/GameData/Sounds/Bg.mp3" Crc="2757185817" ABName="sound" AssetName="Bg.mp3" />
   <ABList Path="Assets/GameData/Sounds/menusound.mp3" Crc="2729331572" ABName="sound" AssetName="menusound.mp3" />
   <ABList Path="Assets/GameData/Sounds/senlin.mp3" Crc="3022988390" ABName="sound" AssetName="senlin.mp3" />
+  <ABList Path="Assets/GameData/Sounds/Welcome.mp3" Crc="3254427362" ABName="sound" AssetName="Welcome.mp3" />
   <ABList Path="Assets/GameData/Prefabs/Effect/TestEffect1.prefab" Crc="129261198" ABName="testeffect1" AssetName="TestEffect1.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/AR/UICamera.prefab" Crc="1276256547" ABName="uicamera" AssetName="UICamera.prefab" />
 </AssetBundleConfig>

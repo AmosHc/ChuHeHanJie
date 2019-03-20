@@ -100,7 +100,7 @@ public class StableTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
             {
                 audioSource.Play();
             }
-            WarFieldTransform.GetComponent<WarFieldController>().enabled = true;
+            WarFieldManager.Instance.enabled = true;
         }
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
