@@ -22,4 +22,13 @@ public class BaseWindow : Window
             btn.onClick.AddListener(ButtonPlaySound);
         }
     }
+    /// <summary>
+    /// 提示信息（调用前确认已经添加提示窗体）
+    /// </summary>
+    /// <param name="title">标题</param>
+    /// <param name="content">内容</param>
+    public void Toast(string title,string content)
+    {
+        UIManager.Instance.PopUpWnd(this,ConStr.ALERTPANEL,title,content);
+    }
 }

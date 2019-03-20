@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetBundleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" Crc="3753357791" ABName="alertpanel" AssetName="AlertPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/Attack.prefab" Crc="1330568117" ABName="attack" AssetName="Attack.prefab" />
-  <ABList Path="Assets/GameData/Prefabs/AR/BlueThief.prefab" Crc="4065899689" ABName="bluethief" AssetName="BlueThief.prefab" />
-  <ABList Path="Assets/GameData/Prefabs/AR/Bullet.prefab" Crc="2920459829" ABName="bullet" AssetName="Bullet.prefab" />
-  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/ExitPanel.prefab" Crc="919997153" ABName="exitpanel" AssetName="ExitPanel.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/EmbattlePanel.prefab" Crc="1659219367" ABName="embattlepanel" AssetName="EmbattlePanel.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/ExitPanel.prefab" Crc="919997153" ABName="exitpanel" AssetName="ExitPanel.prefab">
+    <ABDependce>alertpanel</ABDependce>
+  </ABList>
   <ABList Path="Assets/GameData/Prefabs/GameStart.prefab" Crc="114936917" ABName="gamestart" AssetName="GameStart.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Grid.prefab" Crc="2208843439" ABName="grid" AssetName="Grid.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/HelpPanel.prefab" Crc="2587995737" ABName="helppanel" AssetName="HelpPanel.prefab">
+    <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/InfoPanel.prefab" Crc="3797680262" ABName="infopanel" AssetName="InfoPanel.prefab">
+    <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoadPanel.prefab" Crc="460640323" ABName="loadpanel" AssetName="LoadPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoginPlane.prefab" Crc="103597582" ABName="loginplane" AssetName="LoginPlane.prefab">
     <ABDependce>exitpanel</ABDependce>
+    <ABDependce>alertpanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="3283179713" ABName="menupanel" AssetName="MenuPanel.prefab">
     <ABDependce>loginplane</ABDependce>
     <ABDependce>exitpanel</ABDependce>
+    <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>alertpanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/Panel.prefab" Crc="2282723340" ABName="panel" AssetName="Panel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/AR/RedThief.prefab" Crc="2250691663" ABName="redthief" AssetName="RedThief.prefab">
@@ -26,6 +34,13 @@
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/RegisterPanel.prefab" Crc="1531265789" ABName="registerpanel" AssetName="RegisterPanel.prefab">
     <ABDependce>loginplane</ABDependce>
     <ABDependce>exitpanel</ABDependce>
+    <ABDependce>alertpanel</ABDependce>
+  </ABList>
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/SettingPanel.prefab" Crc="2634294076" ABName="settingpanel" AssetName="SettingPanel.prefab">
+    <ABDependce>loginplane</ABDependce>
+    <ABDependce>exitpanel</ABDependce>
+    <ABDependce>alertpanel</ABDependce>
+    <ABDependce>menupanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/SettingPanel.prefab" Crc="2634294076" ABName="settingpanel" AssetName="SettingPanel.prefab">
     <ABDependce>loginplane</ABDependce>

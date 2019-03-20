@@ -6,28 +6,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
+using System.Text;
+using System.Reflection;
 
-public class SocketClient
+public class SocketClient:Singleton<SocketClient>
 {
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
 
+    public static bool IsOnline = true;    //在线模式
+
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
-
-    private static SocketClient m_instance = null;
-    public static SocketClient Instance
-    {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = new SocketClient();
-                m_instance.OnInit();
-            }
-            return m_instance;
-        }
-    }
+    public bool IsConnected = false;
 
     /// <summary>
     /// 向服务发送消息
@@ -37,40 +28,32 @@ public class SocketClient
     public void SendAsyn<T>(T data)
     {
         Write_Buffer = ObjectToBytes(data);
+
         m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
-    }
-
-    /// <summary>
-    /// 在消息队列中获取消息
-    /// </summary>
-    /// <returns>消息内容</returns>
-    public object ReadAsyn()
-    {
-        if (MsgQueue.Count == 0)
-            return null;
-        byte[] bytes = MsgQueue.Dequeue();
-
-        Login m = new Login();
-        m = BytesToObject<Login>(bytes, 0, GetBytesLenth(bytes));
-        return m;
     }
 
     /// <summary>
     /// 初始化工作，包括Socket的初始化、连接服务器以及开启消息异步接受
     /// </summary>
-    void OnInit()
+    public void Connect()
     {
+        IsConnected = false;
         int port = 8888;
-//        string host = "39.105.149.213";
-                    string host = "127.0.0.1";
+        string host = "39.105.149.213";
+        //                   string host = "127.0.0.1";
         IPAddress ip = IPAddress.Parse(host);
         IPEndPoint ipe = new IPEndPoint(ip, port);
         m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        m_Socket.Connect(ipe);
-
+        m_Socket.BeginConnect(ipe, new AsyncCallback(EndConnect), null);
+    }
+    void EndConnect(IAsyncResult ar)
+    {
+        m_Socket.EndConnect(ar);
+        IsConnected = true;
         m_Socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_Socket);
     }
+
 
     /// <summary>
     /// 异步接收消息的函数回调
@@ -82,11 +65,27 @@ public class SocketClient
         int len = m_socket.EndReceive(ar);
         if (len > 0)
         {
-            byte[] msgcell = new byte[len];
-            for (int i = 0; i < len; i++)
-                msgcell[i] = Read_Buffer[i];
-            MsgQueue.Enqueue(msgcell);
-            Debug.Log("收到服务器消息");
+            Debug.Log("收到服务器消息,消息类型："+ (GData._RequestType)Read_Buffer[0]);
+            switch (Read_Buffer[0])
+            {
+                case (int)GData._RequestType.LOGINOK:       //登陆成功
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.OK);
+                    break;
+                case (int)GData._RequestType.LOGINFAIL:     //登陆失败
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.FAIL);
+                    break;
+                case (int)GData._RequestType.REGISTEROK:    //注册成功
+                    UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.OK);
+                    break;
+                case (int)GData._RequestType.REGISTERFAIL:  //注册失败
+                    UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.FAIL);
+                    break;
+                case (int)GData._RequestType.PLAYERINFO:    //玩家信息
+                    GData.PLAYERINFO playerinfo = BytesToObject<GData.PLAYERINFO>(Read_Buffer, 0, len);
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.PLAYERINFO, playerinfo);
+                    break;
+                default:break;
+            }
             m_socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_socket);
         }
     }
@@ -123,23 +122,50 @@ public class SocketClient
 
     public static byte[] ObjectToBytes<T>(T instance)
     {
+        GData._RequestType _RequestType = (GData._RequestType)Enum.Parse(typeof(GData._RequestType), instance.ToString().Split('+')[1]);
+        byte _type = (byte)_RequestType;
         MemoryStream memoryStream = new MemoryStream();
         Serializer.Serialize(memoryStream, instance);
-        byte[] array = new byte[memoryStream.Length];
+        byte[] array = new byte[memoryStream.Length + 1];
+        array[0] = _type;
         memoryStream.Position = 0L;
-        memoryStream.Read(array, 0, array.Length);
+        memoryStream.Read(array, 1, array.Length-1);
         memoryStream.Dispose();
         return array;
     }
 
     public static T BytesToObject<T>(byte[] bytesData, int offset, int length)
     {
-
+        if (length <= 1)
+            return default(T);
         MemoryStream memoryStream = new MemoryStream();
-        memoryStream.Write(bytesData, 0, length);
+        memoryStream.Write(bytesData, 1, length);
         memoryStream.Position = 0L;
-        T result = Serializer.Deserialize<T>(memoryStream);
-        memoryStream.Dispose();
-        return result;
+        GData data = new GData();
+        Type t = data.GetType();
+        Type[] types = t.GetNestedTypes();
+        GData._RequestType _requestType = (GData._RequestType)bytesData[0];
+        foreach(Type type in types)
+        {
+            if(type.Name == _requestType.ToString())
+            {
+                object result = Activator.CreateInstance(type);
+                result = Serializer.Deserialize<T>(memoryStream);
+                memoryStream.Dispose();
+                return (T)result;
+            }
+        }
+        Debug.Log("没找到对应类型!");
+        return default(T);
+
+        //object r;
+        //switch (_requestType)
+        //{
+        //    case _RequestType.LOG_IN:r = new LOG_IN();r = Serializer.Deserialize<LOG_IN>(memoryStream);break;
+        //    case _RequestType.SIGN_IN: r = new SIGN_IN(); r = Serializer.Deserialize<SIGN_IN>(memoryStream); break;
+        //    default: r = null;break;
+        //}
+        //memoryStream.Dispose();
+        //return r;
     }
 }

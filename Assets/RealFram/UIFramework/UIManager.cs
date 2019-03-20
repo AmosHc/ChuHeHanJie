@@ -12,6 +12,9 @@ using UnityEngine.UI;
 public enum UIMsgID
 {
     NONE = 0,
+    PLAYERINFO = 1,
+    OK = 200,
+    FAIL = 201
 }
 
 public class UIManager : Singleton<UIManager>
