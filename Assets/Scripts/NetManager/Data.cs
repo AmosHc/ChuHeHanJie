@@ -4,56 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProtoBuf;
+using ProtoUser;
 
-public class GData
+public enum _RequestType
 {
-    [ProtoContract]
-    public class LOGIN
-    {
-        [ProtoMember(1)]
-        public string Id { get; set; }
+    REGISTER = 101,     //注册
+    LOGIN = 102,        //登陆
 
-        [ProtoMember(2)]
-        public string Password { get; set; }
+    REGISTEROK = 200,   //注册成功
+    REGISTERFAIL = 201, //注册失败
+    PLAYERINFO = 202,   //登陆成功返回玩家信息
+    LOGINFAIL = 203,    //登陆失败
+    START = 210,         //开始游戏
 
-        public LOGIN()
-        {
-        }
-    }
+    EMbattle = 18       //保存阵形
+}
 
-    [ProtoContract]
-    public class REGISTER
-    {
-        [ProtoMember(1)]
-        public string Id { get; set; }
+public class DataLocal : Singleton<DataLocal>
+{
+    public User User;
 
-        [ProtoMember(2)]
-        public string Password { get; set; }
-
-        [ProtoMember(3)]
-        public string name { get; set; }
-
-        public REGISTER()
-        {
-        }
-    }
-
-    [ProtoContract]
-    public class PLAYERINFO
-    {
-        [ProtoMember(1)]
-        public string Name { get; set; }
-    }
-
-    public enum _RequestType
-    {
-        REGISTER = 101,     //注册
-        LOGIN = 102,        //登陆
-        PLAYERINFO = 103,   //玩家信息
-
-        REGISTEROK = 200,   //注册成功
-        REGISTERFAIL = 201, //注册失败
-        LOGINOK = 202,      //登陆成功
-        LOGINFAIL = 203     //登陆失败
-    }
+    public EMbattle PLAYERINFO;
 }
