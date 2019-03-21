@@ -10,6 +10,9 @@ public class MenuWindow : BaseWindow
         base.Awake(paramList);
         Debug.Log("Awake");
         m_MainPanel = GameObject.GetComponent<MenuPanel>();
+        if (!SocketClient.IsOnline)
+            DataLocal.Instance.PLAYERINFO = new ProtoUser.EMbattle();
+        m_MainPanel.WelcomeTxt.text = "欢迎您：" + DataLocal.Instance.PLAYERINFO.Name;
         AddButtonClickListener(m_MainPanel.PlayBtn, OnClickPlayBtn);
         AddButtonClickListener(m_MainPanel.SettingBtn, OnClickSettingBtn);
         AddButtonClickListener(m_MainPanel.RembattleBtn, OnClickRembattleBtn);
@@ -45,7 +48,8 @@ public class MenuWindow : BaseWindow
     /// </summary>
     private void OnClickRembattleBtn()
     {
-
+        UIManager.Instance.OpenWnd(ConStr.EMBATTLEPANEL, true);
+        UIManager.Instance.CloseWindow(ConStr.MENUPANEL, false);
     }
     /// <summary>
     /// 朋友

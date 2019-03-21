@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProtoUser;
 
 public class RegisterWindow : BaseWindow
 {
@@ -48,11 +49,13 @@ public class RegisterWindow : BaseWindow
         //发注册请求
         if (m_MainPanel.PasswordTxt.text != m_MainPanel.AgainPasswordTxt.text)
             return;
-        GData.REGISTER sign = new GData.REGISTER();
-        sign.Id = m_MainPanel.UsernameTxt.text;
-        sign.Password = m_MainPanel.PasswordTxt.text;
-        sign.name = m_MainPanel.NicknameTxt.text;
-        SocketClient.Instance.SendAsyn(sign);
+        User sign = new User()
+        {
+            Id = m_MainPanel.UsernameTxt.text,
+            Password = m_MainPanel.PasswordTxt.text,
+            Name = m_MainPanel.NicknameTxt.text
+        };
+        SocketClient.Instance.SendAsyn(_RequestType.REGISTER, sign);
     }
 
     /// <summary>
