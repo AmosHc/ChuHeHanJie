@@ -15,9 +15,11 @@ public enum _RequestType
     REGISTERFAIL = 201, //注册失败
     PLAYERINFO = 202,   //登陆成功返回玩家信息
     LOGINFAIL = 203,    //登陆失败
-    START = 210,         //开始游戏
+    START = 16,         //开始游戏
 
-    EMbattle = 18       //保存阵形
+    EMbattle = 18,       //保存阵形
+    PLAYERDATA = 19,     //游戏中玩家数据
+    SOILDERDATA = 20     //游戏中士兵数据
 }
 
 public class DataLocal : Singleton<DataLocal>

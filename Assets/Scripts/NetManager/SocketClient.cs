@@ -16,7 +16,7 @@ public class SocketClient:Singleton<SocketClient>
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
 
-    public static bool IsOnline = false;    //在线模式
+    public static bool IsOnline = true;    //在线模式
 
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
@@ -84,6 +84,16 @@ public class SocketClient:Singleton<SocketClient>
                     break;
                 case (int)_RequestType.REGISTERFAIL:  //注册失败
                     UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.FAIL);
+                    break;
+                case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
+                    WarData.Types.Player data_player = new WarData.Types.Player();
+                    data_player = BytesToObject<WarData.Types.Player>(Read_Buffer, 1, len);
+                    System_Event.m_Events.Dispatche(System_Event.GAMEPLAYERDATA, data_player);
+                    break;
+                case (int)_RequestType.SOILDERDATA:  //游戏中玩家数据
+                    WarData.Types.Soilder data_soilder = new WarData.Types.Soilder();
+                    data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 1, len);
+                    System_Event.m_Events.Dispatche(System_Event.GAMEPLAYERDATA, data_soilder);
                     break;
                 default:break;
             }
