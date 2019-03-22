@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProtoUser;
 
 
 /// <summary>
@@ -14,7 +15,7 @@ public class BulletController : MonoBehaviour
 
     private Vector3 forward;
 
-    public CampOption Camp { get; set; }
+    public WarData.Types.CampState Camp { get; set; }
 
     private void Start()
     {

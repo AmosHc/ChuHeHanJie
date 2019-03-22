@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using ProtoUser;
 
 
 /// <summary>
@@ -15,7 +16,7 @@ public class SoilderController : MonoBehaviour
     [Tooltip("行走速度")]
     public float WalkSpeed = 1;
 
-    public CampOption Camp;
+    public WarData.Types.CampState Camp;
     /// <summary>
     /// 代理经过的节点集合
     /// </summary>
@@ -136,7 +137,7 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     public void SendMessage()
     {
-        SoilderData sd = new SoilderData();
+        WarData.Types.Soilder sd = new WarData.Types.Soilder();
         sd.Camp = Camp;
         sd.Attack = 1;
     }
