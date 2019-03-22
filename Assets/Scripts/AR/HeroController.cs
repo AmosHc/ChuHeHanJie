@@ -7,10 +7,21 @@ using UnityEngine;
 /// </summary>
 public class HeroController : MonoBehaviour
 {
+    public CampOption Camp  = CampOption.Blue;
+
+    public int Health = 10;
+
     /// <summary>
     /// 子弹预设体路径
     /// </summary>
     private string bulletPrefab = "Assets/GameData/Prefabs/AR/Bullet.prefab";
+
+    private Transform ARCamera;
+
+    private void Start()
+    {
+        ARCamera = GameObject.Find("ARCamera").transform;
+    }
 
 #if UNITY_EDITOR
     private void Update()
@@ -22,13 +33,42 @@ public class HeroController : MonoBehaviour
 
     public void Shoot()
     {
-
-        Transform ARCamera = GameObject.Find("ARCamera").transform;
-
         GameObject go = ObjectManger.Instance.InstantiateObject(bulletPrefab);
 
         go.transform.up = ARCamera.forward;
         go.transform.position = ARCamera.position;
     }
 
+    /// <summary>
+    /// 发送消息
+    /// </summary>
+    public void SendMessage()
+    {
+        PlayerData pd = new PlayerData();
+        pd.Camp = Camp;
+        pd.Position = ARCamera.position;
+        pd.Forward = ARCamera.forward;
+    }
+
+    /// <summary>
+    /// 接收消息
+    /// </summary>
+    public void ReceiveMessage(PlayerData pd)
+    {
+        GameObject go = ObjectManger.Instance.InstantiateObject(bulletPrefab);
+        if (pd.Camp != Camp)
+            return;
+        go.GetComponent<BulletController>().Camp = pd.Camp;
+        go.transform.up = pd.Forward;
+        go.transform.position = pd.Position;
+    }
+
+    public void ReceiveMessage(SoilderData sd)
+    {
+        if(sd.Camp == Camp)
+        {
+            return;
+        }
+        Health = Health - sd.Attack;
+    }
 }

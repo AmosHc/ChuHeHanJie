@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 4583468611483090}
   - component: {fileID: 95475507065170052}
   - component: {fileID: 114104851973047290}
+  - component: {fileID: 65460575461374250}
   m_Layer: 0
   m_Name: RedThief
   m_TagString: Untagged
@@ -567,7 +568,7 @@ Transform:
   m_GameObject: {fileID: 1157211024240538}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.20000005, y: 0.2, z: 0.20000005}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4543642198562692}
   - {fileID: 4242263424272950}
@@ -769,6 +770,18 @@ Transform:
   m_Father: {fileID: 4543642198562692}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65460575461374250
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1157211024240538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.48, z: 0}
 --- !u!95 &95156573704475098
 Animator:
   serializedVersion: 3
@@ -816,8 +829,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be67d2a852963bd42a33b9d8cce64407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimSpeed: 0.3
-  WalkSpeed: 1
+  AnimSpeed: 0.2
+  WalkSpeed: 0.3
 --- !u!137 &137584023300694324
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

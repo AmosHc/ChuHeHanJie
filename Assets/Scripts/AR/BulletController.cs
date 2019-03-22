@@ -14,21 +14,27 @@ public class BulletController : MonoBehaviour
 
     private Vector3 forward;
 
+    public CampOption Camp { get; set; }
+
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.AddForce(transform.up * Force);
-    }
-
-    private void Update()
-    {
-        
+        Destroy(gameObject, 10);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        SoilderController sc = collision.gameObject.GetComponent<SoilderController>();
+        //只有当子弹碰到的是对方小兵，才会销毁自身。
+        if (sc != null && sc.Camp == Camp)
+            return;
+        DestroySelf();
         print("bullet collision" + collision.gameObject.name);
     }
 
+    private void DestroySelf()
+    {
+        Destroy(gameObject); 
+    }
 }

@@ -46,9 +46,11 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     public Transform RedCamp;
 
     /// <summary>
-    /// 士兵存储
+    /// 红方士兵存储
     /// </summary>
-    private Dictionary<string, int> SoildersDictionary = new Dictionary<string, int>();
+    private Dictionary<string, int> RedCampSoildersDictionary = new Dictionary<string, int>();
+
+    private Dictionary<string, int> BlueCampSoildersDictionary = new Dictionary<string, int>();
 
     protected override void Awake()
     {
@@ -60,34 +62,35 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     private void Start()
     {
-        SoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
+        RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
+        BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
         
     }
 
     void Update ()
     {
+        //测试：点击生产小兵
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
             StartSpawnSoilders();
 #endif
 
-#if UNITY_ANDROID
-        foreach(Touch touch in Input.touches)
-        {
-            if(touch.phase == TouchPhase.Began)
-            {
-                StartSpawnSoilders();
-            }
-        }
-#endif
-        #region 当战场上升到一定高度，就停止上升，销毁背景
+//#if UNITY_ANDROID
+//        foreach (Touch touch in Input.touches)
+//        {
+//            if (touch.phase == TouchPhase.Began)
+//            {
+//                StartSpawnSoilders();
+//            }
+//        }
+//#endif
+        #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
         if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
         {
             if (BGRFX != null)
                 Destroy(BGRFX);
             if (AR_UI != null)
                 AR_UI.SetActive(true);
-            
             return;
         }
         transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
@@ -100,13 +103,24 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     /// </summary>
     public void StartSpawnSoilders()
     {
-        foreach (KeyValuePair<string, int> pair in SoildersDictionary)
+        foreach (KeyValuePair<string, int> pair in RedCampSoildersDictionary)
         {
             int count = pair.Value;
             for (int i = 0; i < count; i++)
             {
                 GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
                 go.transform.SetParent(RedCamp);
+                go.transform.localPosition = Vector3.zero;
+            }
+        }
+
+        foreach (KeyValuePair<string, int> pair in BlueCampSoildersDictionary)
+        {
+            int count = pair.Value;
+            for (int i = 0; i < count; i++)
+            {
+                GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
+                go.transform.SetParent(BlueCamp);
                 go.transform.localPosition = Vector3.zero;
             }
         }

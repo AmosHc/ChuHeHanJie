@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 4216560190031516}
   - component: {fileID: 95160154188588924}
   - component: {fileID: 114071443508899306}
+  - component: {fileID: 65510234350645242}
   m_Layer: 0
   m_Name: BlueThief
   m_TagString: Untagged
@@ -482,7 +483,7 @@ Transform:
   m_GameObject: {fileID: 1623566709411876}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.20000039, y: 0.19999997, z: 0.20000039}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4699936505411438}
   - {fileID: 4184961344303330}
@@ -769,6 +770,18 @@ Transform:
   m_Father: {fileID: 4399431895380118}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65510234350645242
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623566709411876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.48, z: 0}
 --- !u!95 &95160154188588924
 Animator:
   serializedVersion: 3
@@ -816,8 +829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb29045646788c9468c519ce27bfc589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimSpeed: 0.3
-  WalkSpeed: 0.5
+  AnimSpeed: 0.2
+  WalkSpeed: 0.3
+  Camp: 1
 --- !u!137 &137666911957991634
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

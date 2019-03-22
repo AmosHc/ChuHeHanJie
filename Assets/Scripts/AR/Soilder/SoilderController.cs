@@ -15,6 +15,7 @@ public class SoilderController : MonoBehaviour
     [Tooltip("行走速度")]
     public float WalkSpeed = 1;
 
+    public CampOption Camp;
     /// <summary>
     /// 代理经过的节点集合
     /// </summary>
@@ -54,9 +55,12 @@ public class SoilderController : MonoBehaviour
 
     private void Update()
     {
+        //如果达到终点，销毁自身，并且对玩家造成伤害
         if(ReachDestination())
         {
+            SendMessage();
             animator.speed = 0;
+            DestroySelf();
         }
         else
         { 
@@ -72,7 +76,12 @@ public class SoilderController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        BulletController bc = collision.gameObject.GetComponent<BulletController>();
+
+        //只有当对方的子弹撞击到身上时，才会销毁自身
+        if (bc != null && bc.Camp == Camp)
+            return;
+        DestroySelf();
     }
 
     /// <summary>
@@ -113,5 +122,22 @@ public class SoilderController : MonoBehaviour
     {
 
     }
+
+    /// <summary>
+    /// 对象销毁
+    /// </summary>
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
     
+    /// <summary>
+    /// 发送消息
+    /// </summary>
+    public void SendMessage()
+    {
+        SoilderData sd = new SoilderData();
+        sd.Camp = Camp;
+        sd.Attack = 1;
+    }
 }
