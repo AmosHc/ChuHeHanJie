@@ -53,6 +53,7 @@ public class HeroController : MonoBehaviour
     /// <summary>
     /// 接收消息
     /// </summary>
+    /// <param name="pd">玩家数据</param>
     public void ReceiveMessage(PlayerData pd)
     {
         GameObject go = ObjectManger.Instance.InstantiateObject(bulletPrefab);
@@ -63,6 +64,10 @@ public class HeroController : MonoBehaviour
         go.transform.position = pd.Position;
     }
 
+    /// <summary>
+    /// 接收消息
+    /// </summary>
+    /// <param name="sd">士兵数据</param>
     public void ReceiveMessage(SoilderData sd)
     {
         if(sd.Camp == Camp)

@@ -139,7 +139,7 @@ public class SocketClient:Singleton<SocketClient>
     public static T BytesToObject<T>(byte[] bytesData, int offset, int length) where T : IMessage, new()
     {
         if (length <= 1)
-            return default;
+            return default(T);
         byte[] array = new byte[length - offset];
         for (int i = 0; i < array.Length; i++)
             array[i] = bytesData[i + offset];
