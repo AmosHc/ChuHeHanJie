@@ -41,6 +41,8 @@ public class GameStart : MonoSingleton<GameStart>
         UIManager.Instance.Register<ExitWindow>(ConStr.EXITPANEL);
         UIManager.Instance.Register<SettingWindow>(ConStr.SETTINGPANEL);
         UIManager.Instance.Register<AlertWindow>(ConStr.ALERTPANEL);
+        UIManager.Instance.Register<EmbattleWindow>(ConStr.EMBATTLEPANEL);
+        UIManager.Instance.Register<SelectWindow>(ConStr.SELECTPANEL);
     }
 
     public void PreLoad()

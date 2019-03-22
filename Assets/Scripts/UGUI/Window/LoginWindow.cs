@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProtoUser;
 
 public class LoginWindow : BaseWindow
 {
@@ -46,7 +47,12 @@ public class LoginWindow : BaseWindow
                 return SocketClient.Instance.IsConnected;
                 });
             if (t > 5.0f)
+            {
                 Toast("提示", "连接服务器失败");
+                AddButtonClickListener(m_MainPanel.LoginBtn, () => Toast("提示", "连接服务器失败"));
+                AddButtonClickListener(m_MainPanel.RegisterBtn, () => Toast("提示", "连接服务器失败"));
+                yield break;
+            }
             else
                 Debug.Log("连接服务器成功");
         }
@@ -88,12 +94,22 @@ public class LoginWindow : BaseWindow
     /// </summary>
     private void OnClickLoginBtnOnline()
     {
+
         Debug.Log("登录");
         Debug.Log("账号："+m_MainPanel.UserNameTxt.text+"密码："+m_MainPanel.PassWordTxt.text);
-        GData.LOGIN login = new GData.LOGIN();
-        login.Id = m_MainPanel.UserNameTxt.text;
-        login.Password = m_MainPanel.PassWordTxt.text;
-        SocketClient.Instance.SendAsyn(login);
+        //DataOnline.LOGIN login = new DataOnline.LOGIN();
+        //login.Id = m_MainPanel.UserNameTxt.text;
+        //login.Password = m_MainPanel.PassWordTxt.text;
+
+        User user = new User
+        {
+            Id = m_MainPanel.UserNameTxt.text,
+            Password = m_MainPanel.PassWordTxt.text
+        };
+        
+        Debug.Log(user.GetType().Name);
+
+        SocketClient.Instance.SendAsyn(_RequestType.LOGIN, user);
     }
 
     /// <summary>
