@@ -46,14 +46,22 @@ public class HeroController : MonoBehaviour
     /// </summary>
     public void SendMessage()
     {
-        WarData.Types.Player pd = new WarData.Types.Player();
-        pd.Camp = Camp;
-        pd.Self.X = ARCamera.position.x;
-        pd.Self.Y = ARCamera.position.y;
-        pd.Self.Z = ARCamera.position.z;
-        pd.Forward.X = ARCamera.forward.x;
-        pd.Forward.Y = ARCamera.forward.y;
-        pd.Forward.Z = ARCamera.forward.z;
+        WarData.Types.Player pd = new WarData.Types.Player
+        {
+            Camp = Camp,
+            Self = new WarData.Types.Vector3
+            {
+                X = ARCamera.position.x,
+                Y = ARCamera.position.y,
+                Z = ARCamera.position.z
+            },
+            Forward = new WarData.Types.Vector3()
+            {
+                X = ARCamera.forward.x,
+                Y = ARCamera.forward.y,
+                Z = ARCamera.forward.z
+            }
+        };
         SocketClient.Instance.SendAsyn(pd, _RequestType.PLAYERDATA);
     }
 
