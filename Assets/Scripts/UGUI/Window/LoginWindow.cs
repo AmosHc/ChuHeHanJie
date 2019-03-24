@@ -109,7 +109,7 @@ public class LoginWindow : BaseWindow
         
         Debug.Log(user.GetType().Name);
 
-        SocketClient.Instance.SendAsyn(_RequestType.LOGIN, user);
+        SocketClient.Instance.SendAsyn(user, _RequestType.LOGIN);
     }
 
     /// <summary>

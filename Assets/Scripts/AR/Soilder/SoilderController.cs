@@ -137,8 +137,11 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     public void SendMessage()
     {
-        WarData.Types.Soilder sd = new WarData.Types.Soilder();
-        sd.Camp = Camp;
-        sd.Attack = 1;
+        WarData.Types.Soilder sd = new WarData.Types.Soilder
+        {
+            Camp = Camp,
+            Attack = 1
+        };
+        SocketClient.Instance.SendAsyn(sd, _RequestType.SOILDERDATA);
     }
 }
