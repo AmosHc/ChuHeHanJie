@@ -5,6 +5,8 @@ using UnityEngine;
 public class MenuWindow : BaseWindow
 {
     private MenuPanel m_MainPanel;
+    private bool IsWaitStart = false;
+
     public override void Awake(params object[] paramList)
     {
         base.Awake(paramList);
@@ -33,8 +35,11 @@ public class MenuWindow : BaseWindow
     /// </summary>
     private void OnClickPlayBtn()
     {
-        GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
-        UIManager.Instance.CloseWindow(this);
+        Toast("提示", "匹配玩家中...");
+        if (IsWaitStart)
+            return;
+        else
+            SocketClient.Instance.SendAsyn(_RequestType.START);
     }
     /// <summary>
     /// 设置

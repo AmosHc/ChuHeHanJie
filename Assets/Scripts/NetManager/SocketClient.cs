@@ -27,12 +27,22 @@ public class SocketClient:Singleton<SocketClient>
     /// </summary>
     /// <typeparam name="T">消息类型</typeparam>
     /// <param name="data">消息内容</param>
-    public void SendAsyn<T>(_RequestType _RequestType,T data) where T : IMessage
+    public void SendAsyn<T>(T data, _RequestType _RequestType) where T : IMessage
     {
         Write_Buffer = ObjectToBytes(_RequestType, data);
         m_Socket.Send(Write_Buffer);
         Debug.Log("消息发送成功！");
         //m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
+    }
+
+    public void SendAsyn(_RequestType _RequestType)
+    {
+        byte[] array = new byte[3];
+        array[0] = (byte)_RequestType;
+        array[1] = 0;
+        array[2] = 3;
+        m_Socket.Send(array);
+        Debug.Log("消息发送成功！");
     }
 
     /// <summary>
@@ -68,12 +78,12 @@ public class SocketClient:Singleton<SocketClient>
         int len = m_socket.EndReceive(ar);  //这里获取的lenth太不靠谱
         if (len > 0)
         {
-            len = GetBytesLenth(Read_Buffer);   //获取ReadBuffer的长度
+            len = ByteToLenth(Read_Buffer[1], Read_Buffer[2]);  //获取ReadBuffer的长度
             Debug.Log("收到服务器消息,消息类型："+ (_RequestType)Read_Buffer[0]);
             switch (Read_Buffer[0])
             {
-                case (int)_RequestType.PLAYERINFO:       //登陆成功
-                    DataLocal.Instance.PLAYERINFO = BytesToObject<EMbattle>(Read_Buffer, 1, len);
+                case (int)_RequestType.LOGINOK:       //登陆成功
+                    DataLocal.Instance.PLAYERINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     UIManager.Instance.SendMessageToWindow(ConStr.LOGINPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.LOGINFAIL:     //登陆失败
@@ -85,15 +95,25 @@ public class SocketClient:Singleton<SocketClient>
                 case (int)_RequestType.REGISTERFAIL:  //注册失败
                     UIManager.Instance.SendMessageToWindow(ConStr.REGISTERPANEL, UIMsgID.FAIL);
                     break;
+                case (int)_RequestType.CAMPRED:     //红方阵营
+                    DataLocal.Instance.MyCamp = WarData.Types.CampState.Red;
+                    GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+                    UIManager.Instance.CloseWindow(ConStr.MENUPANEL);
+                    break;
+                case (int)_RequestType.CAMPBLUE:    //蓝方阵营
+                    DataLocal.Instance.MyCamp = WarData.Types.CampState.Blue;
+                    GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+                    UIManager.Instance.CloseWindow(ConStr.MENUPANEL);
+                    break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
                     WarData.Types.Player data_player = new WarData.Types.Player();
-                    data_player = BytesToObject<WarData.Types.Player>(Read_Buffer, 1, len);
-                    System_Event.m_Events.Dispatche(System_Event.GAMEPLAYERDATA, data_player);
+                    data_player = BytesToObject<WarData.Types.Player>(Read_Buffer, 3, len);
+                    System_Event.m_Events.Dispatche(System_Event.GAMEPLAYERDATA,_RequestType.PLAYERDATA, data_player);
                     break;
                 case (int)_RequestType.SOILDERDATA:  //游戏中玩家数据
                     WarData.Types.Soilder data_soilder = new WarData.Types.Soilder();
-                    data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 1, len);
-                    System_Event.m_Events.Dispatche(System_Event.GAMEPLAYERDATA, data_soilder);
+                    data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 3, len);
+                    System_Event.m_Events.Dispatche(System_Event.GAMESOILDERDATA,_RequestType.SOILDERDATA, data_soilder);
                     break;
                 default:break;
             }
@@ -138,10 +158,12 @@ public class SocketClient:Singleton<SocketClient>
         CodedOutputStream cos = new CodedOutputStream(memoryStream);
         instance.WriteTo(cos);
         cos.Flush();
-        byte[] array = new byte[memoryStream.Length + 1];
+        byte[] array = new byte[memoryStream.Length + 3];
         array[0] = _type;
+        array[1] = LenthToByte((int)memoryStream.Length)[0];
+        array[2] = LenthToByte((int)memoryStream.Length)[1];
         memoryStream.Position = 0L;
-        memoryStream.Read(array, 1, array.Length - 1);
+        memoryStream.Read(array, 3, array.Length - 3);
         cos.Dispose();
         return array;
     }
@@ -159,5 +181,26 @@ public class SocketClient:Singleton<SocketClient>
         result.MergeFrom(cis);
         cis.Dispose();
         return result;
+    }
+
+    public static byte[] LenthToByte(int a)
+    {
+        byte[] Lenth = new byte[2];
+        if (a > 255)
+        {
+            Lenth[0] = Convert.ToByte(a / 256);
+            Lenth[1] = Convert.ToByte(a % 256);  
+        }
+        else
+        {
+            Lenth[0] = 0;
+            Lenth[1] = Convert.ToByte(a);
+        }
+        return Lenth;
+    }
+
+    public static int ByteToLenth(byte a,byte b)
+    {
+        return a * 256 + b;
     }
 }

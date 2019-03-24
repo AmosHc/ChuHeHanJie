@@ -6,6 +6,7 @@ using UnityEngine.Experimental.UIElements;
 public class System_Event
 {
     public const string GAMEPLAYERDATA = "gameplayerdata";
+    public const string GAMESOILDERDATA = "gamesoilderdata";
 
     public delegate void m_eventCallback(params object[] paramslist);
 
