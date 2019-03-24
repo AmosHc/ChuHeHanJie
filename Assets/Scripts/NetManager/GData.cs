@@ -486,7 +486,7 @@ namespace ProtoUser {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       public enum CampState {
-        [pbr::OriginalName("read")] Read = 0,
+        [pbr::OriginalName("read")] Red = 0,
         [pbr::OriginalName("blue")] Blue = 1,
       }
 
