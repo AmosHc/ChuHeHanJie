@@ -16,7 +16,7 @@ public class SocketClient:Singleton<SocketClient>
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
 
-    public static bool IsOnline = true;    //在线模式
+    public static bool IsOnline = false;    //在线模式
 
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
@@ -97,13 +97,11 @@ public class SocketClient:Singleton<SocketClient>
                     break;
                 case (int)_RequestType.CAMPRED:     //红方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Red;
-                    GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
-                    UIManager.Instance.CloseWindow(ConStr.MENUPANEL);
+                    UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.CAMPBLUE:    //蓝方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Blue;
-                    GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
-                    UIManager.Instance.CloseWindow(ConStr.MENUPANEL);
+                    UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
                     WarData.Types.Player data_player = new WarData.Types.Player();
@@ -172,7 +170,7 @@ public class SocketClient:Singleton<SocketClient>
     {
         if (length <= 1)
             return default;
-        byte[] array = new byte[length - offset];
+        byte[] array = new byte[length];
         for (int i = 0; i < array.Length; i++)
             array[i] = bytesData[i + offset];
 
@@ -188,19 +186,19 @@ public class SocketClient:Singleton<SocketClient>
         byte[] Lenth = new byte[2];
         if (a > 255)
         {
-            Lenth[0] = Convert.ToByte(a / 256);
-            Lenth[1] = Convert.ToByte(a % 256);  
+            Lenth[1] = Convert.ToByte(a / 256);
+            Lenth[0] = Convert.ToByte(a % 256);  
         }
         else
         {
-            Lenth[0] = 0;
-            Lenth[1] = Convert.ToByte(a);
+            Lenth[1] = 0;
+            Lenth[0] = Convert.ToByte(a);
         }
         return Lenth;
     }
 
     public static int ByteToLenth(byte a,byte b)
     {
-        return a * 256 + b;
+        return b * 256 + a;
     }
 }
