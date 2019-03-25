@@ -5,6 +5,9 @@ using UnityEngine;
 public class MenuWindow : BaseWindow
 {
     private MenuPanel m_MainPanel;
+    private bool IsWaitStart = false;
+    private bool IsStart = false;
+
     public override void Awake(params object[] paramList)
     {
         base.Awake(paramList);
@@ -25,7 +28,17 @@ public class MenuWindow : BaseWindow
 
     public override bool OnMessage(UIMsgID msgId, object[] paramList)
     {
-        return base.OnMessage(msgId, paramList);
+        if (msgId == UIMsgID.OK)
+            IsStart = true;
+        return true;
+    }
+
+    IEnumerator WaitForStartGame()
+    {
+        yield return new WaitUntil(() => IsStart);
+        GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+        UIManager.Instance.CloseWindow(ConStr.ALERTPANEL);
+        UIManager.Instance.CloseWindow(this);
     }
 
     /// <summary>
@@ -33,8 +46,21 @@ public class MenuWindow : BaseWindow
     /// </summary>
     private void OnClickPlayBtn()
     {
-        GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
-        UIManager.Instance.CloseWindow(this);
+        if(!SocketClient.IsOnline)
+        {
+            GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+            UIManager.Instance.CloseWindow(this);
+            return;
+        }
+        Toast("提示", "匹配玩家中...");
+        if (IsWaitStart)
+            return;
+        else
+        {
+            IsWaitStart = true;
+            m_MainPanel.StartCoroutine(WaitForStartGame());
+            SocketClient.Instance.SendAsyn(_RequestType.START);
+        }
     }
     /// <summary>
     /// 设置

@@ -138,7 +138,7 @@ public class EmbattleWindow : BaseWindow
         //}
 
         DataLocal.Instance.PLAYERINFO = PLAYERINFO;
-        SocketClient.Instance.SendAsyn(_RequestType.EMbattle, PLAYERINFO);
+        SocketClient.Instance.SendAsyn(PLAYERINFO, _RequestType.EMbattle);
         UIManager.Instance.CloseWindow(ConStr.SELECTPANEL, true);
         UIManager.Instance.CloseWindow(ConStr.EMBATTLEPANEL, true);
         UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);

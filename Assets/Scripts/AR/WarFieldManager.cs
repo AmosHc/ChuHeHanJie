@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using ProtoUser;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -45,6 +47,9 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("红方士兵根节点")]
     public Transform RedCamp;
 
+    [Tooltip("射击按钮")]
+    public Button ShootButton;
+
     /// <summary>
     /// 红方士兵存储
     /// </summary>
@@ -65,6 +70,19 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
         BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
         
+        // 如果当前设备属于蓝方阵营，将蓝方的HeroController.cs中的SendMessage
+        // 添加到射击按钮点击事件中
+        if(DataLocal.Instance.MyCamp==WarData.Types.CampState.Blue)
+        {
+            HeroController hc = BlueCamp.GetComponent<HeroController>();
+            ShootButton.onClick.AddListener(hc.SendMessage);
+        }
+        else
+        {
+            HeroController hc = RedCamp.GetComponent<HeroController>();
+            ShootButton.onClick.AddListener(hc.SendMessage);
+        }
+            
     }
 
     void Update ()
@@ -98,10 +116,16 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     }
 
 
+    public void StartSpawnSoilders()
+    {
+        StartSpawnSoilders(0);
+        //StartSpawnSoilders(0.2f);
+    }
+
     /// <summary>
     /// 开始生产士兵
     /// </summary>
-    public void StartSpawnSoilders()
+    public void StartSpawnSoilders(float offset)
     {
         foreach (KeyValuePair<string, int> pair in RedCampSoildersDictionary)
         {
@@ -109,8 +133,14 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             for (int i = 0; i < count; i++)
             {
                 GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
+
+                //士兵放回对象池中的时候，士兵的SoilderController.cs代码只会执行
+                //Update函数，为了让士兵可以按照节点正常行走，需要重置NodeIndex。
+                go.GetComponent<SoilderController>().NodeIndex = 0;
+                go.GetComponent<SoilderController>().OffSet = offset;
                 go.transform.SetParent(RedCamp);
-                go.transform.localPosition = Vector3.zero;
+                go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
+
             }
         }
 
@@ -120,8 +150,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             for (int i = 0; i < count; i++)
             {
                 GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
+                go.GetComponent<SoilderController>().NodeIndex = 0;
+                go.GetComponent<SoilderController>().OffSet = offset;
                 go.transform.SetParent(BlueCamp);
-                go.transform.localPosition = Vector3.zero;
+                go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using ProtoUser;
 
 
 /// <summary>
@@ -15,7 +16,7 @@ public class SoilderController : MonoBehaviour
     [Tooltip("行走速度")]
     public float WalkSpeed = 1;
 
-    public CampOption Camp;
+    public WarData.Types.CampState Camp;
     /// <summary>
     /// 代理经过的节点集合
     /// </summary>
@@ -38,6 +39,20 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private int nodeIndex = 0;
 
+    public int NodeIndex
+    {
+        get
+        {
+            return nodeIndex;
+        }
+        set
+        {
+            nodeIndex = value;
+        }
+    }
+
+    public float OffSet = 0;
+
     /// <summary>
     /// 父对象
     /// </summary>
@@ -48,9 +63,8 @@ public class SoilderController : MonoBehaviour
     {
         animator = transform.GetComponent<Animator>();
         animator.speed = AnimSpeed;
-
         parentTransform = transform.parent;
-        InitNodes();
+        InitNodes(OffSet);
     }
 
     private void Update()
@@ -58,7 +72,9 @@ public class SoilderController : MonoBehaviour
         //如果达到终点，销毁自身，并且对玩家造成伤害
         if(ReachDestination())
         {
-            SendMessage();
+            // 只有属于当前设备所属阵营的小兵才会发送消息
+            if (DataLocal.Instance.MyCamp == Camp)
+                SendMessage();
             animator.speed = 0;
             DestroySelf();
         }
@@ -118,7 +134,7 @@ public class SoilderController : MonoBehaviour
     /// <summary>
     /// 初始化节点
     /// </summary>
-    protected virtual void InitNodes()
+    protected virtual void InitNodes(float offset)
     {
 
     }
@@ -128,7 +144,8 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private void DestroySelf()
     {
-        Destroy(gameObject);
+        ObjectManger.Instance.ReleaseObject(gameObject);
+        //Destroy(gameObject);
     }
     
     /// <summary>
@@ -136,8 +153,12 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     public void SendMessage()
     {
-        SoilderData sd = new SoilderData();
-        sd.Camp = Camp;
-        sd.Attack = 1;
+        
+        WarData.Types.Soilder sd = new WarData.Types.Soilder
+        {
+            Camp = Camp,
+            Attack = 1
+        };
+        SocketClient.Instance.SendAsyn(sd, _RequestType.SOILDERDATA);
     }
 }

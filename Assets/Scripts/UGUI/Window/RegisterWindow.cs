@@ -55,7 +55,7 @@ public class RegisterWindow : BaseWindow
             Password = m_MainPanel.PasswordTxt.text,
             Name = m_MainPanel.NicknameTxt.text
         };
-        SocketClient.Instance.SendAsyn(_RequestType.REGISTER, sign);
+        SocketClient.Instance.SendAsyn(sign, _RequestType.REGISTER);
     }
 
     /// <summary>

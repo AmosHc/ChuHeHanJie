@@ -13,16 +13,21 @@ public enum _RequestType
 
     REGISTEROK = 200,   //注册成功
     REGISTERFAIL = 201, //注册失败
-    PLAYERINFO = 202,   //登陆成功返回玩家信息
+    LOGINOK = 202,   //登陆成功返回玩家信息
     LOGINFAIL = 203,    //登陆失败
-    START = 210,         //开始游戏
+    START = 16,         //开始游戏
+    GAMEOVER = 17,      //结束游戏
 
-    EMbattle = 18       //保存阵形
+    EMbattle = 18,       //布阵
+    PLAYERDATA = 19,     //游戏中玩家数据
+    SOILDERDATA = 20,     //游戏中士兵数据
+    CAMPRED = 21,   //红方阵营
+    CAMPBLUE = 22   //蓝方阵营
 }
 
 public class DataLocal : Singleton<DataLocal>
 {
-    public User User;
-
     public EMbattle PLAYERINFO;
+
+    public WarData.Types.CampState MyCamp;
 }
