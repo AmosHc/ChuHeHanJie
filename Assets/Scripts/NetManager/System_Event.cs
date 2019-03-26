@@ -21,17 +21,16 @@ public class System_Event
         }
     }
 
-    private Dictionary<string, m_eventCallback> dic_event = new Dictionary<string, m_eventCallback>();
+    private Dictionary<string, List<m_eventCallback>> dic_event = new Dictionary<string, List<m_eventCallback>>();
 
-    public bool AddListener(string _type,m_eventCallback eventCallback)
+    public void AddListener(string _type,m_eventCallback eventCallback)
     {
         if (!dic_event.ContainsKey(_type))
         {
-            dic_event.Add(_type, eventCallback);
-            return true;
+            List<m_eventCallback> callbacks = new List<m_eventCallback>();
+            dic_event.Add(_type, callbacks);
         }
-        else
-            return false;
+        dic_event[_type].Add(eventCallback);
     }
 
     public bool RemoveListener(string _type)
@@ -55,7 +54,8 @@ public class System_Event
 
         if (dic_event.ContainsKey(_type))
         {
-            dic_event[_type](paramslist);
+            foreach (m_eventCallback callback in dic_event[_type])
+                callback(paramslist);
             return true;
         }
         else
