@@ -1,7 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ProtoUser;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -46,6 +47,9 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("红方士兵根节点")]
     public Transform RedCamp;
 
+    [Tooltip("射击按钮")]
+    public Button ShootButton;
+
     private const string ThiefPrefab = "Assets/GameData/Art/Character/Prefab/Hero/thief.prefab";
     private const string PolicePrefab = "Assets/GameData/Art/Character/Prefab/Hero/police.prefab";
     private const string RomanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/roman.prefab";
@@ -58,13 +62,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     private EMbattle MyFormation = DataLocal.Instance.PLAYERINFO;
     private EMbattle YouFormation = DataLocal.Instance.ENEMYINFO;
 
-    /// <summary>
-    /// 红方士兵存储
-    /// </summary>
-    private Dictionary<string, int> RedCampSoildersDictionary = new Dictionary<string, int>();
-
-    private Dictionary<string, int> BlueCampSoildersDictionary = new Dictionary<string, int>();
-
     protected override void Awake()
     {
         base.Awake();
@@ -73,6 +70,24 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         yLocalAngle = transform.localEulerAngles.y;
         System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
         SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
+    }
+
+    private void Start()
+    {
+
+        // 如果当前设备属于蓝方阵营，将蓝方的HeroController.cs中的SendMessage
+        // 添加到射击按钮点击事件中
+        if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Blue)
+        {
+            HeroController hc = BlueCamp.GetComponent<HeroController>();
+            ShootButton.onClick.AddListener(hc.SendMessage);
+        }
+        else
+        {
+            HeroController hc = RedCamp.GetComponent<HeroController>();
+            ShootButton.onClick.AddListener(hc.SendMessage);
+        }
+
     }
 
     private void OnMessage(object []paramalist)
@@ -87,6 +102,34 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         yield return new WaitUntil(() => NewRoundStart);
         NewRoundStart = false;
         StartSpawnSoilders();
+
+    }
+
+    void Update ()
+    {
+        #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
+        if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
+        {
+            if (BGRFX != null)
+                Destroy(BGRFX);
+            if (AR_UI != null)
+                AR_UI.SetActive(true);
+            return;
+        }
+        transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
+        #endregion
+    }
+
+
+    /// <summary>
+    /// 开始生产士兵
+    /// </summary>
+    public void StartSpawnSoilders()
+    {
+        Transform CampTrans = DataLocal.Instance.MyCamp == WarData.Types.CampState.Red ? RedCamp : BlueCamp;
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject go = null;
     }
 
     private void Start()
@@ -134,6 +177,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
+                go.GetComponent<SoilderController>().NodeIndex = 0;
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero;
             }
@@ -157,6 +201,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
+                go.GetComponent<SoilderController>().NodeIndex = 0;
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero;
             }
