@@ -39,6 +39,18 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private int nodeIndex = 0;
 
+    public int NodeIndex
+    {
+        get
+        {
+            return nodeIndex;
+        }
+        set
+        {
+            nodeIndex = value;
+        }
+    }
+
     /// <summary>
     /// 父对象
     /// </summary>
@@ -59,7 +71,9 @@ public class SoilderController : MonoBehaviour
         //如果达到终点，销毁自身，并且对玩家造成伤害
         if(ReachDestination())
         {
-            SendMessage();
+            // 只有属于当前设备所属阵营的小兵才会发送消息
+            if (DataLocal.Instance.MyCamp == Camp)
+                SendMessage();
             animator.speed = 0;
             DestroySelf();
         }
@@ -130,7 +144,8 @@ public class SoilderController : MonoBehaviour
     private void DestroySelf()
     {
         WarFieldManager.Instance.SoilderCount--;
-        Destroy(gameObject);
+        ObjectManger.Instance.ReleaseObject(gameObject);
+        //Destroy(gameObject);
     }
     
     /// <summary>
@@ -138,6 +153,7 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     public void SendMessage()
     {
+        
         WarData.Types.Soilder sd = new WarData.Types.Soilder
         {
             Camp = Camp,
