@@ -140,10 +140,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         }
 
         CampTrans = CampTrans == RedCamp ? BlueCamp : RedCamp;
-        for (int i = 0; i < YouFormation.Embattle[RoundNow].Length; i++)
+        for (int i = 0; i < 10; i++)
         {
             GameObject go = null;
-            switch (MyFormation.Embattle[RoundNow][i])
+            switch (YouFormation.Embattle[RoundNow][i])
             {
                 case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
                 case ConStr.ArmsMauler: go = ObjectManger.Instance.InstantiateObject(ThiefPrefab); break;
