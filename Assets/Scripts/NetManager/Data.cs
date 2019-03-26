@@ -22,12 +22,17 @@ public enum _RequestType
     PLAYERDATA = 19,     //游戏中玩家数据
     SOILDERDATA = 20,     //游戏中士兵数据
     CAMPRED = 21,   //红方阵营
-    CAMPBLUE = 22   //蓝方阵营
+    CAMPBLUE = 22,   //蓝方阵营
+
+    ISREADY = 23,   //请求出兵
+    NEWROUND = 24   //出兵消息
 }
 
 public class DataLocal : Singleton<DataLocal>
 {
     public EMbattle PLAYERINFO;
+
+    public EMbattle ENEMYINFO;
 
     public WarData.Types.CampState MyCamp;
 }

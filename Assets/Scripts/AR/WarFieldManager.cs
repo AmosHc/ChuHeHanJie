@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProtoUser;
 
 
 /// <summary>
@@ -45,6 +46,18 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("红方士兵根节点")]
     public Transform RedCamp;
 
+    private const string ThiefPrefab = "Assets/GameData/Art/Character/Prefab/Hero/thief.prefab";
+    private const string PolicePrefab = "Assets/GameData/Art/Character/Prefab/Hero/police.prefab";
+    private const string RomanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/roman.prefab";
+    private const string ShamanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/shaman.prefab";
+
+    public int SoilderCount = 0;  //当前士兵数量
+    private bool NewRoundStart = false; //是否开启新回合
+    private int RoundNow = 0;   //当前回合，0为初始值
+
+    private EMbattle MyFormation = DataLocal.Instance.PLAYERINFO;
+    private EMbattle YouFormation = DataLocal.Instance.ENEMYINFO;
+
     /// <summary>
     /// 红方士兵存储
     /// </summary>
@@ -58,32 +71,32 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         originalLocalPosition = transform.localPosition;
         originalLocalScale = transform.localScale;
         yLocalAngle = transform.localEulerAngles.y;
+        System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
+        SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
+    }
+
+    private void OnMessage(object []paramalist)
+    {
+        NewRoundStart = true;
+        RoundNow++;
+        StartCoroutine(WaitForNewRound());
+    }
+
+    IEnumerator WaitForNewRound()
+    {
+        yield return new WaitUntil(() => NewRoundStart);
+        NewRoundStart = false;
+        StartSpawnSoilders();
     }
 
     private void Start()
     {
         RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
         BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
-        
     }
 
     void Update ()
     {
-        //测试：点击生产小兵
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(1))
-            StartSpawnSoilders();
-#endif
-
-//#if UNITY_ANDROID
-//        foreach (Touch touch in Input.touches)
-//        {
-//            if (touch.phase == TouchPhase.Began)
-//            {
-//                StartSpawnSoilders();
-//            }
-//        }
-//#endif
         #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
         if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
         {
@@ -103,27 +116,59 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     /// </summary>
     public void StartSpawnSoilders()
     {
-        foreach (KeyValuePair<string, int> pair in RedCampSoildersDictionary)
+        Transform CampTrans = DataLocal.Instance.MyCamp == WarData.Types.CampState.Red ? RedCamp : BlueCamp;
+        for (int i = 0; i < 10; i++)
         {
-            int count = pair.Value;
-            for (int i = 0; i < count; i++)
+            GameObject go = null;
+            switch (MyFormation.Embattle[RoundNow][i])
             {
-                GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
-                go.transform.SetParent(RedCamp);
+                case ConStr.ArmsCavalry:go = ObjectManger.Instance.InstantiateObject(PolicePrefab);break;
+                case ConStr.ArmsMauler:go = ObjectManger.Instance.InstantiateObject(ThiefPrefab);break;
+                case ConStr.ArmsBowmen:go = ObjectManger.Instance.InstantiateObject(ShamanPrefab);break;
+                case ConStr.ArmsInfantry:go = ObjectManger.Instance.InstantiateObject(RomanPrefab);break;
+                case ConStr.ArmsNull:break;
+                default:break;
+            }
+            if (go == null)
+                continue;
+            else
+            {
+                SoilderCount++;
+                go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero;
             }
         }
 
-        foreach (KeyValuePair<string, int> pair in BlueCampSoildersDictionary)
+        CampTrans = CampTrans == RedCamp ? BlueCamp : RedCamp;
+        for (int i = 0; i < YouFormation.Embattle[RoundNow].Length; i++)
         {
-            int count = pair.Value;
-            for (int i = 0; i < count; i++)
+            GameObject go = null;
+            switch (MyFormation.Embattle[RoundNow][i])
             {
-                GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
-                go.transform.SetParent(BlueCamp);
+                case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
+                case ConStr.ArmsMauler: go = ObjectManger.Instance.InstantiateObject(ThiefPrefab); break;
+                case ConStr.ArmsBowmen: go = ObjectManger.Instance.InstantiateObject(ShamanPrefab); break;
+                case ConStr.ArmsInfantry: go = ObjectManger.Instance.InstantiateObject(RomanPrefab); break;
+                case ConStr.ArmsNull: break;
+                default: break;
+            }
+            if (go == null)
+                continue;
+            else
+            {
+                SoilderCount++;
+                go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero;
             }
         }
+
+        StartCoroutine(WaitForSoilerZero());
+    }
+
+    IEnumerator WaitForSoilerZero()
+    {
+        yield return new WaitUntil(() => SoilderCount == 0);
+        SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
     }
 
     #region 场景缩放及旋转
