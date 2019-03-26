@@ -129,6 +129,7 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private void DestroySelf()
     {
+        WarFieldManager.Instance.SoilderCount--;
         Destroy(gameObject);
     }
     
