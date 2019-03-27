@@ -51,6 +51,8 @@ public class SoilderController : MonoBehaviour
         }
     }
 
+    public float OffSet = 0;
+
     /// <summary>
     /// 父对象
     /// </summary>
@@ -61,15 +63,14 @@ public class SoilderController : MonoBehaviour
     {
         animator = transform.GetComponent<Animator>();
         animator.speed = AnimSpeed;
-
         parentTransform = transform.parent;
-        InitNodes();
+        InitNodes(OffSet);
     }
 
     private void Update()
     {
         //如果达到终点，销毁自身，并且对玩家造成伤害
-        if(ReachDestination())
+        if (ReachDestination())
         {
             // 只有属于当前设备所属阵营的小兵才会发送消息
             if (DataLocal.Instance.MyCamp == Camp)
@@ -78,7 +79,7 @@ public class SoilderController : MonoBehaviour
             DestroySelf();
         }
         else
-        { 
+        {
             float remainingDistance = Vector3.Distance(transform.localPosition, Nodes[nodeIndex]);
             if (nodeIndex <= Nodes.Count - 1 && remainingDistance < 0.1f)
             {
@@ -105,7 +106,7 @@ public class SoilderController : MonoBehaviour
     /// <returns></returns>
     private bool ReachDestination()
     {
-        if(Vector3.Distance(transform.localPosition, DestinationNode) <0.1f)
+        if (Vector3.Distance(transform.localPosition, DestinationNode) < 0.1f)
         {
             return true;
         }
@@ -133,7 +134,7 @@ public class SoilderController : MonoBehaviour
     /// <summary>
     /// 初始化节点
     /// </summary>
-    protected virtual void InitNodes()
+    protected virtual void InitNodes(float offset)
     {
 
     }
@@ -147,13 +148,13 @@ public class SoilderController : MonoBehaviour
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
     }
-    
+
     /// <summary>
     /// 发送消息
     /// </summary>
     public void SendMessage()
     {
-        
+
         WarData.Types.Soilder sd = new WarData.Types.Soilder
         {
             Camp = Camp,
