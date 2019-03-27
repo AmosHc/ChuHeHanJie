@@ -120,40 +120,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         #endregion
     }
 
-
-    /// <summary>
-    /// 开始生产士兵
-    /// </summary>
-    public void StartSpawnSoilders()
-    {
-        Transform CampTrans = DataLocal.Instance.MyCamp == WarData.Types.CampState.Red ? RedCamp : BlueCamp;
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject go = null;
-    }
-
-    private void Start()
-    {
-        RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
-        BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
-    }
-
-    void Update ()
-    {
-        #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
-        if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
-        {
-            if (BGRFX != null)
-                Destroy(BGRFX);
-            if (AR_UI != null)
-                AR_UI.SetActive(true);
-            return;
-        }
-        transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
-        #endregion
-    }
-
-
     /// <summary>
     /// 开始生产士兵
     /// </summary>

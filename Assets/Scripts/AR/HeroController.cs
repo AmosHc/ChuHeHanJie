@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProtoUser;
 using UnityEngine.UI;
-using System.Runtime.CompilerServices;
 
 /// <summary>
 /// 英雄控制
 /// </summary>
 public class HeroController : MonoBehaviour
 {
-    public WarData.Types.CampState Camp  = WarData.Types.CampState.Blue;
+    public WarData.Types.CampState Camp = WarData.Types.CampState.Blue;
 
     private WarData.Types.Player Data_Player = null;
     private WarData.Types.Soilder Data_Soilder = null;
 
+    [Tooltip("玩家血量")]
     public int Health = 10;
 
+    [Tooltip("玩家血量文字框")]
     public Text HealthText;
+
+    [Tooltip("多台设备参照物")]
+    public Transform ImageTarget;
 
     /// <summary>
     /// 子弹预设体路径
@@ -27,7 +31,6 @@ public class HeroController : MonoBehaviour
     private Transform ARCamera;
 
 
-    [MethodImpl(MethodImplOptions.NoOptimization)]
     private void Start()
     {
         ARCamera = GameObject.Find("ARCamera").transform;
@@ -36,7 +39,7 @@ public class HeroController : MonoBehaviour
         StartCoroutine(WaitForMessage());
     }
 
-    private void OnMessage(object []paramlist)
+    private void OnMessage(object[] paramlist)
     {
         if ((_RequestType)paramlist[0] == _RequestType.PLAYERDATA)
             Data_Player = (WarData.Types.Player)paramlist[1];
@@ -67,7 +70,7 @@ public class HeroController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             Shoot();
 #endif
-        if(Camp == WarData.Types.CampState.Blue)
+        if (Camp == WarData.Types.CampState.Blue)
             HealthText.text = "蓝方剩余血量: " + Health.ToString();
         else
             HealthText.text = "红方剩余血量: " + Health.ToString();
@@ -89,20 +92,22 @@ public class HeroController : MonoBehaviour
     /// </summary>
     public void SendMessage()
     {
+        Vector3 localPosition = ImageTarget.InverseTransformPoint(ARCamera.position);
+        Vector3 localForward = ImageTarget.InverseTransformDirection(ARCamera.forward);
         WarData.Types.Player pd = new WarData.Types.Player
         {
             Camp = Camp,
             Self = new WarData.Types.Vector3
             {
-                X = ARCamera.position.x,
-                Y = ARCamera.position.y,
-                Z = ARCamera.position.z
+                X = localPosition.x,
+                Y = localPosition.y,
+                Z = localPosition.z
             },
             Forward = new WarData.Types.Vector3()
             {
-                X = ARCamera.forward.x,
-                Y = ARCamera.forward.y,
-                Z = ARCamera.forward.z
+                X = localForward.x,
+                Y = localForward.y,
+                Z = localForward.z
             }
         };
         SocketClient.Instance.SendAsyn(pd, _RequestType.PLAYERDATA);
@@ -121,8 +126,11 @@ public class HeroController : MonoBehaviour
         //go.transform.SetParent(null);
         //go.GetComponent<BulletController>().Init();
         go.GetComponent<BulletController>().Camp = pd.Camp;
-        go.transform.up = new Vector3(pd.Forward.X, pd.Forward.Y, pd.Forward.Z);
-        go.transform.position = new Vector3(pd.Self.X, pd.Self.Y, pd.Self.Z);
+        Vector3 worldPosition = ImageTarget.TransformPoint(new Vector3(pd.Self.X, pd.Self.Y, pd.Self.Z));
+        Vector3 worldForward = ImageTarget.TransformDirection(new Vector3(pd.Forward.X, pd.Forward.Y, pd.Forward.Z));
+
+        go.transform.up = worldForward;
+        go.transform.position = worldPosition;
     }
 
     public void ReceiveMessage(WarData.Types.Soilder sd)
