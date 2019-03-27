@@ -154,8 +154,12 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     public void StartSpawnSoilders()
     {
+        
+        StartSpawnSoilders(-0.4f);
+        StartSpawnSoilders(-0.2f);
         StartSpawnSoilders(0);
         StartSpawnSoilders(0.2f);
+        StartSpawnSoilders(0.4f);
     }
 
     /// <summary>

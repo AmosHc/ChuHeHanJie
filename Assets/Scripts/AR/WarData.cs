@@ -31,3 +31,31 @@ public class PlayerData
     public Vector3 Position;
     public Vector3 Forward;
 }
+
+/// <summary>
+/// 子弹数据
+/// </summary>
+public class BulletData
+{
+    public CampOption SoilderCamp;
+    public CampOption BulletCamp;
+    public int SoilderID;
+    public int BulletID;
+}
+
+/// <summary>
+/// 客户端向服务器发送游戏准备就绪
+/// </summary>
+public class GameReady
+{
+    public bool IsReady;
+}
+
+
+/// <summary>
+/// 服务器向客户端传回开始发兵指令
+/// </summary>
+public class SpawnSoilders
+{
+    public bool StartSpawn;
+}
