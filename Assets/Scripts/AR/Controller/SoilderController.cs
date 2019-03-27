@@ -144,16 +144,18 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private void DestroySelf()
     {
+        #region 李锐
+        WarFieldManager.Instance.SoilderCount--;
+        #endregion
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
     }
-    
+
     /// <summary>
     /// 发送消息
     /// </summary>
     public void SendMessage()
     {
-        
         WarData.Types.Soilder sd = new WarData.Types.Soilder
         {
             Camp = Camp,

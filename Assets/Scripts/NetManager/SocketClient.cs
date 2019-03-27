@@ -16,7 +16,7 @@ public class SocketClient:Singleton<SocketClient>
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
 
-    public static bool IsOnline = true;    //在线模式
+    public static bool IsOnline = false;    //在线模式
 
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
@@ -97,10 +97,12 @@ public class SocketClient:Singleton<SocketClient>
                     break;
                 case (int)_RequestType.CAMPRED:     //红方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Red;
+                    DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.CAMPBLUE:    //蓝方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Blue;
+                    DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
@@ -112,6 +114,9 @@ public class SocketClient:Singleton<SocketClient>
                     WarData.Types.Soilder data_soilder = new WarData.Types.Soilder();
                     data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 3, len);
                     System_Event.m_Events.Dispatche(System_Event.GAMESOILDERDATA,_RequestType.SOILDERDATA, data_soilder);
+                    break;
+                case (int)_RequestType.NEWROUND:    //下一回合开始可以进行出兵操作
+                    System_Event.m_Events.Dispatche(System_Event.GAMENEWROUND);
                     break;
                 default:break;
             }

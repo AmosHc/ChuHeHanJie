@@ -50,6 +50,20 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("射击按钮")]
     public Button ShootButton;
 
+    #region 李锐
+    private const string ThiefPrefab = "Assets/GameData/Art/Character/Prefab/Hero/thief.prefab";
+    private const string PolicePrefab = "Assets/GameData/Art/Character/Prefab/Hero/police.prefab";
+    private const string RomanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/roman.prefab";
+    private const string ShamanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/shaman.prefab";
+
+    public int SoilderCount = 0;  //当前士兵数量
+    private bool NewRoundStart = false; //是否开启新回合
+    private int RoundNow = 0;   //当前回合，0为初始值
+
+    private EMbattle MyFormation = DataLocal.Instance.PLAYERINFO;
+    private EMbattle YouFormation = DataLocal.Instance.ENEMYINFO;
+    #endregion
+
     /// <summary>
     /// 红方士兵存储
     /// </summary>
@@ -63,6 +77,11 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         originalLocalPosition = transform.localPosition;
         originalLocalScale = transform.localScale;
         yLocalAngle = transform.localEulerAngles.y;
+
+        #region 李锐
+        System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
+        SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
+        #endregion
     }
 
     private void Start()
@@ -84,6 +103,23 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         }
             
     }
+
+    #region 李锐
+    private void OnMessage(object[] paramalist)
+    {
+        NewRoundStart = true;
+        RoundNow++;
+        StartCoroutine(WaitForNewRound());
+    }
+
+    IEnumerator WaitForNewRound()
+    {
+        yield return new WaitUntil(() => NewRoundStart);
+        NewRoundStart = false;
+        StartSpawnSoilders();
+
+    }
+    #endregion
 
     void Update ()
     {
@@ -119,7 +155,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     public void StartSpawnSoilders()
     {
         StartSpawnSoilders(0);
-        //StartSpawnSoilders(0.2f);
+        StartSpawnSoilders(0.2f);
     }
 
     /// <summary>
@@ -157,6 +193,14 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             }
         }
     }
+
+    #region 李锐
+    IEnumerator WaitForSoilerZero()
+    {
+        yield return new WaitUntil(() => SoilderCount == 0);
+        SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
+    }
+    #endregion
 
     #region 场景缩放及旋转
     public void RotateWarField(float factor)
