@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ProtoUser;
@@ -102,6 +102,40 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         yield return new WaitUntil(() => NewRoundStart);
         NewRoundStart = false;
         StartSpawnSoilders();
+
+    }
+
+    void Update ()
+    {
+        #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
+        if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
+        {
+            if (BGRFX != null)
+                Destroy(BGRFX);
+            if (AR_UI != null)
+                AR_UI.SetActive(true);
+            return;
+        }
+        transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
+        #endregion
+    }
+
+
+    /// <summary>
+    /// 开始生产士兵
+    /// </summary>
+    public void StartSpawnSoilders()
+    {
+        Transform CampTrans = DataLocal.Instance.MyCamp == WarData.Types.CampState.Red ? RedCamp : BlueCamp;
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject go = null;
+    }
+
+    private void Start()
+    {
+        RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
+        BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
     }
 
     void Update ()
@@ -150,10 +184,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         }
 
         CampTrans = CampTrans == RedCamp ? BlueCamp : RedCamp;
-        for (int i = 0; i < YouFormation.Embattle[RoundNow].Length; i++)
+        for (int i = 0; i < 10; i++)
         {
             GameObject go = null;
-            switch (MyFormation.Embattle[RoundNow][i])
+            switch (YouFormation.Embattle[RoundNow][i])
             {
                 case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
                 case ConStr.ArmsMauler: go = ObjectManger.Instance.InstantiateObject(ThiefPrefab); break;
