@@ -18,14 +18,18 @@ public enum _RequestType
     START = 16,         //开始游戏
     GAMEOVER = 17,      //结束游戏
 
-    EMbattle = 18,       //布阵
+    EMbattle = 18,       //布阵保存
     PLAYERDATA = 19,     //游戏中玩家数据
     SOILDERDATA = 20,     //游戏中士兵数据
-    CAMPRED = 21,   //红方阵营
-    CAMPBLUE = 22,   //蓝方阵营
+    BULLETDATA = 21,    //游戏中子弹数据
 
-    ISREADY = 23,   //请求出兵
-    NEWROUND = 24   //出兵消息
+    CAMPRED = 98,   //红方阵营
+    CAMPBLUE = 99,   //蓝方阵营
+
+    ISREADY = 50,   //请求出兵
+    NEWROUND = 51,   //出兵消息
+
+    FORMATION = 52  //发送阵形到服务器
 }
 
 public class DataLocal : Singleton<DataLocal>

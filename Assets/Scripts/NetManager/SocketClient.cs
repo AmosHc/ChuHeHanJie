@@ -98,11 +98,13 @@ public class SocketClient:Singleton<SocketClient>
                 case (int)_RequestType.CAMPRED:     //红方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Red;
                     DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
+                    SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.FORMATION);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.CAMPBLUE:    //蓝方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Blue;
                     DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
+                    SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.FORMATION);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
@@ -114,6 +116,9 @@ public class SocketClient:Singleton<SocketClient>
                     WarData.Types.Soilder data_soilder = new WarData.Types.Soilder();
                     data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 3, len);
                     System_Event.m_Events.Dispatche(System_Event.GAMESOILDERDATA,_RequestType.SOILDERDATA, data_soilder);
+                    break;
+                case (int)_RequestType.BULLETDATA:  //游戏中子弹数据
+                    System_Event.m_Events.Dispatche(System_Event.GAMEBULLETDATA);
                     break;
                 case (int)_RequestType.NEWROUND:    //下一回合开始可以进行出兵操作
                     System_Event.m_Events.Dispatche(System_Event.GAMENEWROUND);
