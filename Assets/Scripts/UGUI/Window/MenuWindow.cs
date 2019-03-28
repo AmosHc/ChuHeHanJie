@@ -59,7 +59,7 @@ public class MenuWindow : BaseWindow
         {
             IsWaitStart = true;
             m_MainPanel.StartCoroutine(WaitForStartGame());
-            SocketClient.Instance.SendAsyn(_RequestType.START);
+            SocketClient.Instance.SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.START);
         }
     }
     /// <summary>

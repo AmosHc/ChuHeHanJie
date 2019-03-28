@@ -16,7 +16,7 @@ public class SocketClient:Singleton<SocketClient>
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
 
-    public static bool IsOnline = false;    //在线模式
+    public static bool IsOnline = true;    //在线模式
 
     private Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
@@ -31,7 +31,7 @@ public class SocketClient:Singleton<SocketClient>
     {
         Write_Buffer = ObjectToBytes(_RequestType, data);
         m_Socket.Send(Write_Buffer);
-        Debug.Log("消息发送成功！");
+        Debug.Log("消息发送成功！消息类型：" + _RequestType);
         //m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
     }
 
@@ -42,7 +42,7 @@ public class SocketClient:Singleton<SocketClient>
         array[1] = 0;
         array[2] = 3;
         m_Socket.Send(array);
-        Debug.Log("消息发送成功！");
+        Debug.Log("消息发送成功！消息类型：" + _RequestType);
     }
 
     /// <summary>

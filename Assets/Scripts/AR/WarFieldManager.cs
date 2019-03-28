@@ -51,10 +51,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     public Button ShootButton;
 
     #region 李锐
-    private const string ThiefPrefab = "Assets/GameData/Art/Character/Prefab/Hero/thief.prefab";
-    private const string PolicePrefab = "Assets/GameData/Art/Character/Prefab/Hero/police.prefab";
-    private const string RomanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/roman.prefab";
-    private const string ShamanPrefab = "Assets/GameData/Art/Character/Prefab/Hero/shaman.prefab";
+    private const string ThiefPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
+    private const string PolicePrefab = "Assets/GameData/Prefabs/AR/police.prefab";
+    private const string RomanPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
+    private const string ShamanPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
 
     public int SoilderCount = 0;  //当前士兵数量
     private bool NewRoundStart = false; //是否开启新回合
@@ -77,11 +77,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         originalLocalPosition = transform.localPosition;
         originalLocalScale = transform.localScale;
         yLocalAngle = transform.localEulerAngles.y;
-
-        #region 李锐
-        System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
-        SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
-        #endregion
     }
 
     private void Start()
@@ -117,7 +112,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         yield return new WaitUntil(() => NewRoundStart);
         NewRoundStart = false;
         StartSpawnSoilders();
-
     }
     #endregion
 
@@ -126,7 +120,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         //测试：点击生产小兵
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
+        {
+            RoundNow++;
             StartSpawnSoilders();
+        }
 #endif
 
 //#if UNITY_ANDROID
@@ -142,9 +139,17 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
         {
             if (BGRFX != null)
+            {
+                #region 李锐
+                System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
+                SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
+                #endregion
+
                 Destroy(BGRFX);
+            }
             if (AR_UI != null)
                 AR_UI.SetActive(true);
+            
             return;
         }
         transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
@@ -154,45 +159,47 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     public void StartSpawnSoilders()
     {
-        
-        StartSpawnSoilders(-0.4f);
-        StartSpawnSoilders(-0.2f);
-        StartSpawnSoilders(0);
-        StartSpawnSoilders(0.2f);
-        StartSpawnSoilders(0.4f);
+        Transform CampTrans = DataLocal.Instance.MyCamp == WarData.Types.CampState.Red ? RedCamp : BlueCamp;
+        StartSpawnSoilders(CampTrans, MyFormation);     //我方出兵
+        CampTrans = CampTrans == RedCamp ? BlueCamp : RedCamp;
+        StartSpawnSoilders(CampTrans, YouFormation);    //对方出兵
+//        StartCoroutine(WaitForSoilerZero());
     }
 
     /// <summary>
     /// 开始生产士兵
     /// </summary>
-    public void StartSpawnSoilders(float offset)
+    /// <param name="CampTrans">阵营父节点</param>
+    /// <param name="mbattle">阵形信息</param>
+    public void StartSpawnSoilders(Transform CampTrans, EMbattle mbattle)
     {
-        foreach (KeyValuePair<string, int> pair in RedCampSoildersDictionary)
+        float offset = -0.6f;   //初始偏移量
+        for (int i = 0; i < 10; i++)
         {
-            int count = pair.Value;
-            for (int i = 0; i < count; i++)
+            offset += 0.2f;
+            GameObject go = null;
+            Debug.LogWarning(RoundNow);
+            switch (mbattle.Embattle[RoundNow-1][i])
             {
-                GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
-
-                //士兵放回对象池中的时候，士兵的SoilderController.cs代码只会执行
-                //Update函数，为了让士兵可以按照节点正常行走，需要重置NodeIndex。
-                go.GetComponent<SoilderController>().NodeIndex = 0;
-                go.GetComponent<SoilderController>().OffSet = offset;
-                go.transform.SetParent(RedCamp);
-                go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
-
+                case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
+                case ConStr.ArmsMauler: go = ObjectManger.Instance.InstantiateObject(ThiefPrefab); break;
+                case ConStr.ArmsBowmen: go = ObjectManger.Instance.InstantiateObject(ShamanPrefab); break;
+                case ConStr.ArmsInfantry: go = ObjectManger.Instance.InstantiateObject(RomanPrefab); break;
+                case ConStr.ArmsNull: break;
+                default: break;
             }
-        }
-
-        foreach (KeyValuePair<string, int> pair in BlueCampSoildersDictionary)
-        {
-            int count = pair.Value;
-            for (int i = 0; i < count; i++)
+            if (go == null)
+                continue;
+            else
             {
-                GameObject go = ObjectManger.Instance.InstantiateObject(pair.Key);
+                SoilderCount++;
                 go.GetComponent<SoilderController>().NodeIndex = 0;
+                if (CampTrans == RedCamp)
+                    go.GetComponent<SoilderController>().Camp = WarData.Types.CampState.Red;
+                else
+                    go.GetComponent<SoilderController>().Camp = WarData.Types.CampState.Blue;
+                go.transform.SetParent(CampTrans);
                 go.GetComponent<SoilderController>().OffSet = offset;
-                go.transform.SetParent(BlueCamp);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
             }
         }
