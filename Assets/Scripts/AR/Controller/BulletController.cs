@@ -15,15 +15,15 @@ public class BulletController : MonoBehaviour
 
     private Vector3 forward;
 
-    //测试用
-    private Transform ImageTarget;
+    ////测试用
+    //private Transform ImageTarget;
 
     public WarData.Types.CampState Camp { get; set; }
 
     private void Start()
     {
-        //测试用
-        ImageTarget = GameObject.Find("ImageTarget").transform;
+        ////测试用
+        //ImageTarget = GameObject.Find("ImageTarget").transform;
         Init();
     }
 
@@ -52,20 +52,25 @@ public class BulletController : MonoBehaviour
         print("bullet collision" + collision.gameObject.name);
     }
 
-    /// <summary>
-    /// 测试用
-    /// </summary>
-    private void OnGUI()
+    private void SendMessage()
     {
-        GUIStyle fontStyle = new GUIStyle();
-        fontStyle.normal.background = null;    //设置背景填充
-        fontStyle.normal.textColor = new Color(1, 0, 0);   //设置字体颜色
-        fontStyle.fontSize = 60;       //字体大小
-
-        GUI.Label(new Rect(100, 300, 200, 200), "位置："+ ImageTarget.InverseTransformPoint(transform.position).ToString(), fontStyle);
-        GUI.Label(new Rect(100, 500, 200, 200), "位置：" + ImageTarget.InverseTransformDirection(transform.forward).ToString(), fontStyle);
-
+        BulletData bd = new BulletData();
     }
+
+    ///// <summary>
+    ///// 测试用
+    ///// </summary>
+    //private void OnGUI()
+    //{
+    //    GUIStyle fontStyle = new GUIStyle();
+    //    fontStyle.normal.background = null;    //设置背景填充
+    //    fontStyle.normal.textColor = new Color(1, 0, 0);   //设置字体颜色
+    //    fontStyle.fontSize = 60;       //字体大小
+
+    //    GUI.Label(new Rect(100, 300, 200, 200), "位置："+ ImageTarget.InverseTransformPoint(transform.position).ToString(), fontStyle);
+    //    GUI.Label(new Rect(100, 500, 200, 200), "位置：" + ImageTarget.InverseTransformDirection(transform.forward).ToString(), fontStyle);
+
+    //}
 
     private void DestroySelf()
     {
