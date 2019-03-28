@@ -98,11 +98,13 @@ public class SocketClient:Singleton<SocketClient>
                 case (int)_RequestType.CAMPRED:     //红方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Red;
                     DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
+                    SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.FORMATION);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.CAMPBLUE:    //蓝方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Blue;
                     DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
+                    SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.FORMATION);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
