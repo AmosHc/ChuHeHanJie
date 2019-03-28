@@ -8,6 +8,7 @@ public class System_Event
     public const string GAMEPLAYERDATA = "gameplayerdata";
     public const string GAMESOILDERDATA = "gamesoilderdata";
     public const string GAMENEWROUND = "gamenewround";
+    public const string GAMEBULLETDATA = "gamebulletdata";
 
     public delegate void m_eventCallback(params object[] paramslist);
 

@@ -115,6 +115,9 @@ public class SocketClient:Singleton<SocketClient>
                     data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 3, len);
                     System_Event.m_Events.Dispatche(System_Event.GAMESOILDERDATA,_RequestType.SOILDERDATA, data_soilder);
                     break;
+                case (int)_RequestType.BULLETDATA:  //游戏中子弹数据
+                    System_Event.m_Events.Dispatche(System_Event.GAMEBULLETDATA);
+                    break;
                 case (int)_RequestType.NEWROUND:    //下一回合开始可以进行出兵操作
                     System_Event.m_Events.Dispatche(System_Event.GAMENEWROUND);
                     break;
