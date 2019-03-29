@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using ProtoUser;
 
@@ -16,6 +17,11 @@ public class SoilderController : MonoBehaviour
     [Tooltip("行走速度")]
     public float WalkSpeed = 1;
 
+    /// <summary>
+    /// 兵的标志
+    /// </summary>
+    public int ID { get; set; }
+        
     public WarData.Types.CampState Camp;
     /// <summary>
     /// 代理经过的节点集合
@@ -38,6 +44,8 @@ public class SoilderController : MonoBehaviour
     /// 节点索引
     /// </summary>
     private int nodeIndex = 0;
+
+    private WarData.Types.Bullet BulletData = null;
 
     public int NodeIndex
     {
@@ -65,6 +73,32 @@ public class SoilderController : MonoBehaviour
         animator.speed = AnimSpeed;
         parentTransform = transform.parent;
         InitNodes(OffSet);
+        System_Event.m_Events.AddListener(System_Event.GAMEBULLETDATA, OnMessage);
+        StartCoroutine(WaitForMessage());
+    }
+
+    private void OnMessage(object[] paramlist)
+    {
+        if ((_RequestType)paramlist[0] == _RequestType.BULLETDATA)
+            BulletData = (WarData.Types.Bullet)paramlist[1];
+        else
+            Debug.LogWarning("消息类型错误：" + paramlist[0]);
+    }
+
+    IEnumerator WaitForMessage()
+    {
+        yield return new WaitUntil(() => BulletData != null);
+        if (BulletData != null)
+            ReceiveMessage(BulletData);
+        BulletData = null;
+        StartCoroutine(WaitForMessage());
+    }
+
+    public void ReceiveMessage(WarData.Types.Bullet bd)
+    {
+        //如果包中的子弹阵营和ID与当前子弹的阵营和ID相符，就销毁子弹
+        if (bd.SoilderCamp == Camp && bd.SoilderID == ID)
+            DestroySelf();
     }
 
     private void Update()
@@ -92,12 +126,13 @@ public class SoilderController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        BulletController bc = collision.gameObject.GetComponent<BulletController>();
+        //单机用
+        //BulletController bc = collision.gameObject.GetComponent<BulletController>();
 
-        //只有当对方的子弹撞击到身上时，才会销毁自身
-        if (bc != null && bc.Camp == Camp)
-            return;
-        DestroySelf();
+        ////只有当对方的子弹撞击到身上时，才会销毁自身
+        //if (bc != null && bc.Camp == Camp)
+        //    return;
+        //DestroySelf();
     }
 
     /// <summary>

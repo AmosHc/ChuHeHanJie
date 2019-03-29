@@ -24,6 +24,10 @@ public class HeroController : MonoBehaviour
     public Transform ImageTarget;
 
     /// <summary>
+    /// 该玩家当前的子弹ID
+    /// </summary>
+    private int currentBulletID = 0;
+    /// <summary>
     /// 子弹预设体路径
     /// </summary>
     private string bulletPrefab = "Assets/GameData/Prefabs/AR/Bullet.prefab";
@@ -126,6 +130,8 @@ public class HeroController : MonoBehaviour
         //go.transform.SetParent(null);
         //go.GetComponent<BulletController>().Init();
         go.GetComponent<BulletController>().Camp = pd.Camp;
+        go.GetComponent<BulletController>().ID = currentBulletID % int.MaxValue;
+        currentBulletID += 1;
         Vector3 worldPosition = ImageTarget.TransformPoint(new Vector3(pd.Self.X, pd.Self.Y, pd.Self.Z));
         Vector3 worldForward =  ImageTarget.TransformDirection(new Vector3(pd.Forward.X, pd.Forward.Y, pd.Forward.Z)); 
 

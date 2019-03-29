@@ -9,11 +9,20 @@ using ProtoUser;
 /// </summary>
 public class BulletController : MonoBehaviour
 {
+
+    [Tooltip("子弹受力")]
     public float Force = 1;
+
+    /// <summary>
+    /// 子弹的标志
+    /// </summary>
+    public int ID { get; set; }
 
     private Rigidbody rigidBody;
 
     private Vector3 forward;
+
+    private WarData.Types.Bullet BulletData = null;
 
     ////测试用
     //private Transform ImageTarget;
@@ -25,6 +34,25 @@ public class BulletController : MonoBehaviour
         ////测试用
         //ImageTarget = GameObject.Find("ImageTarget").transform;
         Init();
+        System_Event.m_Events.AddListener(System_Event.GAMEBULLETDATA, OnMessage);
+        StartCoroutine(WaitForMessage());
+    }
+
+    private void OnMessage(object[] paramlist)
+    {
+        if ((_RequestType)paramlist[0] == _RequestType.BULLETDATA)
+            BulletData = (WarData.Types.Bullet)paramlist[1];
+        else
+            Debug.LogWarning("消息类型错误：" + paramlist[0]);
+    }
+
+    IEnumerator WaitForMessage()
+    {
+        yield return new WaitUntil(() => BulletData != null);
+        if (BulletData != null)
+            ReceiveMessage(BulletData);
+        BulletData = null;
+        StartCoroutine(WaitForMessage());
     }
 
     public void Init()
@@ -45,18 +73,46 @@ public class BulletController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         SoilderController sc = collision.gameObject.GetComponent<SoilderController>();
-        //只有当子弹碰到的是对方小兵，才会销毁自身。
-        if (sc != null && sc.Camp == Camp)
-            return;
-        DestroySelf();
-        print("bullet collision" + collision.gameObject.name);
+        
+        if(sc==null)
+        {
+            DestroySelf();
+            print("子弹击中环境：" + collision.gameObject.name);
+        }
+        else if(sc.Camp != Camp)
+        {
+            //只有当子弹碰到的是对方小兵，才会销毁自身或者发送消息。
+            SendMessage(sc);
+            print(string.Format("发送的消息是：\n子弹阵营：{0}，子弹ID，{1}，小兵阵营：{2}，小兵ID：{3}", Camp, ID, sc.Camp, sc.ID));
+        }
+        else
+        {
+            print("子弹击中己方小兵");
+        }
     }
 
-    private void SendMessage()
+    /// <summary>
+    /// 发送消息
+    /// </summary>
+    public void SendMessage(SoilderController sc)
     {
-        BulletData bd = new BulletData();
+        WarData.Types.Bullet bd = new WarData.Types.Bullet
+        {
+            BulletCamp = Camp,
+            BulletID = ID,
+            SoilderCamp = sc.Camp,
+            SoilderID = sc.ID,
+        };
+        SocketClient.Instance.SendAsyn(bd, _RequestType.PLAYERDATA);
     }
 
+
+    public void ReceiveMessage(WarData.Types.Bullet bd)
+    {
+        //如果包中的子弹阵营和ID与当前子弹的阵营和ID相符，就销毁子弹
+        if (bd.BulletCamp == Camp && bd.BulletID == ID)
+            DestroySelf();
+    }
     ///// <summary>
     ///// 测试用
     ///// </summary>

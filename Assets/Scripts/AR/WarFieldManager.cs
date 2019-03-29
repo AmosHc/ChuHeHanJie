@@ -50,6 +50,13 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("射击按钮")]
     public Button ShootButton;
 
+    #region 蔡林烽
+    /// <summary>
+    /// 当前生产小兵的ID
+    /// </summary>
+    private int currentSoilderID = 0;
+    #endregion
+
     #region 李锐
     private const string ThiefPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
     private const string PolicePrefab = "Assets/GameData/Prefabs/AR/police.prefab";
@@ -200,6 +207,12 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                     go.GetComponent<SoilderController>().Camp = WarData.Types.CampState.Blue;
                 go.transform.SetParent(CampTrans);
                 go.GetComponent<SoilderController>().OffSet = offset;
+
+                #region 蔡林烽
+                go.GetComponent<SoilderController>().ID = currentSoilderID % int.MaxValue;
+                currentSoilderID += 1;
+                #endregion
+
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
             }
         }
