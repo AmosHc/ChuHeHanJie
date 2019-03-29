@@ -26,14 +26,17 @@ namespace ProtoUser {
           string.Concat(
             "CgtHRGF0YS5wcm90bxIKcHJvdG9fVXNlciIyCgRVc2VyEgoKAmlkGAEgASgJ",
             "EhAKCHBhc3N3b3JkGAIgASgJEgwKBG5hbWUYAyABKAkiKgoIRU1iYXR0bGUS",
-            "DAoEbmFtZRgBIAEoCRIQCghlbWJhdHRsZRgCIAMoDCKuAgoHV2FyRGF0YRoq",
+            "DAoEbmFtZRgBIAEoCRIQCghlbWJhdHRsZRgCIAMoDCLFAwoHV2FyRGF0YRoq",
             "CgdWZWN0b3IzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCGkYK",
             "B1NvaWxkZXISKwoEQ2FtcBgEIAEoDjIdLnByb3RvX1VzZXIuV2FyRGF0YS5D",
-            "YW1wU3RhdGUSDgoGYXR0YWNrGAUgASgFGo0BCgVQbGFlchIrCgRDYW1wGAYg",
-            "ASgOMh0ucHJvdG9fVXNlci5XYXJEYXRhLkNhbXBTdGF0ZRIpCgRTZWxmGAcg",
-            "ASgLMhsucHJvdG9fVXNlci5XYXJEYXRhLlZlY3RvcjMSLAoHRm9yd2FyZBgI",
-            "IAEoCzIbLnByb3RvX1VzZXIuV2FyRGF0YS5WZWN0b3IzIh8KCUNhbXBTdGF0",
-            "ZRIICgRyZWFkEAASCAoEYmx1ZRABYgZwcm90bzM="));
+            "YW1wU3RhdGUSDgoGYXR0YWNrGAUgASgFGo4BCgZQbGF5ZXISKwoEQ2FtcBgG",
+            "IAEoDjIdLnByb3RvX1VzZXIuV2FyRGF0YS5DYW1wU3RhdGUSKQoEU2VsZhgH",
+            "IAEoCzIbLnByb3RvX1VzZXIuV2FyRGF0YS5WZWN0b3IzEiwKB0ZvcndhcmQY",
+            "CCABKAsyGy5wcm90b19Vc2VyLldhckRhdGEuVmVjdG9yMxqUAQoGQnVsbGV0",
+            "EjIKC1NvaWxkZXJDYW1wGAkgASgOMh0ucHJvdG9fVXNlci5XYXJEYXRhLkNh",
+            "bXBTdGF0ZRIxCgpCdWxsZXRDYW1wGAogASgOMh0ucHJvdG9fVXNlci5XYXJE",
+            "YXRhLkNhbXBTdGF0ZRIRCglTb2lsZGVySUQYCyABKAUSEAoIQnVsbGV0SUQY",
+            "DCABKAUiHgoJQ2FtcFN0YXRlEgcKA3JlZBAAEggKBGJsdWUQAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -41,7 +44,8 @@ namespace ProtoUser {
             new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.EMbattle), global::ProtoUser.EMbattle.Parser, new[]{ "Name", "Embattle" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.WarData), global::ProtoUser.WarData.Parser, null, null, new[]{ typeof(global::ProtoUser.WarData.Types.CampState) }, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.WarData.Types.Vector3), global::ProtoUser.WarData.Types.Vector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.WarData.Types.Soilder), global::ProtoUser.WarData.Types.Soilder.Parser, new[]{ "Camp", "Attack" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.WarData.Types.Player), global::ProtoUser.WarData.Types.Player.Parser, new[]{ "Camp", "Self", "Forward" }, null, null, null)})
+            new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.WarData.Types.Player), global::ProtoUser.WarData.Types.Player.Parser, new[]{ "Camp", "Self", "Forward" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ProtoUser.WarData.Types.Bullet), global::ProtoUser.WarData.Types.Bullet.Parser, new[]{ "SoilderCamp", "BulletCamp", "SoilderID", "BulletID" }, null, null, null)})
           }));
     }
     #endregion
@@ -486,7 +490,7 @@ namespace ProtoUser {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       public enum CampState {
-        [pbr::OriginalName("read")] Red = 0,
+        [pbr::OriginalName("red")] Red = 0,
         [pbr::OriginalName("blue")] Blue = 1,
       }
 
@@ -1021,6 +1025,219 @@ namespace ProtoUser {
                   Forward = new global::ProtoUser.WarData.Types.Vector3();
                 }
                 input.ReadMessage(Forward);
+                break;
+              }
+            }
+          }
+        }
+
+      }
+
+      public sealed partial class Bullet : pb::IMessage<Bullet> {
+        private static readonly pb::MessageParser<Bullet> _parser = new pb::MessageParser<Bullet>(() => new Bullet());
+        private pb::UnknownFieldSet _unknownFields;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<Bullet> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor {
+          get { return global::ProtoUser.WarData.Descriptor.NestedTypes[3]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+          get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Bullet() {
+          OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Bullet(Bullet other) : this() {
+          soilderCamp_ = other.soilderCamp_;
+          bulletCamp_ = other.bulletCamp_;
+          soilderID_ = other.soilderID_;
+          bulletID_ = other.bulletID_;
+          _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Bullet Clone() {
+          return new Bullet(this);
+        }
+
+        /// <summary>Field number for the "SoilderCamp" field.</summary>
+        public const int SoilderCampFieldNumber = 9;
+        private global::ProtoUser.WarData.Types.CampState soilderCamp_ = 0;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::ProtoUser.WarData.Types.CampState SoilderCamp {
+          get { return soilderCamp_; }
+          set {
+            soilderCamp_ = value;
+          }
+        }
+
+        /// <summary>Field number for the "BulletCamp" field.</summary>
+        public const int BulletCampFieldNumber = 10;
+        private global::ProtoUser.WarData.Types.CampState bulletCamp_ = 0;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::ProtoUser.WarData.Types.CampState BulletCamp {
+          get { return bulletCamp_; }
+          set {
+            bulletCamp_ = value;
+          }
+        }
+
+        /// <summary>Field number for the "SoilderID" field.</summary>
+        public const int SoilderIDFieldNumber = 11;
+        private int soilderID_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int SoilderID {
+          get { return soilderID_; }
+          set {
+            soilderID_ = value;
+          }
+        }
+
+        /// <summary>Field number for the "BulletID" field.</summary>
+        public const int BulletIDFieldNumber = 12;
+        private int bulletID_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int BulletID {
+          get { return bulletID_; }
+          set {
+            bulletID_ = value;
+          }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other) {
+          return Equals(other as Bullet);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(Bullet other) {
+          if (ReferenceEquals(other, null)) {
+            return false;
+          }
+          if (ReferenceEquals(other, this)) {
+            return true;
+          }
+          if (SoilderCamp != other.SoilderCamp) return false;
+          if (BulletCamp != other.BulletCamp) return false;
+          if (SoilderID != other.SoilderID) return false;
+          if (BulletID != other.BulletID) return false;
+          return Equals(_unknownFields, other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode() {
+          int hash = 1;
+          if (SoilderCamp != 0) hash ^= SoilderCamp.GetHashCode();
+          if (BulletCamp != 0) hash ^= BulletCamp.GetHashCode();
+          if (SoilderID != 0) hash ^= SoilderID.GetHashCode();
+          if (BulletID != 0) hash ^= BulletID.GetHashCode();
+          if (_unknownFields != null) {
+            hash ^= _unknownFields.GetHashCode();
+          }
+          return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString() {
+          return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output) {
+          if (SoilderCamp != 0) {
+            output.WriteRawTag(72);
+            output.WriteEnum((int) SoilderCamp);
+          }
+          if (BulletCamp != 0) {
+            output.WriteRawTag(80);
+            output.WriteEnum((int) BulletCamp);
+          }
+          if (SoilderID != 0) {
+            output.WriteRawTag(88);
+            output.WriteInt32(SoilderID);
+          }
+          if (BulletID != 0) {
+            output.WriteRawTag(96);
+            output.WriteInt32(BulletID);
+          }
+          if (_unknownFields != null) {
+            _unknownFields.WriteTo(output);
+          }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize() {
+          int size = 0;
+          if (SoilderCamp != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) SoilderCamp);
+          }
+          if (BulletCamp != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) BulletCamp);
+          }
+          if (SoilderID != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(SoilderID);
+          }
+          if (BulletID != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(BulletID);
+          }
+          if (_unknownFields != null) {
+            size += _unknownFields.CalculateSize();
+          }
+          return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(Bullet other) {
+          if (other == null) {
+            return;
+          }
+          if (other.SoilderCamp != 0) {
+            SoilderCamp = other.SoilderCamp;
+          }
+          if (other.BulletCamp != 0) {
+            BulletCamp = other.BulletCamp;
+          }
+          if (other.SoilderID != 0) {
+            SoilderID = other.SoilderID;
+          }
+          if (other.BulletID != 0) {
+            BulletID = other.BulletID;
+          }
+          _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input) {
+          uint tag;
+          while ((tag = input.ReadTag()) != 0) {
+            switch(tag) {
+              default:
+                _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                break;
+              case 72: {
+                SoilderCamp = (global::ProtoUser.WarData.Types.CampState) input.ReadEnum();
+                break;
+              }
+              case 80: {
+                BulletCamp = (global::ProtoUser.WarData.Types.CampState) input.ReadEnum();
+                break;
+              }
+              case 88: {
+                SoilderID = input.ReadInt32();
+                break;
+              }
+              case 96: {
+                BulletID = input.ReadInt32();
                 break;
               }
             }
