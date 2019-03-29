@@ -103,7 +103,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             HeroController hc = RedCamp.GetComponent<HeroController>();
             ShootButton.onClick.AddListener(hc.SendMessage);
         }
-            
+        StartCoroutine(WaitForNewRound());
     }
 
     #region 李锐
@@ -111,7 +111,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     {
         NewRoundStart = true;
         RoundNow++;
-        StartCoroutine(WaitForNewRound());
     }
 
     IEnumerator WaitForNewRound()
@@ -196,7 +195,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 default: break;
             }
             if (go == null)
+            {
+                Debug.Log("GameObject is null");
                 continue;
+            }
             else
             {
                 SoilderCount++;
