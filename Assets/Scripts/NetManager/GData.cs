@@ -29,11 +29,11 @@ namespace ProtoUser {
             "DAoEbmFtZRgBIAEoCRIQCghlbWJhdHRsZRgCIAMoDCKuAgoHV2FyRGF0YRoq",
             "CgdWZWN0b3IzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCGkYK",
             "B1NvaWxkZXISKwoEQ2FtcBgEIAEoDjIdLnByb3RvX1VzZXIuV2FyRGF0YS5D",
-            "YW1wU3RhdGUSDgoGYXR0YWNrGAUgASgFGo0BCgVQbGFlchIrCgRDYW1wGAYg",
-            "ASgOMh0ucHJvdG9fVXNlci5XYXJEYXRhLkNhbXBTdGF0ZRIpCgRTZWxmGAcg",
-            "ASgLMhsucHJvdG9fVXNlci5XYXJEYXRhLlZlY3RvcjMSLAoHRm9yd2FyZBgI",
-            "IAEoCzIbLnByb3RvX1VzZXIuV2FyRGF0YS5WZWN0b3IzIh8KCUNhbXBTdGF0",
-            "ZRIICgRyZWFkEAASCAoEYmx1ZRABYgZwcm90bzM="));
+            "YW1wU3RhdGUSDgoGYXR0YWNrGAUgASgFGo4BCgZQbGF5ZXISKwoEQ2FtcBgG",
+            "IAEoDjIdLnByb3RvX1VzZXIuV2FyRGF0YS5DYW1wU3RhdGUSKQoEU2VsZhgH",
+            "IAEoCzIbLnByb3RvX1VzZXIuV2FyRGF0YS5WZWN0b3IzEiwKB0ZvcndhcmQY",
+            "CCABKAsyGy5wcm90b19Vc2VyLldhckRhdGEuVmVjdG9yMyIeCglDYW1wU3Rh",
+            "dGUSBwoDcmVkEAASCAoEYmx1ZRABYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -486,7 +486,7 @@ namespace ProtoUser {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       public enum CampState {
-        [pbr::OriginalName("read")] Red = 0,
+        [pbr::OriginalName("red")] Red = 0,
         [pbr::OriginalName("blue")] Blue = 1,
       }
 
