@@ -194,7 +194,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 case ConStr.ArmsNull: break;
                 default: break;
             }
-            
             if (go == null)
             {
                 Debug.Log("GameObject is null");
