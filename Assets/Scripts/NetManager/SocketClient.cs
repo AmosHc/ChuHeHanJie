@@ -16,7 +16,7 @@ public class SocketClient:Singleton<SocketClient>
     static byte[] Read_Buffer = new byte[1024];
     static byte[] Write_Buffer = new byte[1024];
 
-    public static bool IsOnline = true;    //在线模式
+    public static bool IsOnline = false;    //在线模式
 
     public Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
