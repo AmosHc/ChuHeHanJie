@@ -147,8 +147,8 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             if (BGRFX != null)
             {
                 #region 李锐
-                System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
-                SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
+                //System_Event.m_Events.AddListener(System_Event.GAMENEWROUND, OnMessage);
+                //SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
                 #endregion
 
                 Destroy(BGRFX);
