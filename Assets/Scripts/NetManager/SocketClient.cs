@@ -18,7 +18,7 @@ public class SocketClient:Singleton<SocketClient>
 
     public static bool IsOnline = true;    //在线模式
 
-    private Socket m_Socket = null;
+    public Socket m_Socket = null;
     public Queue<byte[]> MsgQueue { get; } = new Queue<byte[]>();   //消息队列
     public bool IsConnected = false;
 
@@ -97,14 +97,14 @@ public class SocketClient:Singleton<SocketClient>
                     break;
                 case (int)_RequestType.CAMPRED:     //红方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Red;
-                    DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.FORMATION);
-                    UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.CAMPBLUE:    //蓝方阵营
                     DataLocal.Instance.MyCamp = WarData.Types.CampState.Blue;
-                    DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     SendAsyn(DataLocal.Instance.PLAYERINFO, _RequestType.FORMATION);
+                    break;
+                case (int)_RequestType.FORMATION:   //保存对方阵形
+                    DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
@@ -112,7 +112,7 @@ public class SocketClient:Singleton<SocketClient>
                     data_player = BytesToObject<WarData.Types.Player>(Read_Buffer, 3, len);
                     System_Event.m_Events.Dispatche(System_Event.GAMEPLAYERDATA,_RequestType.PLAYERDATA, data_player);
                     break;
-                case (int)_RequestType.SOILDERDATA:  //游戏中玩家数据
+                case (int)_RequestType.SOILDERDATA:  //游戏中小兵数据
                     WarData.Types.Soilder data_soilder = new WarData.Types.Soilder();
                     data_soilder = BytesToObject<WarData.Types.Soilder>(Read_Buffer, 3, len);
                     System_Event.m_Events.Dispatche(System_Event.GAMESOILDERDATA,_RequestType.SOILDERDATA, data_soilder);

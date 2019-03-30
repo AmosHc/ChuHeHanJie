@@ -118,6 +118,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         yield return new WaitUntil(() => NewRoundStart);
         NewRoundStart = false;
         StartSpawnSoilders();
+        StartCoroutine(WaitForNewRound());
     }
     #endregion
 
@@ -179,12 +180,11 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     /// <param name="mbattle">阵形信息</param>
     public void StartSpawnSoilders(Transform CampTrans, EMbattle mbattle)
     {
-        float offset = -0.6f;   //初始偏移量
+        float offset = -0.15f;   //初始偏移量
         for (int i = 0; i < 10; i++)
         {
-            offset += 0.2f;
+            offset += 0.05f;
             GameObject go = null;
-            Debug.LogWarning(RoundNow);
             switch (mbattle.Embattle[RoundNow-1][i])
             {
                 case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
@@ -195,10 +195,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 default: break;
             }
             if (go == null)
-            {
-                Debug.Log("GameObject is null");
                 continue;
-            }
             else
             {
                 SoilderCount++;
@@ -233,6 +230,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     #region 李锐
     IEnumerator WaitForSoilerZero()
     {
+        Debug.Log("开启协程");
         yield return new WaitUntil(() => SoilderCount == 0);
         SocketClient.Instance.SendAsyn(_RequestType.ISREADY);
     }

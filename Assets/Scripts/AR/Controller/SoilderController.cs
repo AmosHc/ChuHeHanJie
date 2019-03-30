@@ -12,10 +12,10 @@ using ProtoUser;
 public class SoilderController : MonoBehaviour
 {
     [Tooltip("动画播放速度")]
-    public float AnimSpeed = 1;
+    public float AnimSpeed = 0.2f;
 
     [Tooltip("行走速度")]
-    public float WalkSpeed = 1;
+    public float WalkSpeed = 0.3f;
 
     /// <summary>
     /// 兵的标志

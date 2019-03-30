@@ -58,6 +58,7 @@ public class GameStart : MonoSingleton<GameStart>
     void OnApplicationQuit()
     {
 #if UNITY_EDITOR
+        SocketClient.Instance.m_Socket.Close();
         ResourceManger.Instance.ClearCache();
         Resources.UnloadUnusedAssets();//编辑器下卸载所有未使用的资源
         Debug.Log("应用退出，清空编辑器缓存");
