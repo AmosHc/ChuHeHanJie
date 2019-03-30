@@ -169,7 +169,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         StartSpawnSoilders(CampTrans, MyFormation);     //我方出兵
         CampTrans = CampTrans == RedCamp ? BlueCamp : RedCamp;
         StartSpawnSoilders(CampTrans, YouFormation);    //对方出兵
-//        StartCoroutine(WaitForSoilerZero());
+        StartCoroutine(WaitForSoilerZero());
     }
 
     /// <summary>
@@ -202,20 +202,30 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
-                go.GetComponent<SoilderController>().NodeIndex = 0;
                 if (CampTrans == RedCamp)
-                    go.GetComponent<SoilderController>().Camp = WarData.Types.CampState.Red;
+                {
+                    go.AddComponent<RedCampSoilderController>();
+                    go.GetComponent<RedCampSoilderController>().NodeIndex = 0;
+                    go.GetComponent<RedCampSoilderController>().OffSet = offset;
+                    go.GetComponent<RedCampSoilderController>().ID = currentSoilderID % int.MaxValue;
+                    currentSoilderID += 1;
+                }
                 else
-                    go.GetComponent<SoilderController>().Camp = WarData.Types.CampState.Blue;
+                {
+                    go.AddComponent<BlueCampSoilderController>();
+                    go.GetComponent<BlueCampSoilderController>().NodeIndex = 0;
+                    go.GetComponent<BlueCampSoilderController>().OffSet = offset;
+                    go.GetComponent<BlueCampSoilderController>().ID = currentSoilderID % int.MaxValue;
+                    currentSoilderID += 1;
+                }
                 go.transform.SetParent(CampTrans);
-                go.GetComponent<SoilderController>().OffSet = offset;
-
-                #region 蔡林烽
-                go.GetComponent<SoilderController>().ID = currentSoilderID % int.MaxValue;
-                currentSoilderID += 1;
-                #endregion
-
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
+
+                //#region 蔡林烽
+                //go.GetComponent<SoilderController>().ID = currentSoilderID % int.MaxValue;
+                //currentSoilderID += 1;
+                //#endregion
+
             }
         }
     }
