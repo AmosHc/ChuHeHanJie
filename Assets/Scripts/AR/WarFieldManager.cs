@@ -221,6 +221,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 }
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
+                go.GetComponent<SoilderController>().StartCoroutine(go.GetComponent<SoilderController>().WaitForMessage());
 
                 //#region 蔡林烽
                 //go.GetComponent<SoilderController>().ID = currentSoilderID % int.MaxValue;

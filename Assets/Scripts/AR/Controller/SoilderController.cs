@@ -74,7 +74,6 @@ public class SoilderController : MonoBehaviour
         parentTransform = transform.parent;
         InitNodes(OffSet);
         System_Event.m_Events.AddListener(System_Event.GAMEBULLETDATA, OnMessage);
-        StartCoroutine(WaitForMessage());
     }
 
     private void OnMessage(object[] paramlist)
@@ -85,13 +84,11 @@ public class SoilderController : MonoBehaviour
             Debug.LogWarning("消息类型错误：" + paramlist[0]);
     }
 
-    IEnumerator WaitForMessage()
+    public IEnumerator WaitForMessage()
     {
         yield return new WaitUntil(() => BulletData != null);
-        if (BulletData != null)
-            ReceiveMessage(BulletData);
+        ReceiveMessage(BulletData);
         BulletData = null;
-        StartCoroutine(WaitForMessage());
     }
 
     public void ReceiveMessage(WarData.Types.Bullet bd)
@@ -160,6 +157,7 @@ public class SoilderController : MonoBehaviour
     {
         if (Nodes.Count == 0)
         {
+            Debug.LogWarning("Node.Count == 0！！！");
             return;
         }
         nodeIndex++;
@@ -182,6 +180,7 @@ public class SoilderController : MonoBehaviour
         #region 李锐
         WarFieldManager.Instance.SoilderCount--;
         #endregion
+        Destroy(GetComponent<SoilderController>());
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
     }
