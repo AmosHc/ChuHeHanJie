@@ -183,6 +183,8 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         float offset = -0.15f;   //初始偏移量
         for (int i = 0; i < 10; i++)
         {
+            if (i == 5)
+                offset = -0.15f;
             offset += 0.05f;
             GameObject go = null;
             switch (mbattle.Embattle[RoundNow-1][i])
@@ -205,6 +207,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                     go.GetComponent<RedCampSoilderController>().NodeIndex = 0;
                     go.GetComponent<RedCampSoilderController>().OffSet = offset;
                     go.GetComponent<RedCampSoilderController>().ID = currentSoilderID % int.MaxValue;
+                    go.GetComponent<RedCampSoilderController>().Camp = WarData.Types.CampState.Red;
                     currentSoilderID += 1;
                 }
                 else
@@ -213,6 +216,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                     go.GetComponent<BlueCampSoilderController>().NodeIndex = 0;
                     go.GetComponent<BlueCampSoilderController>().OffSet = offset;
                     go.GetComponent<BlueCampSoilderController>().ID = currentSoilderID % int.MaxValue;
+                    go.GetComponent<BlueCampSoilderController>().Camp = WarData.Types.CampState.Blue;
                     currentSoilderID += 1;
                 }
                 go.transform.SetParent(CampTrans);
