@@ -67,16 +67,12 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     private bool NewRoundStart = false; //是否开启新回合
     private int RoundNow = 0;   //当前回合，0为初始值
 
+    private HeroController RedHero;
+    private HeroController BlueHero;
+
     private EMbattle MyFormation = DataLocal.Instance.PLAYERINFO;
     private EMbattle YouFormation = DataLocal.Instance.ENEMYINFO;
     #endregion
-
-    /// <summary>
-    /// 红方士兵存储
-    /// </summary>
-    private Dictionary<string, int> RedCampSoildersDictionary = new Dictionary<string, int>();
-
-    private Dictionary<string, int> BlueCampSoildersDictionary = new Dictionary<string, int>();
 
     protected override void Awake()
     {
@@ -88,21 +84,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     private void Start()
     {
-        RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
-        BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
-        
+        RedHero = RedCamp.GetComponent<HeroController>();
+        BlueHero = BlueCamp.GetComponent<HeroController>();
+
         // 如果当前设备属于蓝方阵营，将蓝方的HeroController.cs中的SendMessage
         // 添加到射击按钮点击事件中
-        if(DataLocal.Instance.MyCamp==WarData.Types.CampState.Blue)
-        {
-            HeroController hc = BlueCamp.GetComponent<HeroController>();
-            ShootButton.onClick.AddListener(hc.SendMessage);
-        }
+        if (DataLocal.Instance.MyCamp==WarData.Types.CampState.Blue)
+            ShootButton.onClick.AddListener(BlueHero.SendMessage);
         else
-        {
-            HeroController hc = RedCamp.GetComponent<HeroController>();
-            ShootButton.onClick.AddListener(hc.SendMessage);
-        }
+            ShootButton.onClick.AddListener(RedHero.SendMessage);
         StartCoroutine(WaitForNewRound());
     }
 
@@ -116,14 +106,54 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     IEnumerator WaitForNewRound()
     {
         yield return new WaitUntil(() => NewRoundStart);
+        if (RoundNow > 10)
+        {
+            ShowResult();
+            yield return null;
+        }
         NewRoundStart = false;
         StartSpawnSoilders();
         StartCoroutine(WaitForNewRound());
+    }
+
+    //十回合结束后发送结果
+    private void ShowResult()
+    {
+        Debug.Log("Game Over！");
+        int RedHealth = RedHero.Health;
+        int BlueHealth = BlueHero.Health;
+        if (RedHealth > BlueHealth)
+            SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
+        else if (RedHealth < BlueHealth)
+            SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+        else
+            SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
+    }
+
+    //游戏中判断当某方血量小于0时游戏结束并发送结果
+    private void HealthListener()
+    {
+        if (BlueHero.Health <= 0 || RedHero.Health <= 0)
+        {
+            StopAllCoroutines();
+            for (int i = 0; i < RedCamp.childCount; i++)
+                RedCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
+            for (int i = 0; i < BlueCamp.childCount; i++)
+                BlueCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
+            if (BlueHero.Health <= 0 && RedHero.Health <= 0)
+                SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
+            else if (BlueHero.Health <= 0)
+                SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
+            else
+                SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+        }
     }
     #endregion
 
     void Update ()
     {
+        HealthListener();
+
         //测试：点击生产小兵
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))

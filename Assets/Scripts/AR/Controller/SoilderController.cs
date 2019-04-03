@@ -40,6 +40,8 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private Animator animator;
 
+    public bool IsGameOver = false;
+
     /// <summary>
     /// 节点索引
     /// </summary>
@@ -87,6 +89,8 @@ public class SoilderController : MonoBehaviour
     public IEnumerator WaitForMessage()
     {
         yield return new WaitUntil(() => BulletData != null);
+        if (IsGameOver)
+            yield return null;
         ReceiveMessage(BulletData);
         BulletData = null;
     }
@@ -100,6 +104,8 @@ public class SoilderController : MonoBehaviour
 
     private void Update()
     {
+        if (IsGameOver)
+            return;
         //如果达到终点，销毁自身，并且对玩家造成伤害
         if(ReachDestination())
         {
