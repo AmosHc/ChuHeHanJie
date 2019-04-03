@@ -21,7 +21,7 @@ public class SoilderController : MonoBehaviour
     /// 兵的标志
     /// </summary>
     public int ID { get; set; }
-        
+
     public WarData.Types.CampState Camp;
     /// <summary>
     /// 代理经过的节点集合
@@ -74,7 +74,7 @@ public class SoilderController : MonoBehaviour
         parentTransform = transform.parent;
         InitNodes(OffSet);
         System_Event.m_Events.AddListener(System_Event.GAMEBULLETDATA, OnMessage);
-        StartCoroutine(WaitForMessage());
+        //StartCoroutine(WaitForMessage());
     }
 
     private void OnMessage(object[] paramlist)
@@ -85,20 +85,24 @@ public class SoilderController : MonoBehaviour
             Debug.LogWarning("消息类型错误：" + paramlist[0]);
     }
 
-    IEnumerator WaitForMessage()
+    public IEnumerator WaitForMessage()
     {
         yield return new WaitUntil(() => BulletData != null);
         if (BulletData != null)
             ReceiveMessage(BulletData);
         BulletData = null;
-        StartCoroutine(WaitForMessage());
+        //if(gameObject.activeSelf)
+        //    StartCoroutine(WaitForMessage());
     }
 
     public void ReceiveMessage(WarData.Types.Bullet bd)
     {
-        //如果包中的子弹阵营和ID与当前子弹的阵营和ID相符，就销毁子弹
+        //如果包中的小兵阵营和ID与当前小兵的阵营和ID相符，就销毁子弹
         if (bd.SoilderCamp == Camp && bd.SoilderID == ID)
+        {
             DestroySelf();
+            Debug.Log(string.Format("{0},{1}小兵被摧毁", Camp, ID));
+        }
     }
 
     private void Update()
@@ -182,6 +186,8 @@ public class SoilderController : MonoBehaviour
         #region 李锐
         WarFieldManager.Instance.SoilderCount--;
         #endregion
+        Destroy(GetComponent<SoilderController>());
+        //StopCoroutine(WaitForMessage());
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
     }

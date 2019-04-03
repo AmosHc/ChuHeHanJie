@@ -72,6 +72,8 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (Camp != DataLocal.Instance.MyCamp)
+            return;
         SoilderController sc = collision.gameObject.GetComponent<SoilderController>();
         
         if(sc==null)
@@ -103,7 +105,7 @@ public class BulletController : MonoBehaviour
             SoilderCamp = sc.Camp,
             SoilderID = sc.ID,
         };
-        SocketClient.Instance.SendAsyn(bd, _RequestType.PLAYERDATA);
+        SocketClient.Instance.SendAsyn(bd, _RequestType.BULLETDATA);
     }
 
 
@@ -132,5 +134,6 @@ public class BulletController : MonoBehaviour
     {
         //ObjectManger.Instance.ReleaseObject(gameObject);
         Destroy(gameObject);
+        Debug.Log(string.Format("{0},{1}子弹被摧毁",Camp,ID));
     }
 }
