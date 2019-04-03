@@ -11,6 +11,11 @@ using ProtoUser;
 /// </summary>
 public class SoilderController : MonoBehaviour
 {
+    public float Speed { get; protected set; }
+    public float HealthMax { get; protected set; }
+    public float HealthNow { get; set; }
+    public int Attack { get; protected set; }
+
     [Tooltip("动画播放速度")]
     public float AnimSpeed = 0.2f;
 
@@ -68,6 +73,11 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     protected Transform parentTransform;
 
+    protected virtual void Awake()
+    {
+        WalkSpeed = Speed;
+        HealthNow = HealthMax;
+    }
 
     private void Start()
     {
@@ -213,7 +223,7 @@ public class SoilderController : MonoBehaviour
         WarData.Types.Soilder sd = new WarData.Types.Soilder
         {
             Camp = Camp,
-            Attack = 1
+            Attack = Attack,
         };
         SocketClient.Instance.SendAsyn(sd, _RequestType.SOILDERDATA);
     }

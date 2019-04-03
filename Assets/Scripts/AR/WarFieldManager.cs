@@ -58,10 +58,10 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     #endregion
 
     #region 李锐
-    private const string ThiefPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
-    private const string PolicePrefab = "Assets/GameData/Prefabs/AR/police.prefab";
-    private const string RomanPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
-    private const string ShamanPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
+    private const string MaulerPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
+    private const string CavalryPrefab = "Assets/GameData/Prefabs/AR/police.prefab";
+    private const string InfantryPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
+    private const string BowmenPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
 
     public int SoilderCount = 0;  //当前士兵数量
     private bool NewRoundStart = false; //是否开启新回合
@@ -89,7 +89,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
         // 如果当前设备属于蓝方阵营，将蓝方的HeroController.cs中的SendMessage
         // 添加到射击按钮点击事件中
-        if (DataLocal.Instance.MyCamp==WarData.Types.CampState.Blue)
+        if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Blue)
             ShootButton.onClick.AddListener(BlueHero.SendMessage);
         else
             ShootButton.onClick.AddListener(RedHero.SendMessage);
@@ -150,7 +150,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     }
     #endregion
 
-    void Update ()
+    void Update()
     {
         HealthListener();
 
@@ -163,15 +163,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         }
 #endif
 
-//#if UNITY_ANDROID
-//        foreach (Touch touch in Input.touches)
-//        {
-//            if (touch.phase == TouchPhase.Began)
-//            {
-//                StartSpawnSoilders();
-//            }
-//        }
-//#endif
+        //#if UNITY_ANDROID
+        //        foreach (Touch touch in Input.touches)
+        //        {
+        //            if (touch.phase == TouchPhase.Began)
+        //            {
+        //                StartSpawnSoilders();
+        //            }
+        //        }
+        //#endif
         #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
         if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
         {
@@ -186,7 +186,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             }
             if (AR_UI != null)
                 AR_UI.SetActive(true);
-            
+
             return;
         }
         transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
@@ -217,13 +217,26 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 offset = -0.15f;
             offset += 0.05f;
             GameObject go = null;
-            switch (mbattle.Embattle[RoundNow-1][i])
+            switch (mbattle.Embattle[RoundNow - 1][i])
             {
-                case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
-                case ConStr.ArmsMauler: go = ObjectManger.Instance.InstantiateObject(ThiefPrefab); break;
-                case ConStr.ArmsBowmen: go = ObjectManger.Instance.InstantiateObject(ShamanPrefab); break;
-                case ConStr.ArmsInfantry: go = ObjectManger.Instance.InstantiateObject(RomanPrefab); break;
-                case ConStr.ArmsNull: break;
+                case ConStr.ArmsCavalry:
+                    go = ObjectManger.Instance.InstantiateObject(CavalryPrefab);
+                    go.AddComponent<CavalryController>();
+                    break;
+                case ConStr.ArmsMauler:
+                    go = ObjectManger.Instance.InstantiateObject(MaulerPrefab);
+                    go.AddComponent<MaulerController>();
+                    break;
+                case ConStr.ArmsBowmen:
+                    go = ObjectManger.Instance.InstantiateObject(BowmenPrefab);
+                    go.AddComponent<BowmenController>();
+                    break;
+                case ConStr.ArmsInfantry:
+                    go = ObjectManger.Instance.InstantiateObject(InfantryPrefab);
+                    go.AddComponent<InfantryController>();
+                    break;
+                case ConStr.ArmsNull:
+                    break;
                 default: break;
             }
             if (go == null)
@@ -231,27 +244,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
-                if (CampTrans == RedCamp)
-                {
-                    go.AddComponent<RedCampSoilderController>();
-                    go.GetComponent<RedCampSoilderController>().NodeIndex = 0;
-                    go.GetComponent<RedCampSoilderController>().OffSet = offset;
-                    go.GetComponent<RedCampSoilderController>().ID = currentSoilderID % int.MaxValue;
-                    go.GetComponent<RedCampSoilderController>().Camp = WarData.Types.CampState.Red;
-                    currentSoilderID += 1;
-                }
-                else
-                {
-                    go.AddComponent<BlueCampSoilderController>();
-                    go.GetComponent<BlueCampSoilderController>().NodeIndex = 0;
-                    go.GetComponent<BlueCampSoilderController>().OffSet = offset;
-                    go.GetComponent<BlueCampSoilderController>().ID = currentSoilderID % int.MaxValue;
-                    go.GetComponent<BlueCampSoilderController>().Camp = WarData.Types.CampState.Blue;
-                    currentSoilderID += 1;
-                }
+                SoilderController sc = go.GetComponent<SoilderController>();
+                sc.NodeIndex = 0;
+                sc.OffSet = offset;
+                sc.ID = currentSoilderID % int.MaxValue;
+                sc.Camp = CampTrans == RedCamp ? WarData.Types.CampState.Red : WarData.Types.CampState.Blue;
+                currentSoilderID += 1;
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
-                go.GetComponent<SoilderController>().StartCoroutine(go.GetComponent<SoilderController>().WaitForMessage());
+                sc.StartCoroutine(sc.WaitForMessage());
             }
         }
     }
@@ -268,7 +269,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     #region 场景缩放及旋转
     public void RotateWarField(float factor)
     {
-        transform.localEulerAngles  = new Vector3(0, yLocalAngle + factor * MaxRotateAngle, 0);
+        transform.localEulerAngles = new Vector3(0, yLocalAngle + factor * MaxRotateAngle, 0);
     }
 
     public void ScaleWarField(float factor)
@@ -276,7 +277,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         float xScale = originalLocalScale.x * (factor + 1);
         float yScale = originalLocalScale.y;
         float zScale = originalLocalScale.z * (factor + 1);
-        transform.localScale = new Vector3(xScale,yScale,zScale);
+        transform.localScale = new Vector3(xScale, yScale, zScale);
     }
     #endregion
 }
