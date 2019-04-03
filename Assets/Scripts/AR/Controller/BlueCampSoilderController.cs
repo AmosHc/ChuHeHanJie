@@ -7,14 +7,14 @@ using UnityEngine;
 /// </summary>
 public class BlueCampSoilderController : SoilderController
 {
-    protected override void InitNodes(float offset)
-    {
-        NodesCollection = GameObject.Find("NodeCollections").GetComponentsInChildren<Transform>();
-        int len = NodesCollection.Length;
-        for (int i = 1; i < len; i++)
-        {
-            Nodes.Add(parentTransform.InverseTransformPoint(NodesCollection[len - i].position) + Vector3.forward * offset);
-        }
-        DestinationNode = Nodes[Nodes.Count - 1];
-    }
+    //protected override void InitNodes(float offset)
+    //{
+    //    NodesCollection = GameObject.Find("NodeCollections").GetComponentsInChildren<Transform>();
+    //    int len = NodesCollection.Length;
+    //    for (int i = 1; i < len; i++)
+    //    {
+    //        Nodes.Add(parentTransform.InverseTransformPoint(NodesCollection[len - i].position) + Vector3.forward * offset);
+    //    }
+    //    DestinationNode = Nodes[Nodes.Count - 1];
+    //}
 }

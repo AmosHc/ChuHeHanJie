@@ -120,7 +120,7 @@ public class SocketClient:Singleton<SocketClient>
                 case (int)_RequestType.BULLETDATA:  //游戏中子弹数据
                     WarData.Types.Bullet data_bullet = new WarData.Types.Bullet();
                     data_bullet = BytesToObject<WarData.Types.Bullet>(Read_Buffer, 3, len);
-                    System_Event.m_Events.Dispatche(System_Event.GAMEBULLETDATA, data_bullet);
+                    System_Event.m_Events.Dispatche(System_Event.GAMEBULLETDATA, _RequestType.BULLETDATA, data_bullet);
                     break;
                 case (int)_RequestType.NEWROUND:    //下一回合开始可以进行出兵操作
                     System_Event.m_Events.Dispatche(System_Event.GAMENEWROUND);

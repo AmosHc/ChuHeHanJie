@@ -24,7 +24,7 @@ public class SoilderController : MonoBehaviour
 
     public WarData.Types.CampState Camp;
     /// <summary>
-    /// 代理经过的节点集合
+    /// 经过的节点集合
     /// </summary>
     protected Transform[] NodesCollection;
 
@@ -39,6 +39,8 @@ public class SoilderController : MonoBehaviour
     /// 动画组件
     /// </summary>
     private Animator animator;
+
+    public bool IsGameOver = false;
 
     /// <summary>
     /// 节点索引
@@ -74,7 +76,6 @@ public class SoilderController : MonoBehaviour
         parentTransform = transform.parent;
         InitNodes(OffSet);
         System_Event.m_Events.AddListener(System_Event.GAMEBULLETDATA, OnMessage);
-        //StartCoroutine(WaitForMessage());
     }
 
     private void OnMessage(object[] paramlist)
@@ -88,11 +89,10 @@ public class SoilderController : MonoBehaviour
     public IEnumerator WaitForMessage()
     {
         yield return new WaitUntil(() => BulletData != null);
-        if (BulletData != null)
-            ReceiveMessage(BulletData);
+        if (IsGameOver)
+            yield return null;
+        ReceiveMessage(BulletData);
         BulletData = null;
-        //if(gameObject.activeSelf)
-        //    StartCoroutine(WaitForMessage());
     }
 
     public void ReceiveMessage(WarData.Types.Bullet bd)
@@ -107,6 +107,8 @@ public class SoilderController : MonoBehaviour
 
     private void Update()
     {
+        if (IsGameOver)
+            return;
         //如果达到终点，销毁自身，并且对玩家造成伤害
         if(ReachDestination())
         {
@@ -155,8 +157,6 @@ public class SoilderController : MonoBehaviour
         }
     }
 
-
-
     /// <summary>
     /// 去下一个节点
     /// </summary>
@@ -164,6 +164,7 @@ public class SoilderController : MonoBehaviour
     {
         if (Nodes.Count == 0)
         {
+            Debug.LogWarning("Node.Count == 0！！！");
             return;
         }
         nodeIndex++;
@@ -173,9 +174,22 @@ public class SoilderController : MonoBehaviour
     /// <summary>
     /// 初始化节点
     /// </summary>
-    protected virtual void InitNodes(float offset)
+    public  void InitNodes(float offset)
     {
-
+        NodesCollection = GameObject.Find("NodeCollections").GetComponentsInChildren<Transform>();
+        int len = NodesCollection.Length;
+        for (int i = 1; i < len; i++)
+        {
+            if (Camp == WarData.Types.CampState.Blue)
+            {
+                Nodes.Add(parentTransform.InverseTransformPoint(NodesCollection[len - i].position) + Vector3.forward * offset);
+            }
+            else
+            {
+                Nodes.Add(parentTransform.InverseTransformPoint(NodesCollection[i].position) + Vector3.forward * offset);
+            }
+        }
+        DestinationNode = Nodes[Nodes.Count - 1];
     }
 
     /// <summary>
@@ -187,7 +201,6 @@ public class SoilderController : MonoBehaviour
         WarFieldManager.Instance.SoilderCount--;
         #endregion
         Destroy(GetComponent<SoilderController>());
-        //StopCoroutine(WaitForMessage());
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
     }
