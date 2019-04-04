@@ -6,9 +6,10 @@ public class MaulerController : SoilderController
 {
     protected override void Awake()
     {
-        Speed = 0.3f;
+        Speed = 0.5f;
         HealthMax = 2f;
         Attack = 3;
+        AttackDistance = 3f;
 
         base.Awake();
     }
