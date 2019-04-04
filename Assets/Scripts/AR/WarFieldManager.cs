@@ -66,6 +66,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     public int SoilderCount = 0;  //当前士兵数量
     private bool NewRoundStart = false; //是否开启新回合
     private int RoundNow = 0;   //当前回合，0为初始值
+    private bool IsGameOver = false;    //游戏结束判定
 
     private HeroController RedHero;
     private HeroController BlueHero;
@@ -120,6 +121,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     private void ShowResult()
     {
         Debug.Log("Game Over！");
+        IsGameOver = true;
         int RedHealth = RedHero.Health;
         int BlueHealth = BlueHero.Health;
         if (RedHealth > BlueHealth)
@@ -133,12 +135,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     //游戏中判断当某方血量小于0时游戏结束并发送结果
     private void HealthListener()
     {
+        if (IsGameOver)
+            return;
         if (BlueHero.Health <= 0 || RedHero.Health <= 0)
         {
+            IsGameOver = true;
             StopAllCoroutines();
-            for (int i = 0; i < RedCamp.childCount; i++)
+            for (int i = 1; i < RedCamp.childCount; i++)
                 RedCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
-            for (int i = 0; i < BlueCamp.childCount; i++)
+            for (int i = 1; i < BlueCamp.childCount; i++)
                 BlueCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
             if (BlueHero.Health <= 0 && RedHero.Health <= 0)
                 SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);

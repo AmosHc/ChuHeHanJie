@@ -6,9 +6,10 @@ public class CavalryController : SoilderController
 {
     protected override void Awake()
     {
-        Speed = 0.1f;
-        HealthMax = 2f;
+        Speed = 0.3f;
+        HealthMax = 3f;
         Attack = 2;
+        AttackDistance = 2f;
         
         base.Awake();
     }
