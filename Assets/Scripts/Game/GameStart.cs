@@ -14,7 +14,6 @@ public class GameStart : MonoSingleton<GameStart>
     protected override void Awake()
     {
         base.Awake();
-
         GameObject.DontDestroyOnLoad(gameObject);//切场景不销毁此控制器
         AssetBundleManger.Instance.LoadAssetBundleConfig();//初始化配置表
         ResourceManger.Instance.Init(this);
@@ -24,10 +23,18 @@ public class GameStart : MonoSingleton<GameStart>
     }
     void Start()
     {
+        LoadConfigs();//加载配置表
         RegistUI();//注册UI页面
         PreLoad();///预加载资源放这里
         UIManager.Instance.OpenWnd(ConStr.LOGINPANEL, true);
         //GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+    }
+    /// <summary>
+    /// 加载配置表
+    /// </summary>
+    void LoadConfigs()
+    {
+
     }
 
     void RegistUI()
