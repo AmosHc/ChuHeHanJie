@@ -23,6 +23,9 @@ public enum _RequestType
     SOILDERDATA = 20,     //游戏中士兵数据
     BULLETDATA = 21,    //游戏中子弹数据
 
+    REDWIN = 95,    //红方胜利
+    BLUEWIN = 96,   //蓝方胜利
+    NONEWIN = 97,   //平局
     CAMPRED = 98,   //红方阵营
     CAMPBLUE = 99,   //蓝方阵营
 

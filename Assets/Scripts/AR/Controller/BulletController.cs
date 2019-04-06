@@ -72,6 +72,9 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.isTrigger)
+            return;
+
         if (Camp != DataLocal.Instance.MyCamp)
             return;
         SoilderController sc = collision.gameObject.GetComponent<SoilderController>();
@@ -89,7 +92,7 @@ public class BulletController : MonoBehaviour
         }
         else
         {
-            print("子弹击中己方小兵");
+            print("子弹击中己方小兵，此情况不做考虑，无需发送消息");
         }
     }
 
@@ -134,5 +137,6 @@ public class BulletController : MonoBehaviour
     {
         //ObjectManger.Instance.ReleaseObject(gameObject);
         Destroy(gameObject);
+        Debug.Log(string.Format("{0},{1}子弹被摧毁",Camp,ID));
     }
 }

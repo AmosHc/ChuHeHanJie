@@ -58,25 +58,22 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     #endregion
 
     #region 李锐
-    private const string ThiefPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
-    private const string PolicePrefab = "Assets/GameData/Prefabs/AR/police.prefab";
-    private const string RomanPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
-    private const string ShamanPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
+    private const string MaulerPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
+    private const string CavalryPrefab = "Assets/GameData/Prefabs/AR/police.prefab";
+    private const string InfantryPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
+    private const string BowmenPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
 
     public int SoilderCount = 0;  //当前士兵数量
     private bool NewRoundStart = false; //是否开启新回合
     private int RoundNow = 0;   //当前回合，0为初始值
+    private bool IsGameOver = false;    //游戏结束判定
+
+    private HeroController RedHero;
+    private HeroController BlueHero;
 
     private EMbattle MyFormation = DataLocal.Instance.PLAYERINFO;
     private EMbattle YouFormation = DataLocal.Instance.ENEMYINFO;
     #endregion
-
-    /// <summary>
-    /// 红方士兵存储
-    /// </summary>
-    private Dictionary<string, int> RedCampSoildersDictionary = new Dictionary<string, int>();
-
-    private Dictionary<string, int> BlueCampSoildersDictionary = new Dictionary<string, int>();
 
     protected override void Awake()
     {
@@ -88,21 +85,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     private void Start()
     {
-        RedCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/RedThief.prefab", 1);
-        BlueCampSoildersDictionary.Add("Assets/GameData/Prefabs/AR/BlueThief.prefab", 1);
-        
+        RedHero = RedCamp.GetComponent<HeroController>();
+        BlueHero = BlueCamp.GetComponent<HeroController>();
+
         // 如果当前设备属于蓝方阵营，将蓝方的HeroController.cs中的SendMessage
         // 添加到射击按钮点击事件中
-        if(DataLocal.Instance.MyCamp==WarData.Types.CampState.Blue)
-        {
-            HeroController hc = BlueCamp.GetComponent<HeroController>();
-            ShootButton.onClick.AddListener(hc.SendMessage);
-        }
+        if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Blue)
+            ShootButton.onClick.AddListener(BlueHero.SendMessage);
         else
-        {
-            HeroController hc = RedCamp.GetComponent<HeroController>();
-            ShootButton.onClick.AddListener(hc.SendMessage);
-        }
+            ShootButton.onClick.AddListener(RedHero.SendMessage);
         StartCoroutine(WaitForNewRound());
     }
 
@@ -116,14 +107,58 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     IEnumerator WaitForNewRound()
     {
         yield return new WaitUntil(() => NewRoundStart);
+        if (RoundNow > 10)
+        {
+            ShowResult();
+            yield return null;
+        }
         NewRoundStart = false;
         StartSpawnSoilders();
         StartCoroutine(WaitForNewRound());
     }
+
+    //十回合结束后发送结果
+    private void ShowResult()
+    {
+        Debug.Log("Game Over！");
+        IsGameOver = true;
+        int RedHealth = RedHero.Health;
+        int BlueHealth = BlueHero.Health;
+        if (RedHealth > BlueHealth)
+            SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
+        else if (RedHealth < BlueHealth)
+            SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+        else
+            SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
+    }
+
+    //游戏中判断当某方血量小于0时游戏结束并发送结果
+    private void HealthListener()
+    {
+        if (IsGameOver)
+            return;
+        if (BlueHero.Health <= 0 || RedHero.Health <= 0)
+        {
+            IsGameOver = true;
+            StopAllCoroutines();
+            for (int i = 1; i < RedCamp.childCount; i++)
+                RedCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
+            for (int i = 1; i < BlueCamp.childCount; i++)
+                BlueCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
+            if (BlueHero.Health <= 0 && RedHero.Health <= 0)
+                SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
+            else if (BlueHero.Health <= 0)
+                SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
+            else
+                SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+        }
+    }
     #endregion
 
-    void Update ()
+    void Update()
     {
+        HealthListener();
+
         //测试：点击生产小兵
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
@@ -133,15 +168,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         }
 #endif
 
-//#if UNITY_ANDROID
-//        foreach (Touch touch in Input.touches)
-//        {
-//            if (touch.phase == TouchPhase.Began)
-//            {
-//                StartSpawnSoilders();
-//            }
-//        }
-//#endif
+        //#if UNITY_ANDROID
+        //        foreach (Touch touch in Input.touches)
+        //        {
+        //            if (touch.phase == TouchPhase.Began)
+        //            {
+        //                StartSpawnSoilders();
+        //            }
+        //        }
+        //#endif
         #region 当战场上升到一定高度，就停止上升，销毁背景,开始生产小兵
         if (Mathf.Abs(transform.localPosition.y - originalLocalPosition.y) < 0.01f)
         {
@@ -156,7 +191,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             }
             if (AR_UI != null)
                 AR_UI.SetActive(true);
-            
+
             return;
         }
         transform.localPosition = Vector3.Lerp(transform.localPosition, originalLocalPosition, RiseSpeed * Time.deltaTime);
@@ -187,13 +222,26 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 offset = -0.15f;
             offset += 0.05f;
             GameObject go = null;
-            switch (mbattle.Embattle[RoundNow-1][i])
+            switch (mbattle.Embattle[RoundNow - 1][i])
             {
-                case ConStr.ArmsCavalry: go = ObjectManger.Instance.InstantiateObject(PolicePrefab); break;
-                case ConStr.ArmsMauler: go = ObjectManger.Instance.InstantiateObject(ThiefPrefab); break;
-                case ConStr.ArmsBowmen: go = ObjectManger.Instance.InstantiateObject(ShamanPrefab); break;
-                case ConStr.ArmsInfantry: go = ObjectManger.Instance.InstantiateObject(RomanPrefab); break;
-                case ConStr.ArmsNull: break;
+                case ConStr.ArmsCavalry:
+                    go = ObjectManger.Instance.InstantiateObject(CavalryPrefab);
+                    go.AddComponent<CavalryController>();
+                    break;
+                case ConStr.ArmsMauler:
+                    go = ObjectManger.Instance.InstantiateObject(MaulerPrefab);
+                    go.AddComponent<MaulerController>();
+                    break;
+                case ConStr.ArmsBowmen:
+                    go = ObjectManger.Instance.InstantiateObject(BowmenPrefab);
+                    go.AddComponent<BowmenController>();
+                    break;
+                case ConStr.ArmsInfantry:
+                    go = ObjectManger.Instance.InstantiateObject(InfantryPrefab);
+                    go.AddComponent<InfantryController>();
+                    break;
+                case ConStr.ArmsNull:
+                    break;
                 default: break;
             }
             if (go == null)
@@ -201,33 +249,15 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
-                if (CampTrans == RedCamp)
-                {
-                    go.AddComponent<RedCampSoilderController>();
-                    go.GetComponent<RedCampSoilderController>().NodeIndex = 0;
-                    go.GetComponent<RedCampSoilderController>().OffSet = offset;
-                    go.GetComponent<RedCampSoilderController>().ID = currentSoilderID % int.MaxValue;
-                    go.GetComponent<RedCampSoilderController>().Camp = WarData.Types.CampState.Red;
-                    currentSoilderID += 1;
-                }
-                else
-                {
-                    go.AddComponent<BlueCampSoilderController>();
-                    go.GetComponent<BlueCampSoilderController>().NodeIndex = 0;
-                    go.GetComponent<BlueCampSoilderController>().OffSet = offset;
-                    go.GetComponent<BlueCampSoilderController>().ID = currentSoilderID % int.MaxValue;
-                    go.GetComponent<BlueCampSoilderController>().Camp = WarData.Types.CampState.Blue;
-                    currentSoilderID += 1;
-                }
+                SoilderController sc = go.GetComponent<SoilderController>();
+                sc.NodeIndex = 0;
+                sc.OffSet = offset;
+                sc.ID = currentSoilderID % int.MaxValue;
+                sc.Camp = CampTrans == RedCamp ? WarData.Types.CampState.Red : WarData.Types.CampState.Blue;
+                currentSoilderID += 1;
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
-                go.GetComponent<SoilderController>().StartCoroutine(go.GetComponent<SoilderController>().WaitForMessage());
-
-                //#region 蔡林烽
-                //go.GetComponent<SoilderController>().ID = currentSoilderID % int.MaxValue;
-                //currentSoilderID += 1;
-                //#endregion
-
+                sc.StartCoroutine(sc.WaitForMessage());
             }
         }
     }
@@ -244,7 +274,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     #region 场景缩放及旋转
     public void RotateWarField(float factor)
     {
-        transform.localEulerAngles  = new Vector3(0, yLocalAngle + factor * MaxRotateAngle, 0);
+        transform.localEulerAngles = new Vector3(0, yLocalAngle + factor * MaxRotateAngle, 0);
     }
 
     public void ScaleWarField(float factor)
@@ -252,7 +282,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         float xScale = originalLocalScale.x * (factor + 1);
         float yScale = originalLocalScale.y;
         float zScale = originalLocalScale.z * (factor + 1);
-        transform.localScale = new Vector3(xScale,yScale,zScale);
+        transform.localScale = new Vector3(xScale, yScale, zScale);
     }
     #endregion
 }
