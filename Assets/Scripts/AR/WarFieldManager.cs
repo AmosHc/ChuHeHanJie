@@ -254,6 +254,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
+<<<<<<< HEAD
                 //if (CampTrans == RedCamp)
                 //{
                 //    go.AddComponent<RedCampSoilderController>();
@@ -290,7 +291,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
                 sc.StartCoroutine(sc.WaitForMessage());
-                
             }
         }
     }
