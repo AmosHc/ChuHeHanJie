@@ -72,6 +72,8 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.isTrigger)
+            return;
         SoilderController sc = collision.gameObject.GetComponent<SoilderController>();
 
         if (sc == null || sc.Camp == Camp)

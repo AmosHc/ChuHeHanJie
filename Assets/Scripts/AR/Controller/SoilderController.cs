@@ -11,8 +11,14 @@ using ProtoUser;
 /// </summary>
 public class SoilderController : MonoBehaviour
 {
+    public float Speed { get; protected set; }
+    public float HealthMax { get; protected set; }
+    public float HealthNow { get; set; }
+    public int Attack { get; protected set; }
+    public float AttackDistance { get; protected set; }
+
     [Tooltip("动画播放速度")]
-    public float AnimSpeed = 0.2f;
+    public float AnimSpeed = 1f;
 
     [Tooltip("行走速度")]
     public float WalkSpeed = 0.3f;
@@ -68,6 +74,12 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     protected Transform parentTransform;
 
+    protected virtual void Awake()
+    {
+        WalkSpeed = Speed;
+        HealthNow = HealthMax;
+        GetComponent<SphereCollider>().radius = AttackDistance;
+    }
 
     private void Start()
     {
@@ -104,15 +116,24 @@ public class SoilderController : MonoBehaviour
         //如果包中的小兵阵营和ID与当前小兵的阵营和ID相符，就销毁子弹
         if (bd.SoilderCamp == Camp && bd.SoilderID == ID)
         {
-            DestroySelf();
-            Debug.Log(string.Format("{0},{1}小兵被摧毁", Camp, ID));
+            HealthNow--;
+            Debug.Log("小兵被集中，收到1点伤害");
         }
     }
 
     private void Update()
     {
         if (IsGameOver)
+        {
+            animator.speed = 0;
+            WalkSpeed = 0;
             return;
+        }
+        if (HealthNow <= 0)
+        {
+            DestroySelf();
+            Debug.Log(string.Format("{0},{1}小兵被摧毁", Camp, ID));
+        }
         //如果达到终点，销毁自身，并且对玩家造成伤害
         if(ReachDestination())
         {
@@ -134,15 +155,39 @@ public class SoilderController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        //单机用
-        //BulletController bc = collision.gameObject.GetComponent<BulletController>();
-
-        ////只有当对方的子弹撞击到身上时，才会销毁自身
-        //if (bc != null && bc.Camp == Camp)
-        //    return;
-        //DestroySelf();
+        if (collision.gameObject.GetComponent<SoilderController>() == null) //碰撞到非小兵单位不做判定
+            return;
+        if (animator.GetBool("attack")) //已经对一个小兵进行攻击则不攻击第二个小兵
+            return;
+        if (collision.gameObject.GetComponent<SoilderController>().Camp != Camp)
+        {
+            if (collision.isTrigger)    //如果碰撞到的只是对方小兵的攻击距离碰撞器不进行攻击
+                return;
+            animator.SetBool("attack", true);
+            WalkSpeed = 0;
+            StartCoroutine(Attacking(collision.gameObject.GetComponent<SoilderController>()));
+        }
+    }
+    /// <summary>
+    /// 每秒进行攻击判定
+    /// </summary>
+    /// <param name="sc">被攻击小兵</param>
+    /// <returns></returns>
+    IEnumerator Attacking(SoilderController sc)
+    {
+        yield return new WaitForSeconds(0.8f);
+        if (sc)
+        {
+            sc.HealthNow -= Attack;
+            StartCoroutine(Attacking(sc));
+        }
+        else
+        {
+            animator.SetBool("attack", false);
+            WalkSpeed = Speed;
+        }
     }
 
     /// <summary>
@@ -201,9 +246,8 @@ public class SoilderController : MonoBehaviour
     /// </summary>
     private void DestroySelf()
     {
-        #region 李锐
         WarFieldManager.Instance.SoilderCount--;
-        #endregion
+        StopAllCoroutines();
         Destroy(GetComponent<SoilderController>());
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
@@ -217,7 +261,7 @@ public class SoilderController : MonoBehaviour
         WarData.Types.Soilder sd = new WarData.Types.Soilder
         {
             Camp = Camp,
-            Attack = 1
+            Attack = Attack,
         };
         SocketClient.Instance.SendAsyn(sd, _RequestType.SOILDERDATA);
     }
