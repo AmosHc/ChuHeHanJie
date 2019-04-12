@@ -80,6 +80,7 @@ public class SoilderController : MonoBehaviour
 
     private void OnMessage(object[] paramlist)
     {
+        Debug.Log("接受到子弹消息1");
         if ((_RequestType)paramlist[0] == _RequestType.BULLETDATA)
             BulletData = (WarData.Types.Bullet)paramlist[1];
         else
@@ -88,6 +89,7 @@ public class SoilderController : MonoBehaviour
 
     public IEnumerator WaitForMessage()
     {
+        Debug.Log("接受到子弹消息2");
         yield return new WaitUntil(() => BulletData != null);
         if (IsGameOver)
             yield return null;
@@ -97,6 +99,8 @@ public class SoilderController : MonoBehaviour
 
     public void ReceiveMessage(WarData.Types.Bullet bd)
     {
+        Debug.Log("接受到子弹消息3" + " 子弹信息：" + bd.SoilderCamp.ToString() + " " +
+            bd.SoilderID.ToString() + "小兵信息： " + Camp.ToString() + ID.ToString());
         //如果包中的小兵阵营和ID与当前小兵的阵营和ID相符，就销毁子弹
         if (bd.SoilderCamp == Camp && bd.SoilderID == ID)
         {

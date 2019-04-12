@@ -52,9 +52,14 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     #region 蔡林烽
     /// <summary>
-    /// 当前生产小兵的ID
+    /// 当前生产蓝方小兵的ID
     /// </summary>
-    private int currentSoilderID = 0;
+    private int currentBlueSoilderID = 0;
+
+    /// <summary>
+    /// 当前生产红方小兵的ID
+    /// </summary>
+    private int currentRedSoilderID = 0;
     #endregion
 
     #region 李锐
@@ -236,18 +241,18 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
                     go.AddComponent<RedCampSoilderController>();
                     go.GetComponent<RedCampSoilderController>().NodeIndex = 0;
                     go.GetComponent<RedCampSoilderController>().OffSet = offset;
-                    go.GetComponent<RedCampSoilderController>().ID = currentSoilderID % int.MaxValue;
+                    go.GetComponent<RedCampSoilderController>().ID = currentRedSoilderID % int.MaxValue;
                     go.GetComponent<RedCampSoilderController>().Camp = WarData.Types.CampState.Red;
-                    currentSoilderID += 1;
+                    currentRedSoilderID += 1;
                 }
                 else
                 {
                     go.AddComponent<BlueCampSoilderController>();
                     go.GetComponent<BlueCampSoilderController>().NodeIndex = 0;
                     go.GetComponent<BlueCampSoilderController>().OffSet = offset;
-                    go.GetComponent<BlueCampSoilderController>().ID = currentSoilderID % int.MaxValue;
+                    go.GetComponent<BlueCampSoilderController>().ID = currentBlueSoilderID % int.MaxValue;
                     go.GetComponent<BlueCampSoilderController>().Camp = WarData.Types.CampState.Blue;
-                    currentSoilderID += 1;
+                    currentBlueSoilderID += 1;
                 }
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
