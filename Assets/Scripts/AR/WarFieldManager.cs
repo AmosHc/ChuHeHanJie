@@ -220,12 +220,12 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     /// <param name="mbattle">阵形信息</param>
     public void StartSpawnSoilders(Transform CampTrans, EMbattle mbattle)
     {
-        float offset = -0.15f;   //初始偏移量
+        float offset = -0.6f;   //初始偏移量
         for (int i = 0; i < 10; i++)
         {
             if (i == 5)
-                offset = -0.15f;
-            offset += 0.05f;
+                offset = -0.6f;
+            offset += 0.2f;
             GameObject go = null;
             switch (mbattle.Embattle[RoundNow - 1][i])
             {
