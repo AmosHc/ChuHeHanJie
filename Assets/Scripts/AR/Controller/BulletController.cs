@@ -74,26 +74,26 @@ public class BulletController : MonoBehaviour
     {
         if (collision.collider.isTrigger)
             return;
-
-        if (Camp != DataLocal.Instance.MyCamp)
-            return;
         SoilderController sc = collision.gameObject.GetComponent<SoilderController>();
-        
-        if(sc==null)
+
+        if (sc == null || sc.Camp == Camp)
         {
             DestroySelf();
-            print("子弹击中环境：" + collision.gameObject.name);
-        }
-        else if(sc.Camp != Camp)
-        {
-            //只有当子弹碰到的是对方小兵，才会销毁自身或者发送消息。
-            SendMessage(sc);
-            print(string.Format("发送的消息是：\n子弹阵营：{0}，子弹ID，{1}，小兵阵营：{2}，小兵ID：{3}", Camp, ID, sc.Camp, sc.ID));
+            print("子弹击中环境或者己方小兵：" + collision.gameObject.name);
         }
         else
         {
-            print("子弹击中己方小兵，此情况不做考虑，无需发送消息");
-        }
+            if (Camp != DataLocal.Instance.MyCamp)
+                return;
+
+            if (sc.Camp != Camp)
+            {
+                //只有当子弹碰到的是对方小兵，才会销毁自身或者发送消息。
+                SendMessage(sc);
+                print(string.Format("发送的消息是：\n子弹阵营：{0}，子弹ID，{1}，小兵阵营：{2}，小兵ID：{3}", Camp, ID, sc.Camp, sc.ID));
+            }
+
+        }  
     }
 
     /// <summary>

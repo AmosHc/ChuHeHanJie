@@ -52,9 +52,14 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
     #region 蔡林烽
     /// <summary>
-    /// 当前生产小兵的ID
+    /// 当前生产蓝方小兵的ID
     /// </summary>
-    private int currentSoilderID = 0;
+    private int currentBlueSoilderID = 0;
+
+    /// <summary>
+    /// 当前生产红方小兵的ID
+    /// </summary>
+    private int currentRedSoilderID = 0;
     #endregion
 
     #region 李锐
@@ -249,12 +254,39 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             else
             {
                 SoilderCount++;
+                //if (CampTrans == RedCamp)
+                //{
+                //    go.AddComponent<RedCampSoilderController>();
+                //    go.GetComponent<RedCampSoilderController>().NodeIndex = 0;
+                //    go.GetComponent<RedCampSoilderController>().OffSet = offset;
+                //    go.GetComponent<RedCampSoilderController>().ID = currentRedSoilderID % int.MaxValue;
+                //    go.GetComponent<RedCampSoilderController>().Camp = WarData.Types.CampState.Red;
+                //    currentRedSoilderID += 1;
+                //}
+                //else
+                //{
+                //    go.AddComponent<BlueCampSoilderController>();
+                //    go.GetComponent<BlueCampSoilderController>().NodeIndex = 0;
+                //    go.GetComponent<BlueCampSoilderController>().OffSet = offset;
+                //    go.GetComponent<BlueCampSoilderController>().ID = currentBlueSoilderID % int.MaxValue;
+                //    go.GetComponent<BlueCampSoilderController>().Camp = WarData.Types.CampState.Blue;
+                //    currentBlueSoilderID += 1;
+                //}
+                //go.GetComponent<SoilderController>().StartCoroutine(go.GetComponent<SoilderController>().WaitForMessage());
                 SoilderController sc = go.GetComponent<SoilderController>();
                 sc.NodeIndex = 0;
                 sc.OffSet = offset;
-                sc.ID = currentSoilderID % int.MaxValue;
                 sc.Camp = CampTrans == RedCamp ? WarData.Types.CampState.Red : WarData.Types.CampState.Blue;
-                currentSoilderID += 1;
+                if (sc.Camp == WarData.Types.CampState.Blue)
+                {
+                    sc.ID = currentBlueSoilderID % int.MaxValue;
+                    currentBlueSoilderID += 1;
+                }
+                else
+                {
+                    sc.ID = currentRedSoilderID % int.MaxValue;
+                    currentRedSoilderID += 1;
+                }
                 go.transform.SetParent(CampTrans);
                 go.transform.localPosition = Vector3.zero + Vector3.forward * offset;
                 sc.StartCoroutine(sc.WaitForMessage());
