@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MonsterData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <AllMonster Name="monster0" Id="0" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" />
-  <AllMonster Name="monster1" Id="1" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" />
-  <AllMonster Name="monster2" Id="2" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" />
-  <AllMonster Name="monster3" Id="3" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" />
-  <AllMonster Name="monster4" Id="4" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" />
+  <AllMonster Id="0" Name="monster0" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" AttackValue="0" />
+  <AllMonster Id="1" Name="monster1" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" AttackValue="0" />
+  <AllMonster Id="2" Name="monster2" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="0" AttackValue="0" />
+  <AllMonster Id="3" Name="monster3" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="2" AttackValue="0" />
+  <AllMonster Id="4" Name="monster4" PrefabPath="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" AttackRange="3" AttackValue="0" />
 </MonsterData>
