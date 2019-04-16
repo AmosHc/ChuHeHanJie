@@ -21,6 +21,7 @@ public class loadWindow : Window
         m_MainPanel.LoadSlider.value = GameMapManger.LoadingProgress / 100.0f;
         m_MainPanel.ProgressText.text = string.Format("{0}%", GameMapManger.LoadingProgress);
     }
+
     /// <summary>
     /// 加载对应场景第一个UI
     /// </summary>

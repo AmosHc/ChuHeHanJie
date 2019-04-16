@@ -19,19 +19,21 @@ public class BuildApp
         BundleEditor.Build();
         //打包
         string abPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString()+"/";
-        string targetPath = Application.streamingAssetsPath + "/AssetBundle/";
+        string targetPath = AssetBundleManger.Instance.ABLoadpath;
         Copy(abPath, targetPath);//复制ab包到streamasset/AssetBundle
         string savePath = "";
         switch (EditorUserBuildSettings.activeBuildTarget)
         {
             case BuildTarget.Android:
-                savePath = m_AndroidPath+m_AppName+"_"+EditorUserBuildSettings.activeBuildTarget+string.Format("_{0:yyyy_MM_dd_HH_mm}",DateTime.Now)+".apk";
+                savePath = m_AndroidPath + m_AppName + "_" + EditorUserBuildSettings.activeBuildTarget +
+                           string.Format("_{0:yyyy_MM_dd_HH_mm}", DateTime.Now) + ".apk";
                 break;
             case BuildTarget.iOS:
                 break;
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
-                savePath = m_AndroidPath + m_AppName + "_" + EditorUserBuildSettings.activeBuildTarget + string.Format("_{0:yyyy_MM_dd_HH_mm}/{1}.exe", DateTime.Now,m_AppName);
+                savePath = m_WindowsPath + m_AppName + "_" + EditorUserBuildSettings.activeBuildTarget +
+                           string.Format("_{0:yyyy_MM_dd_HH_mm}/{1}.exe", DateTime.Now, m_AppName);
                 break;
             default:
                 Debug.Log("当前选择平台不支持自动打包" + EditorUserBuildSettings.activeBuildTarget);

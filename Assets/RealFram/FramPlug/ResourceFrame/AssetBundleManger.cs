@@ -6,12 +6,17 @@ using UnityEngine;
 
 public class AssetBundleManger : Singleton<AssetBundleManger>
 {
-    private string m_AssetConfigPath = Application.streamingAssetsPath + "/AssetBundle/assetbundleconfig";
+    protected string m_ABConfigABName = "assetbundleconfig";
     protected Dictionary<uint,ResourceItem> m_ResourceItemDic = new Dictionary<uint, ResourceItem>();//资源依赖关系表，根据crc找到对应资源块
     protected Dictionary<uint,AssetBundleItem> m_AssetBundleItemDic = new Dictionary<uint, AssetBundleItem>();//ab包字典集
 
     protected ClassObjectPool<AssetBundleItem> m_AssetBundleItemPool =
         ObjectManger.Instance.GetOrCreateClassPool<AssetBundleItem>(500);
+
+    public string ABLoadpath
+    {
+        get { return Application.streamingAssetsPath + "/AssetBundle/"; }
+    }
     /// <summary>
     /// 加载AssetBundleConfig
     /// </summary>
@@ -32,8 +37,9 @@ public class AssetBundleManger : Singleton<AssetBundleManger>
             return false;
 #endif
         m_ResourceItemDic.Clear();
-        AssetBundle abConfigBundle = AssetBundle.LoadFromFile(m_AssetConfigPath);
-        TextAsset textAsset = abConfigBundle.LoadAsset<TextAsset>("AssetBundleConfig");
+        string assetConfigPath = ABLoadpath + m_ABConfigABName;
+        AssetBundle abConfigBundle = AssetBundle.LoadFromFile(assetConfigPath);
+        TextAsset textAsset = abConfigBundle.LoadAsset<TextAsset>(m_ABConfigABName);
         if (textAsset == null)
         {
             Debug.LogError("assetbundleConfig不存在！" );
@@ -103,7 +109,7 @@ public class AssetBundleManger : Singleton<AssetBundleManger>
         AssetBundleItem item = null;
         if (!m_AssetBundleItemDic.TryGetValue(crc, out item))
         {
-            string path = Application.streamingAssetsPath + "/AssetBundle/" + abName;
+            string path = ABLoadpath + abName;
             AssetBundle ab = null;
             //if (File.Exists(path))//移动端不支持File访问
             ab = AssetBundle.LoadFromFile(path);

@@ -15,9 +15,9 @@ using Object = UnityEngine.Object;
 
 public class DataEditor
 {
-    private static string XMLPATH = "Assets/GameData/Data/Xml/";
-    private static string BINARYPATH = "Assets/GameData/Data/Binary/";
-    private static string SCRIPTPATH = "Assets/Scripts/Data/";
+    private static string XMLPATH = ReadConfig.GetRealFream().m_XmlPath;
+    private static string BINARYPATH = ReadConfig.GetRealFream().m_BinaryPath;
+    private static string SCRIPTPATH = ReadConfig.GetRealFream().m_ScriptsPath;
     private static string EXCELPATH = Application.dataPath+"/../Data/Excel/";
     private static string REGPATH = Application.dataPath + "/../Data/Reg/";
     [MenuItem("Assets/类转Xml")]
@@ -62,10 +62,24 @@ public class DataEditor
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
     }
-    [MenuItem("Tools/Excel转Xml")]
-    public static void ExcelToXml()
+    [MenuItem("Tools/Xml/Excel转xml")]
+    public static void AssetsAllExcelToXml()
     {
-        string xmlRegName = "BuffData";
+        string[] filePaths = Directory.GetFiles(REGPATH, "*", SearchOption.AllDirectories);
+        for (int i = 0; i < filePaths.Length; i++)
+        {
+            if(!filePaths[i].EndsWith(".xml"))
+                continue;
+            EditorUtility.DisplayCancelableProgressBar("查找文件夹下的类", "正在扫描路径" + filePaths[i] + "...",
+                1.0f / filePaths.Length * i);
+            string path = filePaths[i].Substring(filePaths[i].LastIndexOf("/") + 1);
+            ExcelToXml(path.Replace(".xml",""));
+        }
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.Refresh();
+    }
+    public static void ExcelToXml(string xmlRegName)
+    {
         string className = "";
         string excelName = "";
         string xmlName = "";
@@ -193,19 +207,19 @@ public class DataEditor
         object list = CreateList(item.GetType());
         for (int i = 0; i < sheetData.AllData.Count; i++)
         {
+            if (keyValue != null && !string.IsNullOrEmpty(sheetData.AllData[i].parentValue))
+            {
+                if (sheetData.AllData[i].parentValue != keyValue.ToString())
+                    continue;
+            }
             object addItem = CreatClass(sheetClass.Name);
             for (int j = 0; j < sheetClass.VarList.Count; j++)
             {
-                if (keyValue != null && string.IsNullOrEmpty(sheetData.AllData[i].parentValue))
-                {
-                    if(sheetData.AllData[i].parentValue != keyValue.ToString())
-                        continue;
-                }
                 VarClass varClass = sheetClass.VarList[j];
                 if (varClass.Type == "list" && string.IsNullOrEmpty(varClass.SplitStr))
                 {
                     ReadDataToClass(addItem, allSheetClassDic[varClass.ListSheetName],
-                        allSheetDataDic[varClass.ParentSheet.SheetName], allSheetClassDic, allSheetDataDic,
+                        allSheetDataDic[GetSheetName(varClass.ListSheetName)], allSheetClassDic, allSheetDataDic,
                         GetMemberValue(addItem, sheetClass.MainKey));
                 }
                 else if (varClass.Type == "list")
@@ -238,6 +252,11 @@ public class DataEditor
                 new object[] { addItem });
         }
         objClass.GetType().GetProperty(sheetClass.ParentVar.Name).SetValue(objClass,list);
+    }
+    //获得sheet名字
+    private static string GetSheetName(string dicSheetName)
+    {
+        return dicSheetName.Split('-')[1];
     }
     /// <summary>
     /// 设置分隔符class
