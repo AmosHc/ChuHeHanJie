@@ -34,9 +34,12 @@ public class GameStart : MonoSingleton<GameStart>
     /// </summary>
     void LoadConfigs()
     {
-
+        ConfigManger.Instance.LoadData<MonsterData>(CFG.TABLE_MONSTER);
+        ConfigManger.Instance.LoadData<BuffData>(CFG.TABLE_BUFF);
     }
-
+    /// <summary>
+    /// 注册UI窗口
+    /// </summary>
     void RegistUI()
     {
         UIManager.Instance.Register<LoginWindow>(ConStr.LOGINPANEL);

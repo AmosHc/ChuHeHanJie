@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data name="MonsterData" from="G怪物.xlsx" to="MonsterData.xml">
+	<variable name="AllMonster" type="list">
+		<list name="MonsterBase" sheetname="怪物配置" mainKey="Id">
+			<variable name="Id" col="ID" type="int"/>
+			<variable name="Name" col="怪物名称" type="string"/>
+			<variable name="PrefabPath" col="预制体路径" type="string"/>
+			<variable name="AttackRange" col="攻击范围" type="float" defaultValue="0"/>
+			<variable name="AttackValue" col="攻击值" type="int"/>
+		</list>
+	</variable>
+</data>

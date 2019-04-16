@@ -340,8 +340,17 @@ public class ResourceManger : Singleton<ResourceManger>
         {
             item = AssetBundleManger.Instance.FindResourceItem(crc);//查找已有的资源块直接加载
 
-            if (item!=null && item.m_obj != null)
-                obj = item.m_obj as T;
+            if (item != null && item.m_AssetBundle != null)
+            {
+                if (item.m_obj != null)
+                {
+                    obj = item.m_obj as T;
+                }
+                else
+                {
+                    obj = item.m_AssetBundle.LoadAsset<T>(item.m_AssetBundleName) as T;
+                }
+            }
             else
             {
                 if (item == null)

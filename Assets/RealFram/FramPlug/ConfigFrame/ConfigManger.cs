@@ -68,5 +68,9 @@ public class ConfigManger : Singleton<ConfigManger> {
 /// </summary>
 public class CFG
 {
-
+    /// <summary>
+    /// 配置表配置路径
+    /// </summary>
+    public const string TABLE_MONSTER = "Assets/GameData/Data/Binary/MonsterData.bytes";
+    public const string TABLE_BUFF = "Assets/GameData/Data/Binary/BuffData.bytes";
 }

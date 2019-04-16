@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BuffData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AllBuffList Id="0" Name="Name0" OutLook="0.prefab" Time="1.487153" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+  </AllBuffList>
+  <AllBuffList Id="1" Name="Name1" OutLook="1.prefab" Time="3.605083" BuffType="RanShao">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+  </AllBuffList>
+  <AllBuffList Id="2" Name="Name2" OutLook="2.prefab" Time="3.888392" BuffType="RanShao">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+    <AllBuffList Id="3" Name="name3" />
+  </AllBuffList>
+  <AllBuffList Id="3" Name="Name3" OutLook="3.prefab" Time="1.749313" BuffType="Du">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+    <AllBuffList Id="3" Name="name3" />
+  </AllBuffList>
+  <AllBuffList Id="4" Name="Name4" OutLook="4.prefab" Time="0.5925137" BuffType="Du">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+  </AllBuffList>
+  <AllBuffList Id="5" Name="Name5" OutLook="5.prefab" Time="2.139431" BuffType="Du">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+  </AllBuffList>
+  <AllBuffList Id="6" Name="Name6" OutLook="6.prefab" Time="4.709871" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+    <AllBuffList Id="3" Name="name3" />
+  </AllBuffList>
+  <AllBuffList Id="7" Name="Name7" OutLook="7.prefab" Time="2.309692" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+  </AllBuffList>
+  <AllBuffList Id="8" Name="Name8" OutLook="8.prefab" Time="2.674978" BuffType="None">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+  </AllBuffList>
+  <AllBuffList Id="9" Name="Name9" OutLook="9.prefab" Time="2.734669" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+    <AllBuffList Id="3" Name="name3" />
+  </AllBuffList>
+  <AllBuffList Id="10" Name="Name10" OutLook="10.prefab" Time="1.929553" BuffType="None">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+  </AllBuffList>
+  <AllBuffList Id="11" Name="Name11" OutLook="11.prefab" Time="4.0823" BuffType="RanShao">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+    <AllBuffList Id="3" Name="name3" />
+  </AllBuffList>
+  <AllBuffList Id="12" Name="Name12" OutLook="12.prefab" Time="2.690072" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+  </AllBuffList>
+  <AllBuffList Id="13" Name="Name13" OutLook="13.prefab" Time="2.45208" BuffType="Du">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+  </AllBuffList>
+  <AllBuffList Id="14" Name="Name14" OutLook="14.prefab" Time="2.679157" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllList>测试数据3</AllList>
+  </AllBuffList>
+  <MosterBuffList Id="0" Name="Name0" OutLook="0.prefab" Time="3.262418" BuffType="RanShao">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+  </MosterBuffList>
+  <MosterBuffList Id="1" Name="Name1" OutLook="1.prefab" Time="3.235029" BuffType="BingDong">
+    <AllList>测试数据1</AllList>
+    <AllList>测试数据2</AllList>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+  </MosterBuffList>
+</BuffData>

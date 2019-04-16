@@ -25,7 +25,7 @@ public class UIManager : Singleton<UIManager>
     private EventSystem m_EventSystem;//事件系统
     private float m_CanvasRate = 0;//屏幕的宽高比
 
-    private string UIPREFABPATH = "Assets/GameData/Prefabs/UGUI/Panel/";
+    private string m_UIPrefabPath = "Assets/GameData/Prefabs/UGUI/Panel/";
     private Dictionary<string,Window> m_WindowDic = new Dictionary<string, Window>();//窗口缓存
     private Dictionary<string,Type> m_RegisterDic = new Dictionary<string, Type>();//注册的窗口名对应的窗口类型
 
@@ -44,6 +44,14 @@ public class UIManager : Singleton<UIManager>
         this.m_EventSystem = m_EventSystem;
 
         m_CanvasRate = Screen.height /( this.m_UICamera.orthographicSize * 2 );//计算屏幕宽高比
+    }
+    /// <summary>
+    /// 设置所有uiprefab路径
+    /// </summary>
+    /// <param name="path"></param>
+    public void SetUIPrefabPath(string path)
+    {
+        this.m_UIPrefabPath = path;
     }
     /// <summary>
     /// 窗口注册方法
@@ -95,9 +103,9 @@ public class UIManager : Singleton<UIManager>
             //拼接字符串耗gc，换种方式
             StringBuilder sb = new StringBuilder();
             if (wndName.EndsWith(".prefab"))
-                sb.Append(UIPREFABPATH).Append(wndName);
+                sb.Append(m_UIPrefabPath).Append(wndName);
             else
-                sb.Append(UIPREFABPATH).Append(wndName).Append(".prefab");
+                sb.Append(m_UIPrefabPath).Append(wndName).Append(".prefab");
             GameObject wndObj = ObjectManger.Instance.InstantiateObject(sb.ToString(), false, false);
             if (wndObj == null)
             {
@@ -159,9 +167,9 @@ public class UIManager : Singleton<UIManager>
             //拼接字符串耗gc，换种方式
             StringBuilder sb = new StringBuilder();
             if (popupsName.EndsWith(".prefab"))
-                sb.Append(UIPREFABPATH).Append(popupsName);
+                sb.Append(m_UIPrefabPath).Append(popupsName);
             else
-                sb.Append(UIPREFABPATH).Append(popupsName).Append(".prefab");
+                sb.Append(m_UIPrefabPath).Append(popupsName).Append(".prefab");
             GameObject wndObj = ObjectManger.Instance.InstantiateObject(sb.ToString(), false, false);
             if (wndObj == null)
             {
