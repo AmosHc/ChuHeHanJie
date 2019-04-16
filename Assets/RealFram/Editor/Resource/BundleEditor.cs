@@ -12,7 +12,7 @@ public class BundleEditor : ScriptableObject
 {
     private static string ABBYTEPATH = ReadConfig.GetRealFream().m_ABBytePath;
     private static string ABOUTPUTPATH = Application.dataPath+"/../AssetBundle/"+EditorUserBuildSettings.activeBuildTarget.ToString();
-    private static string ABCONFIGPATH = "Assets/RealFram/Editor/ABConfig.asset";
+    private static string ABCONFIGPATH = "Assets/RealFram/Editor/Config/ABConfig.asset";
     private static Dictionary<string, string> m_AllFileDir = new Dictionary<string, string>();//所有文件夹ab包路径
     private static List<string> m_AllFileAB = new List<string>();//ab包已有的所有文件资源,不重复
     private static Dictionary<string, List<string>> m_AllPrefabDir = new Dictionary<string, List<string>>();//所有prefab的关联文件路径数组
