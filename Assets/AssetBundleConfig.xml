@@ -7,6 +7,11 @@
     <ABDependce>black_knight 1</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/AR/Bullet.prefab" Crc="2920459829" ABName="bullet" AssetName="Bullet.prefab" />
+  <ABList Path="Assets/GameData/Data/ABData/AssetBundleConfig.bytes" Crc="588278462" ABName="data" AssetName="AssetBundleConfig.bytes" />
+  <ABList Path="Assets/GameData/Data/Binary/BuffData.bytes" Crc="1956441701" ABName="data" AssetName="BuffData.bytes" />
+  <ABList Path="Assets/GameData/Data/Binary/MonsterData.bytes" Crc="4133987539" ABName="data" AssetName="MonsterData.bytes" />
+  <ABList Path="Assets/GameData/Data/Xml/BuffData.xml" Crc="1798659573" ABName="data" AssetName="BuffData.xml" />
+  <ABList Path="Assets/GameData/Data/Xml/MonsterData.xml" Crc="4113168048" ABName="data" AssetName="MonsterData.xml" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/EmbattlePanel.prefab" Crc="1659219367" ABName="embattlepanel" AssetName="EmbattlePanel.prefab">
     <ABDependce>grid</ABDependce>
     <ABDependce>alertpanel</ABDependce>
