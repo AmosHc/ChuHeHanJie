@@ -11,7 +11,6 @@ public class MenuWindow : BaseWindow
     public override void Awake(params object[] paramList)
     {
         base.Awake(paramList);
-        Debug.Log("Awake");
         m_MainPanel = GameObject.GetComponent<MenuPanel>();
         if (!SocketClient.IsOnline)
             DataLocal.Instance.PLAYERINFO = new ProtoUser.EMbattle();

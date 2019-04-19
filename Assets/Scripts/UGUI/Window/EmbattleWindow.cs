@@ -32,7 +32,9 @@ public class EmbattleWindow : BaseWindow
         for (int i = 0; i < m_EmbattalePanel.ChooseBtn.Length; i++)
         {
             int tempIdx = i;//去除delegate干扰
+            m_EmbattalePanel.ChooseBtn[i].onClick.RemoveAllListeners();
             m_EmbattalePanel.ChooseBtn[i].onClick.AddListener(delegate () { OnChooseClick(tempIdx); });
+            m_EmbattalePanel.RoundBtn[i].onClick.RemoveAllListeners();
             m_EmbattalePanel.RoundBtn[i].onClick.AddListener(delegate () { OnRoundClick(tempIdx); });
         }
         m_EmbattalePanel.TitleTxt.text = AllTitleStr[0];
