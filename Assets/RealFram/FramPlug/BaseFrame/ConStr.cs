@@ -35,5 +35,6 @@ public class ConStr {
     public const int CostBowmen = 2;
     public const int CostMauler = 3;
     public const int CostInfantry = 4;
+    public const string ATTACK = "Assets/GameData/Prefabs/Attack.prefab";
 
 }

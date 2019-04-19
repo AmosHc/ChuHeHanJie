@@ -8,7 +8,12 @@ using Google.Protobuf;
 public class EmbattleWindow : BaseWindow
 {
     private EmbattlePanel m_EmbattalePanel;
-
+    private string[] AllTitleStr =
+    {
+        "请您布置第一回合阵型", "请您布置第二回合阵型", "请您布置第三回合阵型", "请您布置第四回合阵型",
+        "请您布置第五回合阵型", "请您布置第六回合阵型", "请您布置第七回合阵型", "请您布置第八回合阵型",
+        "请您布置第九回合阵型", "请您布置第十回合阵型"
+    };
     EMbattle PLAYERINFO = DataLocal.Instance.PLAYERINFO;
     //DataOnline.PLAYERINFO PLAYERINFO = new DataOnline.PLAYERINFO();
     int RoundNow = 0;  //当前回合
@@ -23,16 +28,21 @@ public class EmbattleWindow : BaseWindow
         Debug.Log("Awake");
         m_EmbattalePanel = GameObject.GetComponent<EmbattlePanel>();
         imageold = m_EmbattalePanel.ChooseImg[0].sprite;   //暂时获取UImask作为初始图片
+        Button tempBtn;
         for (int i = 0; i < m_EmbattalePanel.ChooseBtn.Length; i++)
         {
-            m_EmbattalePanel.ChooseBtn[i].onClick.AddListener(OnChooseClick);
-            m_EmbattalePanel.RoundBtn[i].onClick.AddListener(OnRoundClick);
+            int tempIdx = i;//去除delegate干扰
+            m_EmbattalePanel.ChooseBtn[i].onClick.AddListener(delegate () { OnChooseClick(tempIdx); });
+            m_EmbattalePanel.RoundBtn[i].onClick.AddListener(delegate () { OnRoundClick(tempIdx); });
         }
-        m_EmbattalePanel.SaveBtn.onClick.AddListener(OnSaveClick);
-        ShowFormation();
+        m_EmbattalePanel.TitleTxt.text = AllTitleStr[0];
+        //m_EmbattalePanel.SaveBtn.onClick.AddListener(OnSaveClick);
+        AddButtonClickListener(m_EmbattalePanel.SaveBtn, OnSaveClick);
+        AddButtonClickListener(m_EmbattalePanel.CloseBtn, OnClickCloseBtn);
+        if(SocketClient.IsOnline)
+            ShowFormation();
 
     }
-
     /// <summary>
     /// 显示当前回合的阵形
     /// </summary>
@@ -95,34 +105,29 @@ public class EmbattleWindow : BaseWindow
         return true;
     }
 
-    void OnChooseClick()
+    void OnChooseClick(int index)
     {
-        GameObject go = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        Transform EmbattleGroup = go.transform.parent.parent;
-        for (int i = 0; i < EmbattleGroup.childCount; i++)
-        {
-            if(EmbattleGroup.GetChild(i).GetChild(0).gameObject == go)
-            {
-                ChooseNow = i;
-                break;
-            }
-        }
+        ChooseNow = index;
         UIManager.Instance.OpenWnd(ConStr.SELECTPANEL, true);
     }
 
-    void OnRoundClick()
+    void OnRoundClick(int index)
     {
-        GameObject go = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        Transform NumGroup = go.transform.parent.parent;
-        for (int i = 0; i < NumGroup.childCount; i++)
-        {
-            if (NumGroup.GetChild(i).GetChild(0).gameObject == go)
-            {
-                RoundNow = i;
-                CostTotalNow = RoundNow + 1;
-                break;
-            }
-        }
+        //GameObject go = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        //Transform NumGroup = go.transform.parent.parent;
+        //for (int i = 0; i < NumGroup.childCount; i++)
+        //{
+        //    if (NumGroup.GetChild(i).GetChild(0).gameObject == go)
+        //    {
+        //        RoundNow = i;
+        //        CostTotalNow = RoundNow + 1;
+        //        break;
+        //    }
+        //}
+
+        RoundNow = index;
+        CostTotalNow = RoundNow + 1;
+        m_EmbattalePanel.TitleTxt.text = AllTitleStr[RoundNow];
         ShowFormation();
     }
     
@@ -139,8 +144,14 @@ public class EmbattleWindow : BaseWindow
 
         DataLocal.Instance.PLAYERINFO = PLAYERINFO;
         SocketClient.Instance.SendAsyn(PLAYERINFO, _RequestType.EMbattle);
-        UIManager.Instance.CloseWindow(ConStr.SELECTPANEL, true);
-        UIManager.Instance.CloseWindow(ConStr.EMBATTLEPANEL, true);
+        UIManager.Instance.CloseWindow(ConStr.SELECTPANEL);
+        UIManager.Instance.CloseWindow(ConStr.EMBATTLEPANEL);
+        UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
+    }
+
+    private void OnClickCloseBtn()
+    {
+        UIManager.Instance.CloseWindow(this);
         UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
     }
 }

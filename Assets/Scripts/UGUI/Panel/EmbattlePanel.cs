@@ -11,12 +11,14 @@ public class EmbattlePanel : MonoBehaviour {
     public Button[] RoundBtn;   //十个回合按钮
     public AnimatedButton SaveBtn;      //保存按钮
     public Text CostNow;    //当前费用
+    public Text TitleTxt;    //标题
 
     public Sprite Sprite_null;
     public Sprite Sprite_Cavalry;
     public Sprite Sprite_Bowmen;
     public Sprite Sprite_Mauler;
     public Sprite Sprite_Infantry;
+    public Button CloseBtn;
 
     private void Awake()
     {
