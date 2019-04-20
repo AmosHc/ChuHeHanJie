@@ -170,10 +170,11 @@ public class SocketClient:Singleton<SocketClient>
         cos.Flush();
         byte[] array = new byte[memoryStream.Length + 3];
         array[0] = _type;
-        array[1] = LenthToByte((int)memoryStream.Length)[0];
-        array[2] = LenthToByte((int)memoryStream.Length)[1];
+        array[1] = LenthToByte((int)memoryStream.Length + 3)[0];
+        array[2] = LenthToByte((int)memoryStream.Length + 3)[1];
         memoryStream.Position = 0L;
         memoryStream.Read(array, 3, array.Length - 3);
+        Debug.Log(array.Length);
         cos.Dispose();
         return array;
     }
