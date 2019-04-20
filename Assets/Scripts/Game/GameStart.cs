@@ -11,6 +11,7 @@ public class GameStart : MonoSingleton<GameStart>
     public Camera UICamera;//UI相机
     public EventSystem EventSystem;//事件系统
 
+    private GameObject obj = null;
     protected override void Awake()
     {
         base.Awake();
@@ -27,7 +28,7 @@ public class GameStart : MonoSingleton<GameStart>
         RegistUI();//注册UI页面
         PreLoad();///预加载资源放这里
         UIManager.Instance.OpenWnd(ConStr.LOGINPANEL, true);
-        //GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
+        //GameMapManger.Instance.LoadScene(ConSt    r.ARSCENE);
     }
     /// <summary>
     /// 加载配置表
@@ -68,7 +69,8 @@ public class GameStart : MonoSingleton<GameStart>
     void OnApplicationQuit()
     {
 #if UNITY_EDITOR
-        SocketClient.Instance.m_Socket.Close();
+        if(SocketClient.IsOnline)
+            SocketClient.Instance.m_Socket.Close();
         ResourceManger.Instance.ClearCache();
         Resources.UnloadUnusedAssets();//编辑器下卸载所有未使用的资源
         Debug.Log("应用退出，清空编辑器缓存");

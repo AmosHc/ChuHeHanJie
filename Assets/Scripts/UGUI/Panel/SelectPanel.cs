@@ -9,6 +9,7 @@ public class SelectPanel : MonoBehaviour
     public Button BowmenBtn;    //弓兵
     public Button MaulerBtn;    //盾兵
     public Button InfantryBtn;  //步兵
+    public Button NoneBtn;  //清空
 
     public Button CloseBtn; //关闭
 }

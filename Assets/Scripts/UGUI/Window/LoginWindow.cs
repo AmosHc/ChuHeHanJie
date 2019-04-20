@@ -37,15 +37,16 @@ public class LoginWindow : BaseWindow
     {
         if (SocketClient.IsOnline)
         {
-//            Toast("提示", "正在连接到服务器...");
+            //Toast("提示", "正在连接到服务器...");
             SocketClient.Instance.Connect();
             float t = 0f;
-            yield return new WaitUntil(() => {
+            yield return new WaitUntil(() =>
+            {
                 t += Time.deltaTime;
                 if (t > 5.0f)
                     return true;
                 return SocketClient.Instance.IsConnected;
-                });
+            });
             if (t > 5.0f)
             {
                 Toast("提示", "连接服务器失败");
@@ -75,9 +76,9 @@ public class LoginWindow : BaseWindow
             UIManager.Instance.OpenWnd(ConStr.MENUPANEL, true);
             UIManager.Instance.CloseWindow(ConStr.LOGINPANEL, true);
         }
-        else if(LogInState == UIMsgID.FAIL)   //登陆失败
+        else if (LogInState == UIMsgID.FAIL)   //登陆失败
         {
-            Toast("提示","登陆失败！");
+            Toast("提示", "登陆失败！");
             LogInState = UIMsgID.NONE;
             m_MainPanel.StartCoroutine(WaitForLogSuccess());
         }
@@ -96,7 +97,7 @@ public class LoginWindow : BaseWindow
     {
 
         Debug.Log("登录");
-        Debug.Log("账号："+m_MainPanel.UserNameTxt.text+"密码："+m_MainPanel.PassWordTxt.text);
+        Debug.Log("账号：" + m_MainPanel.UserNameTxt.text + "密码：" + m_MainPanel.PassWordTxt.text);
         //DataOnline.LOGIN login = new DataOnline.LOGIN();
         //login.Id = m_MainPanel.UserNameTxt.text;
         //login.Password = m_MainPanel.PassWordTxt.text;
@@ -106,7 +107,7 @@ public class LoginWindow : BaseWindow
             Id = m_MainPanel.UserNameTxt.text,
             Password = m_MainPanel.PassWordTxt.text
         };
-        
+
         Debug.Log(user.GetType().Name);
 
         SocketClient.Instance.SendAsyn(user, _RequestType.LOGIN);

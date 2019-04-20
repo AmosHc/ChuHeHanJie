@@ -79,7 +79,7 @@ public class AssetBundleManger : Singleton<AssetBundleManger>
             return null;
         }
 
-        if (res.m_AssetBundle != null) return res;
+        //if (res.m_AssetBundle != null) return res;
         else
         {
             res.m_AssetBundle = LoadAssetBundle(res.m_AssetBundleName);
@@ -160,6 +160,7 @@ public class AssetBundleManger : Singleton<AssetBundleManger>
             item.refCount--;
             if (item.refCount <= 0 && item.assetBundle != null)
             {
+                Debug.Log(abName);
                 //没有引用
                 item.assetBundle.Unload(true);
                 item.Rest();
