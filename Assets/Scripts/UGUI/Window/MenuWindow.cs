@@ -27,14 +27,21 @@ public class MenuWindow : BaseWindow
 
     public override bool OnMessage(UIMsgID msgId, object[] paramList)
     {
+        Debug.Log("1...");
+
         if (msgId == UIMsgID.OK)
+        {
+            Debug.Log("2...");
             IsStart = true;
+        }
         return true;
     }
 
     IEnumerator WaitForStartGame()
     {
+        Debug.Log("Wait...");
         yield return new WaitUntil(() => IsStart);
+        Debug.Log("Start...");
         GameMapManger.Instance.LoadScene(ConStr.ARSCENE);
         UIManager.Instance.CloseWindow(ConStr.ALERTPANEL);
         UIManager.Instance.CloseWindow(this);
