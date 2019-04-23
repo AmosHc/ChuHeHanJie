@@ -29,8 +29,11 @@ public class SocketClient:Singleton<SocketClient>
     /// <param name="data">消息内容</param>
     public void SendAsyn<T>(T data, _RequestType _RequestType) where T : IMessage
     {
-        Write_Buffer = ObjectToBytes(_RequestType, data);
-        m_Socket.Send(Write_Buffer);
+        lock (Write_Buffer)
+        {
+            Write_Buffer = ObjectToBytes(_RequestType, data);
+            m_Socket.Send(Write_Buffer);
+        }
         Debug.Log("消息发送成功！消息类型：" + _RequestType);
         //m_Socket.BeginSend(Write_Buffer, 0, GetBytesLenth(Write_Buffer), SocketFlags.None, new AsyncCallback(SendMess), m_Socket);
     }
@@ -39,8 +42,8 @@ public class SocketClient:Singleton<SocketClient>
     {
         byte[] array = new byte[3];
         array[0] = (byte)_RequestType;
-        array[1] = 0;
-        array[2] = 3;
+        array[1] = 3;
+        array[2] = 0;
         m_Socket.Send(array);
         Debug.Log("消息发送成功！消息类型：" + _RequestType);
     }
@@ -78,7 +81,7 @@ public class SocketClient:Singleton<SocketClient>
         int len = m_socket.EndReceive(ar);  //这里获取的lenth太不靠谱
         if (len > 0)
         {
-            len = ByteToLenth(Read_Buffer[1], Read_Buffer[2]);  //获取ReadBuffer的长度
+            len = ByteToLenth(Read_Buffer[1], Read_Buffer[2]) - 3;  //获取ReadBuffer的长度
             Debug.Log("收到服务器消息,消息类型："+ (_RequestType)Read_Buffer[0]);
             switch (Read_Buffer[0])
             {
@@ -172,9 +175,9 @@ public class SocketClient:Singleton<SocketClient>
         array[0] = _type;
         array[1] = LenthToByte((int)memoryStream.Length + 3)[0];
         array[2] = LenthToByte((int)memoryStream.Length + 3)[1];
+        Debug.Log("Lenth---->" + array.Length);
         memoryStream.Position = 0L;
         memoryStream.Read(array, 3, array.Length - 3);
-        Debug.Log(array.Length);
         cos.Dispose();
         return array;
     }
@@ -186,11 +189,17 @@ public class SocketClient:Singleton<SocketClient>
         byte[] array = new byte[length];
         for (int i = 0; i < array.Length; i++)
             array[i] = bytesData[i + offset];
-
-        CodedInputStream cis = new CodedInputStream(array, 0, array.Length);
         T result = new T();
-        result.MergeFrom(cis);
-        cis.Dispose();
+        try
+        {
+            CodedInputStream cis = new CodedInputStream(array, 0, array.Length);
+            result.MergeFrom(cis);
+            cis.Dispose();
+        }
+        catch(Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
         return result;
     }
 
