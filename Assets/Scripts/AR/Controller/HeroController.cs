@@ -15,9 +15,8 @@ public class HeroController : MonoBehaviour
     private WarData.Types.Soilder Data_Soilder = null;
 
     [Tooltip("玩家血量")]
-    public int Health = 10;
-
-    public int m_Total = 10;
+    public int Health = 50;
+    public int m_Total = -1;
     //[Tooltip("玩家血量文字框")]
     //public Text HealthText;
 
@@ -40,6 +39,7 @@ public class HeroController : MonoBehaviour
 
     private void Start()
     {
+        m_Total = Health;
         ARCamera = GameObject.Find("ARCamera").transform;
         System_Event.m_Events.AddListener(System_Event.GAMEPLAYERDATA, OnMessage);
         System_Event.m_Events.AddListener(System_Event.GAMESOILDERDATA, OnMessage);

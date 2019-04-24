@@ -76,13 +76,13 @@ public class SoilderController : MonoBehaviour
 
     protected virtual void Awake()
     {
-        WalkSpeed = Speed;
-        HealthNow = HealthMax;
-        GetComponent<SphereCollider>().radius = AttackDistance;
     }
 
     private void Start()
     {
+        WalkSpeed = Speed;
+        HealthNow = HealthMax;
+        GetComponent<SphereCollider>().radius = AttackDistance;
         animator = transform.GetComponent<Animator>();
         animator.speed = AnimSpeed;
         parentTransform = transform.parent;

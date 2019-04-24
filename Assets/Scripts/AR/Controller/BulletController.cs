@@ -137,6 +137,6 @@ public class BulletController : MonoBehaviour
     {
         //ObjectManger.Instance.ReleaseObject(gameObject);
         Destroy(gameObject);
-        Debug.Log(string.Format("{0},{1}子弹被摧毁",Camp,ID));
+        //Debug.Log(string.Format("{0},{1}子弹被摧毁",Camp,ID));
     }
 }
