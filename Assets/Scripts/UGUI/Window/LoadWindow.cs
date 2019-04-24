@@ -30,9 +30,9 @@ public class loadWindow : Window
         //根据打开场景加载第一个界面
         //switch (m_SceneName)
         //{
-        //    //case ConStr.MENUSCENE:
-        //    //    UIManager.Instance.OpenWnd(ConStr.MENUPANEL,true);
-        //    //    break;
+        //    case ConStr.ARSCENE:
+        //        UIManager.Instance.OpenWnd(ConStr.HUDPANEL, true);
+        //        break;
         //    default:
         //        return;
         //}

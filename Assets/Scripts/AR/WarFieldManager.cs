@@ -22,8 +22,13 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("战斗场景最大旋转角度")]
     public float MaxRotateAngle = 180f;
 
-    [Tooltip("战场缩放和旋转UI")]
-    public GameObject AR_UI;
+    //[Tooltip("战场缩放和旋转UI")]
+    //public GameObject AR_UI;
+    //ui是否显示
+    private bool m_IsShowUI = false;
+    //ui窗口
+    private HUDWindow m_hudWnd;
+
 
     /// <summary>
     /// 战场初始位置
@@ -47,8 +52,8 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("红方士兵根节点")]
     public Transform RedCamp;
 
-    [Tooltip("射击按钮")]
-    public Button ShootButton;
+    //[Tooltip("射击按钮")]
+    //public Button ShootButton;
 
     #region 蔡林烽
     /// <summary>
@@ -93,13 +98,20 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         RedHero = RedCamp.GetComponent<HeroController>();
         BlueHero = BlueCamp.GetComponent<HeroController>();
 
+        
+        StartCoroutine(WaitForNewRound());
+    }
+
+    private void bindClick()
+    {
         // 如果当前设备属于蓝方阵营，将蓝方的HeroController.cs中的SendMessage
         // 添加到射击按钮点击事件中
         if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Blue)
-            ShootButton.onClick.AddListener(BlueHero.SendMessage);
+            //ShootButton.onClick.AddListener(BlueHero.SendMessage);
+            m_hudWnd.AddButtonClickListener(m_hudWnd.m_MainPanel.ShootBtn, BlueHero.SendMessage);
         else
-            ShootButton.onClick.AddListener(RedHero.SendMessage);
-        StartCoroutine(WaitForNewRound());
+            //ShootButton.onClick.AddListener(RedHero.SendMessage);
+            m_hudWnd.AddButtonClickListener(m_hudWnd.m_MainPanel.ShootBtn, RedHero.SendMessage);
     }
 
     #region 李锐
@@ -194,8 +206,14 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
 
                 Destroy(BGRFX);
             }
-            if (AR_UI != null)
-                AR_UI.SetActive(true);
+            //if (AR_UI != null)
+            //    AR_UI.SetActive(true);
+            if (!m_IsShowUI)
+            {
+                m_hudWnd = UIManager.Instance.OpenWnd(ConStr.HUDPANEL, true) as HUDWindow;
+                bindClick();
+                m_IsShowUI = true;
+            }
 
             return;
         }

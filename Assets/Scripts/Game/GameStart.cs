@@ -54,6 +54,7 @@ public class GameStart : MonoSingleton<GameStart>
         UIManager.Instance.Register<AlertWindow>(ConStr.ALERTPANEL);
         UIManager.Instance.Register<EmbattleWindow>(ConStr.EMBATTLEPANEL);
         UIManager.Instance.Register<SelectWindow>(ConStr.SELECTPANEL);
+        UIManager.Instance.Register<HUDWindow>(ConStr.HUDPANEL);
     }
 
     public void PreLoad()

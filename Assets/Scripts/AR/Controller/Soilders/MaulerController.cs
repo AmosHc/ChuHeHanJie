@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MaulerController : SoilderController
 {
+    //盾兵
     protected override void Awake()
     {
-        Speed = 0.5f;
-        HealthMax = 2f;
-        Attack = 3;
-        AttackDistance = 3f;
+        Speed = 0.05f;
+        HealthMax = 20f;
+        Attack = 1;
+        AttackDistance = 1f;
 
         base.Awake();
     }

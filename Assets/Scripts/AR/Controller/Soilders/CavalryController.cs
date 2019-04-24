@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CavalryController : SoilderController
 {
+    //骑兵
     protected override void Awake()
     {
-        Speed = 0.3f;
-        HealthMax = 3f;
-        Attack = 2;
-        AttackDistance = 2f;
-        
         base.Awake();
+
+        Speed = 0.15f;
+        HealthMax = 15f;
+        Attack = 2;
+        AttackDistance = 1f;
     }
 }

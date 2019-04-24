@@ -15,6 +15,7 @@ public class ConStr {
     public const string ALERTPANEL = "AlertPanel";
     public const string EMBATTLEPANEL = "EmbattlePanel";
     public const string SELECTPANEL = "SelectPanel";
+    public const string HUDPANEL = "HUDPanel";
     //场景名称
     public const string EMPTYSCENE = "Empty";
     public const string MENUSCENE = "Menu";
@@ -22,6 +23,9 @@ public class ConStr {
 
     //预加载资源
     public const string ALERTPRE = "Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab";
+    //阵营
+    public const int campRed = 0;
+    public const int campBlue = 1;
 
     //小兵编号
     public const byte ArmsNull = 48;

@@ -2,6 +2,7 @@
 <AssetBundleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/AlertPanel.prefab" Crc="3753357791" ABName="alertpanel" AssetName="AlertPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/Attack.prefab" Crc="1330568117" ABName="attack" AssetName="Attack.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/AR/BattleField.prefab" Crc="3630751753" ABName="battlefield" AssetName="BattleField.prefab" />
   <ABList Path="Assets/GameData/Prefabs/AR/black_knight 1.prefab" Crc="2327219778" ABName="black_knight 1" AssetName="black_knight 1.prefab" />
   <ABList Path="Assets/GameData/Prefabs/AR/BlueThief.prefab" Crc="4065899689" ABName="bluethief" AssetName="BlueThief.prefab">
     <ABDependce>black_knight 1</ABDependce>
@@ -13,8 +14,8 @@
   <ABList Path="Assets/GameData/Data/Xml/BuffData.xml" Crc="1798659573" ABName="data" AssetName="BuffData.xml" />
   <ABList Path="Assets/GameData/Data/Xml/MonsterData.xml" Crc="4113168048" ABName="data" AssetName="MonsterData.xml" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/EmbattlePanel.prefab" Crc="1659219367" ABName="embattlepanel" AssetName="EmbattlePanel.prefab">
-    <ABDependce>grid</ABDependce>
     <ABDependce>alertpanel</ABDependce>
+    <ABDependce>grid</ABDependce>
     <ABDependce>numbtn</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/ExitPanel.prefab" Crc="919997153" ABName="exitpanel" AssetName="ExitPanel.prefab">
@@ -28,6 +29,9 @@
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
   </ABList>
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/HUDPanel.prefab" Crc="2781951973" ABName="hudpanel" AssetName="HUDPanel.prefab">
+    <ABDependce>alertpanel</ABDependce>
+  </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/InfoPanel.prefab" Crc="3797680262" ABName="infopanel" AssetName="InfoPanel.prefab">
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
@@ -40,8 +44,8 @@
     <ABDependce>numbtn</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="3283179713" ABName="menupanel" AssetName="MenuPanel.prefab">
-    <ABDependce>loginplane</ABDependce>
     <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>loginplane</ABDependce>
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
     <ABDependce>numbtn</ABDependce>
@@ -56,8 +60,8 @@
     <ABDependce>bluethief</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/RegisterPanel.prefab" Crc="1531265789" ABName="registerpanel" AssetName="RegisterPanel.prefab">
-    <ABDependce>loginplane</ABDependce>
     <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>loginplane</ABDependce>
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
   </ABList>
@@ -69,8 +73,8 @@
     <ABDependce>alertpanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/SettingPanel.prefab" Crc="2634294076" ABName="settingpanel" AssetName="SettingPanel.prefab">
-    <ABDependce>loginplane</ABDependce>
     <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>loginplane</ABDependce>
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>menupanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
@@ -97,4 +101,5 @@
     <ABDependce>bluethief</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/AR/UICamera.prefab" Crc="1276256547" ABName="uicamera" AssetName="UICamera.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/AR/WaterPanel.prefab" Crc="1902159458" ABName="waterpanel" AssetName="WaterPanel.prefab" />
 </AssetBundleConfig>

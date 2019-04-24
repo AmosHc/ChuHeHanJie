@@ -17,12 +17,15 @@ public class HeroController : MonoBehaviour
     [Tooltip("玩家血量")]
     public int Health = 10;
 
-    [Tooltip("玩家血量文字框")]
-    public Text HealthText;
+    public int m_Total = 10;
+    //[Tooltip("玩家血量文字框")]
+    //public Text HealthText;
 
     [Tooltip("多台设备参照物")]
     public Transform ImageTarget;
 
+    //ui窗口
+    private HUDWindow m_hudWnd;
     /// <summary>
     /// 该玩家当前的子弹ID
     /// </summary>
@@ -74,10 +77,15 @@ public class HeroController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             Shoot();
 #endif
-        if(Camp == WarData.Types.CampState.Blue)
-            HealthText.text = "蓝方剩余血量: " + Health.ToString();
+        if(m_hudWnd == null)
+            m_hudWnd = UIManager.Instance.FindWndByName<HUDWindow>(ConStr.HUDPANEL);
+        if (m_hudWnd == null) return;
+        if (Camp == WarData.Types.CampState.Blue)
+            //HealthText.text = "蓝方剩余血量: " + Health.ToString();
+            m_hudWnd.SetHp(ConStr.campBlue, Health, m_Total);
         else
-            HealthText.text = "红方剩余血量: " + Health.ToString();
+            //HealthText.text = "红方剩余血量: " + Health.ToString();
+            m_hudWnd.SetHp(ConStr.campRed, Health, m_Total);
 
     }
 
@@ -146,5 +154,6 @@ public class HeroController : MonoBehaviour
         if (sd.Camp == Camp)
             return;
         Health = Health - sd.Attack;
+        if (Health <= 0) Health = 0;
     }
 }
