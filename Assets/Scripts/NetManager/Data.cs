@@ -32,7 +32,10 @@ public enum _RequestType
     ISREADY = 50,   //请求出兵
     NEWROUND = 51,   //出兵消息
 
-    FORMATION = 52  //发送阵形到服务器
+    FORMATION = 52,  //发送阵形到服务器
+
+    ENEMYNETCLOSE = 60,     //对方掉线
+    WINONNETCLOSE = 61      //确认对方掉线获得胜利
 }
 
 public class DataLocal : Singleton<DataLocal>

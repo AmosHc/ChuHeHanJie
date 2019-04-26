@@ -86,6 +86,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         originalLocalPosition = transform.localPosition;
         originalLocalScale = transform.localScale;
         yLocalAngle = transform.localEulerAngles.y;
+        System_Event.m_Events.AddListener(System_Event.GAMEWINONNETCLOSE, WinOnNetClose);
     }
 
     private void Start()
@@ -150,6 +151,21 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
             ShowEndUI(_RequestType.NONEWIN);
         }
+    }
+     
+    //对方掉线后发送结果
+    private void WinOnNetClose(object []param)
+    {
+        IsGameOver = true;
+        StopAllCoroutines();
+        for (int i = 1; i < RedCamp.childCount; i++)
+            RedCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
+        for (int i = 1; i < BlueCamp.childCount; i++)
+            BlueCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
+        if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Blue)
+            SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+        else
+            SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
     }
 
     //游戏中判断当某方血量小于0时游戏结束并发送结果
