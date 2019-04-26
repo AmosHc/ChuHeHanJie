@@ -128,6 +128,10 @@ public class SocketClient:Singleton<SocketClient>
                 case (int)_RequestType.NEWROUND:    //下一回合开始可以进行出兵操作
                     System_Event.m_Events.Dispatche(System_Event.GAMENEWROUND);
                     break;
+                case (int)_RequestType.ENEMYNETCLOSE:   //对方掉线
+                    System_Event.m_Events.Dispatche(System_Event.GAMEWINONNETCLOSE);
+                    SocketClient.Instance.SendAsyn(_RequestType.WINONNETCLOSE);
+                    break;
                 default:break;
             }
             m_socket.BeginReceive(Read_Buffer, 0, Read_Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMess), m_socket);
