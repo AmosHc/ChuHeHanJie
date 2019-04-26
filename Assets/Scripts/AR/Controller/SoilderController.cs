@@ -142,6 +142,7 @@ public class SoilderController : MonoBehaviour
             yield return null;
         ReceiveMessage(BulletData);
         BulletData = null;
+        StartCoroutine(WaitForMessage());
     }
 
     public void ReceiveMessage(WarData.Types.Bullet bd)
@@ -153,7 +154,7 @@ public class SoilderController : MonoBehaviour
         {
             HealthNow--;
             UpdateHp();
-            Debug.Log("小兵被集中，收到1点伤害");
+            Debug.Log("小兵被集中，收到1点伤害，剩余血量:" + HealthNow);
         }
     }
 
