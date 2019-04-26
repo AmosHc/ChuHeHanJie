@@ -2872,7 +2872,7 @@ MonoBehaviour:
   TitleTxt: {fileID: 114615424011979204}
   Sprite_null: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   Sprite_Cavalry: {fileID: 21300000, guid: b907636c54d8d46b2ab82b6c8fe65264, type: 3}
-  Sprite_Bowmen: {fileID: 21300000, guid: 9a7fe8ed15b4b4d199e16baf2478c0e3, type: 3}
+  Sprite_Bowmen: {fileID: 21300000, guid: b62170bc46a664a5da6507f916e0f95a, type: 3}
   Sprite_Mauler: {fileID: 21300000, guid: f45c0c0716e334d469ed739a130eecea, type: 3}
   Sprite_Infantry: {fileID: 21300000, guid: 2b6f0fce29f3641f5ae51d1b21a4f341, type: 3}
   CloseBtn: {fileID: 945342275}

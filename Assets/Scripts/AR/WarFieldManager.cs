@@ -22,6 +22,9 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("战斗场景最大旋转角度")]
     public float MaxRotateAngle = 180f;
 
+    [Tooltip("AR摄像机")]
+    public Camera ARCamera;
+
     //[Tooltip("战场缩放和旋转UI")]
     //public GameObject AR_UI;
     //ui是否显示
@@ -52,9 +55,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     [Tooltip("红方士兵根节点")]
     public Transform RedCamp;
 
-    //[Tooltip("射击按钮")]
-    //public Button ShootButton;
-
     #region 蔡林烽
     /// <summary>
     /// 当前生产蓝方小兵的ID
@@ -68,11 +68,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
     #endregion
 
     #region 李锐
-    private const string MaulerPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
-    private const string CavalryPrefab = "Assets/GameData/Prefabs/AR/police.prefab";
-    private const string InfantryPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
-    private const string BowmenPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
-
     public int SoilderCount = 0;  //当前士兵数量
     private bool NewRoundStart = false; //是否开启新回合
     private int RoundNow = 0;   //当前回合，0为初始值
@@ -98,7 +93,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         RedHero = RedCamp.GetComponent<HeroController>();
         BlueHero = BlueCamp.GetComponent<HeroController>();
 
-        
         StartCoroutine(WaitForNewRound());
     }
 
@@ -142,11 +136,20 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
         int RedHealth = RedHero.Health;
         int BlueHealth = BlueHero.Health;
         if (RedHealth > BlueHealth)
+        {
             SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
+            ShowEndUI(_RequestType.REDWIN);
+        }
         else if (RedHealth < BlueHealth)
+        {
             SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+            ShowEndUI(_RequestType.BLUEWIN);
+        }
         else
+        {
             SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
+            ShowEndUI(_RequestType.NONEWIN);
+        }
     }
 
     //游戏中判断当某方血量小于0时游戏结束并发送结果
@@ -163,11 +166,46 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             for (int i = 1; i < BlueCamp.childCount; i++)
                 BlueCamp.GetChild(i).GetComponent<SoilderController>().IsGameOver = true;
             if (BlueHero.Health <= 0 && RedHero.Health <= 0)
+            {
                 SocketClient.Instance.SendAsyn(_RequestType.NONEWIN);
+                ShowEndUI(_RequestType.NONEWIN);
+            }
             else if (BlueHero.Health <= 0)
+            {
                 SocketClient.Instance.SendAsyn(_RequestType.REDWIN);
+                ShowEndUI(_RequestType.REDWIN);
+            }
             else
+            {
                 SocketClient.Instance.SendAsyn(_RequestType.BLUEWIN);
+                ShowEndUI(_RequestType.BLUEWIN);
+            }
+        }
+    }
+    /// <summary>
+    /// 判断哪方获胜，显示ui
+    /// </summary>
+    /// <returns></returns>
+    private void ShowEndUI(_RequestType type)
+    {
+        UIManager.Instance.CloseWindow(m_hudWnd);
+        if (type == _RequestType.NONEWIN)
+        {
+            UIManager.Instance.OpenWnd(ConStr.WINPANEL, true);
+        }
+        else if(type == _RequestType.REDWIN)
+        {
+            if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Red)
+                UIManager.Instance.OpenWnd(ConStr.WINPANEL, true);
+            else
+                UIManager.Instance.OpenWnd(ConStr.LOSEPANEL, true);
+        }
+        else
+        {
+            if (DataLocal.Instance.MyCamp == WarData.Types.CampState.Red)
+                UIManager.Instance.OpenWnd(ConStr.LOSEPANEL, true);
+            else
+                UIManager.Instance.OpenWnd(ConStr.WINPANEL, true);
         }
     }
     #endregion
@@ -211,6 +249,7 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             if (!m_IsShowUI)
             {
                 m_hudWnd = UIManager.Instance.OpenWnd(ConStr.HUDPANEL, true) as HUDWindow;
+                m_hudWnd.SetCamp(DataLocal.Instance.MyCamp);
                 bindClick();
                 m_IsShowUI = true;
             }
@@ -248,20 +287,20 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             switch (mbattle.Embattle[RoundNow - 1][i])
             {
                 case ConStr.ArmsCavalry:
-                    go = ObjectManger.Instance.InstantiateObject(CavalryPrefab);
-                    go.AddComponent<CavalryController>();
+                    go = ObjectManger.Instance.InstantiateObject(ConStr.CavalryPrefab);
+                    go.AddComponent<CavalryController>().ARCamera = ARCamera;
                     break;
                 case ConStr.ArmsMauler:
-                    go = ObjectManger.Instance.InstantiateObject(MaulerPrefab);
-                    go.AddComponent<MaulerController>();
+                    go = ObjectManger.Instance.InstantiateObject(ConStr.MaulerPrefab);
+                    go.AddComponent<MaulerController>().ARCamera = ARCamera;
                     break;
                 case ConStr.ArmsBowmen:
-                    go = ObjectManger.Instance.InstantiateObject(BowmenPrefab);
-                    go.AddComponent<BowmenController>();
+                    go = ObjectManger.Instance.InstantiateObject(ConStr.BowmenPrefab);
+                    go.AddComponent<BowmenController>().ARCamera = ARCamera;
                     break;
                 case ConStr.ArmsInfantry:
-                    go = ObjectManger.Instance.InstantiateObject(InfantryPrefab);
-                    go.AddComponent<InfantryController>();
+                    go = ObjectManger.Instance.InstantiateObject(ConStr.InfantryPrefab);
+                    go.AddComponent<InfantryController>().ARCamera = ARCamera;
                     break;
                 case ConStr.ArmsNull:
                     break;
@@ -311,7 +350,6 @@ public class WarFieldManager : MonoSingleton<WarFieldManager>
             }
         }
     }
-
     #region 李锐
     IEnumerator WaitForSoilerZero()
     {

@@ -109,6 +109,8 @@ public class SocketClient:Singleton<SocketClient>
                 case (int)_RequestType.FORMATION:   //保存对方阵形
                     DataLocal.Instance.ENEMYINFO = BytesToObject<EMbattle>(Read_Buffer, 3, len);
                     UIManager.Instance.SendMessageToWindow(ConStr.MENUPANEL, UIMsgID.OK);
+                    UIManager.Instance.SendMessageToWindow(ConStr.WINPANEL, UIMsgID.OK);
+                    UIManager.Instance.SendMessageToWindow(ConStr.LOSEPANEL, UIMsgID.OK);
                     break;
                 case (int)_RequestType.PLAYERDATA:  //游戏中玩家数据
                     WarData.Types.Player data_player = new WarData.Types.Player();

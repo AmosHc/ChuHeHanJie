@@ -11,7 +11,6 @@ public class GameStart : MonoSingleton<GameStart>
     public Camera UICamera;//UI相机
     public EventSystem EventSystem;//事件系统
 
-    private GameObject obj = null;
     protected override void Awake()
     {
         base.Awake();
@@ -28,7 +27,7 @@ public class GameStart : MonoSingleton<GameStart>
         RegistUI();//注册UI页面
         PreLoad();///预加载资源放这里
         UIManager.Instance.OpenWnd(ConStr.LOGINPANEL, true);
-        //GameMapManger.Instance.LoadScene(ConSt    r.ARSCENE);
+
     }
     /// <summary>
     /// 加载配置表
@@ -55,6 +54,8 @@ public class GameStart : MonoSingleton<GameStart>
         UIManager.Instance.Register<EmbattleWindow>(ConStr.EMBATTLEPANEL);
         UIManager.Instance.Register<SelectWindow>(ConStr.SELECTPANEL);
         UIManager.Instance.Register<HUDWindow>(ConStr.HUDPANEL);
+        UIManager.Instance.Register<LoseWindow>(ConStr.LOSEPANEL);
+        UIManager.Instance.Register<WinWindow>(ConStr.WINPANEL);
     }
 
     public void PreLoad()

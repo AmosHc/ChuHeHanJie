@@ -156,5 +156,15 @@ PrefabInstance:
       propertyPath: m_Depth
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114885447493656562, guid: f264eb5bd94d1444f994d70aa520d343,
+        type: 3}
+      propertyPath: bar
+      value: 
+      objectReference: {fileID: 2800000, guid: 3a06ca76bece64fc4b126e14ac775ea1, type: 3}
+    - target: {fileID: 114885447493656562, guid: f264eb5bd94d1444f994d70aa520d343,
+        type: 3}
+      propertyPath: bg
+      value: 
+      objectReference: {fileID: 2800000, guid: bf31d29ba98d146f1bff2d05503b5b1b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f264eb5bd94d1444f994d70aa520d343, type: 3}

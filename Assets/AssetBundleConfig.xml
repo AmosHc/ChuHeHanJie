@@ -13,6 +13,7 @@
   <ABList Path="Assets/GameData/Data/Binary/MonsterData.bytes" Crc="4133987539" ABName="data" AssetName="MonsterData.bytes" />
   <ABList Path="Assets/GameData/Data/Xml/BuffData.xml" Crc="1798659573" ABName="data" AssetName="BuffData.xml" />
   <ABList Path="Assets/GameData/Data/Xml/MonsterData.xml" Crc="4113168048" ABName="data" AssetName="MonsterData.xml" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/DogfaceHPBar.prefab" Crc="543905020" ABName="dogfacehpbar" AssetName="DogfaceHPBar.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/EmbattlePanel.prefab" Crc="1659219367" ABName="embattlepanel" AssetName="EmbattlePanel.prefab">
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>grid</ABDependce>
@@ -43,8 +44,14 @@
     <ABDependce>exitpanel</ABDependce>
     <ABDependce>numbtn</ABDependce>
   </ABList>
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LosePanel.prefab" Crc="273121544" ABName="losepanel" AssetName="LosePanel.prefab">
+    <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>alertpanel</ABDependce>
+    <ABDependce>numbtn</ABDependce>
+  </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="3283179713" ABName="menupanel" AssetName="MenuPanel.prefab">
     <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>losepanel</ABDependce>
     <ABDependce>loginplane</ABDependce>
     <ABDependce>alertpanel</ABDependce>
     <ABDependce>exitpanel</ABDependce>
@@ -71,6 +78,7 @@
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/SelectPanel.prefab" Crc="3630812763" ABName="selectpanel" AssetName="SelectPanel.prefab">
     <ABDependce>alertpanel</ABDependce>
+    <ABDependce>embattlepanel</ABDependce>
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/SettingPanel.prefab" Crc="2634294076" ABName="settingpanel" AssetName="SettingPanel.prefab">
     <ABDependce>embattlepanel</ABDependce>
@@ -102,4 +110,12 @@
   </ABList>
   <ABList Path="Assets/GameData/Prefabs/AR/UICamera.prefab" Crc="1276256547" ABName="uicamera" AssetName="UICamera.prefab" />
   <ABList Path="Assets/GameData/Prefabs/AR/WaterPanel.prefab" Crc="1902159458" ABName="waterpanel" AssetName="WaterPanel.prefab" />
+  <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/WinPanel.prefab" Crc="3534189846" ABName="winpanel" AssetName="WinPanel.prefab">
+    <ABDependce>embattlepanel</ABDependce>
+    <ABDependce>losepanel</ABDependce>
+    <ABDependce>loginplane</ABDependce>
+    <ABDependce>alertpanel</ABDependce>
+    <ABDependce>menupanel</ABDependce>
+    <ABDependce>numbtn</ABDependce>
+  </ABList>
 </AssetBundleConfig>

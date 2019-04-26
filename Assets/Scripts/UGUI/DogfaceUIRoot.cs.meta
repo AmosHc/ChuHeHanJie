@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 881707cab4885134298bc9e666a6ca3e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - camera: {instanceID: 0}
+  - blood_red: {fileID: 2800000, guid: 3baa28769f7ac43da966e3c7b1f08aa2, type: 3}
+  - blood_black: {fileID: 2800000, guid: bf31d29ba98d146f1bff2d05503b5b1b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

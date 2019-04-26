@@ -2116,6 +2116,7 @@ MonoBehaviour:
   BGRFX: {fileID: 1484972572}
   RiseSpeed: 1
   MaxRotateAngle: 180
+  ARCamera: {fileID: 847463280}
   BlueCamp: {fileID: 1985257810}
   RedCamp: {fileID: 1147345428}
   SoilderCount: 0

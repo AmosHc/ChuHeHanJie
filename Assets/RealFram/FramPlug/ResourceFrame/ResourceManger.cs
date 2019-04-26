@@ -154,7 +154,6 @@ public class ResourceManger : Singleton<ResourceManger>
         {
             DestroyResouceItem(tempList[i], true);
         }
-        
     }
 
     /// <summary>

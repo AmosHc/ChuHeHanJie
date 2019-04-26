@@ -12,26 +12,26 @@ public class HUDWindow : BaseWindow
         base.Awake(paramList);
         m_MainPanel = GameObject.transform.GetComponent<HUDPanel>();
     }
-
-    public override void OnClose()
+    //设置阵营
+    public void SetCamp(WarData.Types.CampState camp)
     {
-        base.OnClose();
-    }
-
-    public override void OnDisable()
-    {
-        base.OnDisable();
-    }
-
-    public override void OnShow(params object[] paramList)
-    {
-        base.OnShow(paramList);
+        Debug.Log(camp);
+        if (camp == WarData.Types.CampState.Red)
+        {
+            m_MainPanel.CampImg.sprite = m_MainPanel.RedSprite;
+            m_MainPanel.ShootBtnImg.sprite = m_MainPanel.RedSprite;
+        }
+        else
+        {
+            m_MainPanel.CampImg.sprite = m_MainPanel.BlueSprite;
+            m_MainPanel.ShootBtnImg.sprite = m_MainPanel.BlueSprite;
+        }
     }
 
     //设置阵营血量
     public void SetHp(int camp, float value,float total)
     {
-        float pointer = Mathf.Round(value / total);//bar进度
+        float pointer = value / total;//bar进度
         switch (camp)
         {
             case ConStr.campRed:

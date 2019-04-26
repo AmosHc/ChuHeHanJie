@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using ProtoUser;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -22,7 +23,11 @@ public class SoilderController : MonoBehaviour
 
     [Tooltip("行走速度")]
     public float WalkSpeed = 0.3f;
-
+    [Tooltip("AR相机")]
+    public Camera ARCamera;
+    //顶部uiroot
+    private GameObject UIRoot = null;
+    private Slider hpBar;
     /// <summary>
     /// 兵的标志
     /// </summary>
@@ -88,6 +93,36 @@ public class SoilderController : MonoBehaviour
         parentTransform = transform.parent;
         InitNodes(OffSet);
         System_Event.m_Events.AddListener(System_Event.GAMEBULLETDATA, OnMessage);
+        AddUIRoot();
+    }
+
+    /// <summary>
+    /// 在角色顶部添加uiroot节点
+    /// </summary>
+    private void AddUIRoot()
+    {
+        UIRoot = new GameObject("UI");
+        UIRoot.layer = 5;
+        UIRoot.transform.SetParent(gameObject.transform, false);
+        UIRoot.transform.localPosition = new Vector3(0, 1.5f, 0);
+        Canvas uiCanvas = UIRoot.AddComponent<Canvas>();
+        uiCanvas.renderMode = RenderMode.WorldSpace;
+        RectTransform rect = UIRoot.GetComponent<RectTransform>();
+        rect.sizeDelta = Vector2.one;
+
+        DogfaceUIRoot uiRootMono = UIRoot.AddComponent<DogfaceUIRoot>();
+        uiRootMono.m_Camera = ARCamera;
+        GameObject hpObj = ObjectManger.Instance.InstantiateObject(ConStr.DOGFACEHPBAR);
+        hpObj.transform.SetParent(UIRoot.transform, false);
+        hpBar = hpObj.GetComponent<Slider>();
+        UpdateHp();
+    }
+
+    //设置血量
+    private void UpdateHp()
+    {
+        float pointer = HealthNow / HealthMax;//bar进度
+        hpBar.value = pointer;
     }
 
     private void OnMessage(object[] paramlist)
@@ -117,6 +152,7 @@ public class SoilderController : MonoBehaviour
         if (bd.SoilderCamp == Camp && bd.SoilderID == ID)
         {
             HealthNow--;
+            UpdateHp();
             Debug.Log("小兵被集中，收到1点伤害");
         }
     }
@@ -181,6 +217,7 @@ public class SoilderController : MonoBehaviour
         if (sc)
         {
             sc.HealthNow -= Attack;
+            UpdateHp();
             StartCoroutine(Attacking(sc));
         }
         else

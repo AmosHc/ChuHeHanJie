@@ -90,7 +90,7 @@ public class BulletController : MonoBehaviour
             {
                 //只有当子弹碰到的是对方小兵，才会销毁自身或者发送消息。
                 SendMessage(sc);
-                print(string.Format("发送的消息是：\n子弹阵营：{0}，子弹ID，{1}，小兵阵营：{2}，小兵ID：{3}", Camp, ID, sc.Camp, sc.ID));
+                //print(string.Format("发送的消息是：\n子弹阵营：{0}，子弹ID，{1}，小兵阵营：{2}，小兵ID：{3}", Camp, ID, sc.Camp, sc.ID));
             }
 
         }  

@@ -16,6 +16,8 @@ public class ConStr {
     public const string EMBATTLEPANEL = "EmbattlePanel";
     public const string SELECTPANEL = "SelectPanel";
     public const string HUDPANEL = "HUDPanel";
+    public const string WINPANEL = "WinPanel";
+    public const string LOSEPANEL = "LosePanel";
     //场景名称
     public const string EMPTYSCENE = "Empty";
     public const string MENUSCENE = "Menu";
@@ -39,6 +41,13 @@ public class ConStr {
     public const int CostBowmen = 2;
     public const int CostMauler = 3;
     public const int CostInfantry = 4;
-    public const string ATTACK = "Assets/GameData/Prefabs/Attack.prefab";
+
+    //小兵资源路径
+    public const string MaulerPrefab = "Assets/GameData/Prefabs/AR/thief.prefab";
+    public const string CavalryPrefab = "Assets/GameData/Prefabs/AR/police.prefab";
+    public const string InfantryPrefab = "Assets/GameData/Prefabs/AR/roman.prefab";
+    public const string BowmenPrefab = "Assets/GameData/Prefabs/AR/shaman.prefab";
+    //血条资源路径
+    public const string DOGFACEHPBAR = "Assets/GameData/Prefabs/UGUI/DogfaceHPBar.prefab";
 
 }
