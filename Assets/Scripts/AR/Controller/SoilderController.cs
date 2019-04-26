@@ -286,6 +286,7 @@ public class SoilderController : MonoBehaviour
         WarFieldManager.Instance.SoilderCount--;
         StopAllCoroutines();
         Destroy(GetComponent<SoilderController>());
+        Destroy(UIRoot);
         ObjectManger.Instance.ReleaseObject(gameObject);
         //Destroy(gameObject);
     }

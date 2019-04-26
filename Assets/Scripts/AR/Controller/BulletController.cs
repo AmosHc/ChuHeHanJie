@@ -103,10 +103,10 @@ public class BulletController : MonoBehaviour
     {
         WarData.Types.Bullet bd = new WarData.Types.Bullet
         {
-            BulletCamp = Camp,
-            BulletID = ID,
-            SoilderCamp = sc.Camp,
-            SoilderID = sc.ID,
+            BulletCamp = Camp,//子弹阵营
+            BulletID = ID,//子弹id
+            SoilderCamp = sc.Camp,//受击小兵阵营
+            SoilderID = sc.ID,//受击小兵id
         };
         SocketClient.Instance.SendAsyn(bd, _RequestType.BULLETDATA);
     }
