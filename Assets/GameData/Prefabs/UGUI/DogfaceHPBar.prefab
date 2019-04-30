@@ -84,6 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1861128633063686599}
   - component: {fileID: 8457569575663688499}
+  - component: {fileID: 114777871951358098}
   m_Layer: 5
   m_Name: DogfaceHPBar
   m_TagString: Untagged
@@ -161,6 +162,68 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114777871951358098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6144579136227083396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c4d73e652a4849a0ca21d7b8e8409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Rigidbody: {fileID: 0}
+  m_Collider: {fileID: 0}
+  m_AllPoint:
+  - {fileID: 1861128633063686599}
+  - {fileID: 4275819511887223595}
+  - {fileID: 8710636244819428131}
+  - {fileID: 8395945020268852715}
+  m_AllPointChildCount: 02000000000000000100000000000000
+  m_AllPointActive: 01010101
+  m_Pos:
+  - {x: 0.0000000092537, y: 0.0000000012403, z: 0.0000000046099}
+  - {x: 0, y: 0, z: 0}
+  - {x: -5, y: 0, z: 0}
+  - {x: -70, y: -5, z: 0}
+  m_Scale:
+  - {x: 0.01, y: 0.01, z: 0.01}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  m_Rot:
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  - {x: 0, y: 0, z: 0, w: 1}
+  m_AnchorMax:
+  - {x: 0.5, y: 0.5}
+  - {x: 1, y: 0.75}
+  - {x: 1, y: 0.75}
+  - {x: 0, y: 0}
+  m_AnchorMin:
+  - {x: 0.5, y: 0.5}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0.25}
+  - {x: 0, y: 0}
+  m_Pivot:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: 0.5}
+  m_SizeDelta:
+  - {x: 160, y: 20}
+  - {x: 0, y: 0}
+  - {x: -20, y: 0}
+  - {x: 10, y: 0}
+  m_AnchoredPos:
+  - {x: 0.0000000092537, y: 0.0000000012403, z: 0.0000000046099}
+  - {x: 0, y: 0, z: 0}
+  - {x: -5, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  m_Particle: []
 --- !u!1 &7309899903914454628
 GameObject:
   m_ObjectHideFlags: 0

@@ -77,8 +77,13 @@ public class HeroController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             Shoot();
 #endif
-        if(m_hudWnd == null)
+        if (m_hudWnd == null)
+        {
             m_hudWnd = UIManager.Instance.FindWndByName<HUDWindow>(ConStr.HUDPANEL);
+            if (m_hudWnd == null) return;
+            m_hudWnd.SetHp(ConStr.campBlue, m_Total, m_Total); //初始化双端血量
+            m_hudWnd.SetHp(ConStr.campRed, m_Total, m_Total);//初始化双端血量
+        }
         if (m_hudWnd == null) return;
         if (Camp == WarData.Types.CampState.Blue)
             //HealthText.text = "蓝方剩余血量: " + Health.ToString();
