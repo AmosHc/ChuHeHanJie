@@ -94,7 +94,7 @@ public delegate void OnAsyncFinish(string path, ResourceObj resObj);
 
 public class ResourceManger : Singleton<ResourceManger>
 {
-    public bool m_LoadFromAssetBundle = true;//是否是通过ab包加载资源 false 编辑器，true ab包
+    public bool m_LoadFromAssetBundle = false;//是否是通过ab包加载资源 false 编辑器，true ab包
     //缓存使用的资源列表
     public Dictionary<uint, ResourceItem> AssetDic { get; set; } = new Dictionary<uint, ResourceItem>();
 
